@@ -1,0 +1,8 @@
+@font-face{
+	font-family: "DroidArabic";
+	src: url("/media/fonts/DroidNaskh-Regular.ttf");
+}
+
+* {
+	font-family: DroidArabic !important;
+}

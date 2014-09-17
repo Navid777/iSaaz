@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block title %}
+    <title>آی‌ساز</title>
+    {% endblock %}
+    <link rel="stylesheet" href="media/css/metro-bootstrap.min.css">
+    <script src="media/js/jquery.min.js"></script>
+    <script src="media/js/jquery-ui.min.js"></script>
+ 	<script src="media/js/metro.min.js"></script>
+ 	<link rel="stylesheet" href="media/css/style.css">
+ 	<link href="media/css/iconFont.min.css" rel="stylesheet">
+    </head>
+    <body class="metro" style="background-color:#efeae3">
+    	<header class="bg-dark">
+    		<div class="navigation-bar dark">
+    			<div class="navigation-bar-content container">
+    				<a class="element place-right" href="/">
+    					آی ساز
+    					<span class="icon-grid-view on-right"> </span>
+    				</a>
+    				<span class="element-divider place-right"> </span>
+    				<ul class="element-menu place-right">
+    					<li style="float: right;">
+    						<a class="" href="#">خانه</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">بیابید</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">بسپارید</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">فروشگاه</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">مقالات</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">دایرکتوری</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">درباره ما</a>
+    					</li>
+    					<li style="float: right;">
+    						<a class="" href="#">تماس با ما</a>
+    					</li>
+    				</ul>
+    			</div>
+    		</div>
+    	</header>
+    	<div class="grid fluid" style="margin-bottom: 0;">
+    	{% block content%}
+    	{% endblock%}
+    	<div class="row bg-dark no-margin fg-white text-center" style="height:400px;">
+    		<div class="container" style="padding: 10px 0; height:100px;">
+    		</div>
+    	</div>
+    	</div>
+    </body>
+</html>
