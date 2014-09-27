@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     
     
     url(r'^$', views.home),
+    url(r'^sell/$', views.sell),
 )
 
 if settings.DEBUG:
