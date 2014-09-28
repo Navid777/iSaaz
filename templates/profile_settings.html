@@ -1,0 +1,143 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="row">
+	<div class="bg-blue span10 offset1">
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> سلام</button>
+		<button class="large span2 bg-lightBlue bg-hover-lightBlue fg-white"> تنظیمات</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> صورت حساب ها</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> پیام ها</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> لیستینگ</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white">داشبورد</button>
+	</div>
+</div>
+<div class="row">
+	<div class="span10 offset1 bg-blue">
+	</div>
+</div>
+<div class="row" style="direction:rtl;">
+	<div class="span10 offset1">
+		<h3>ویرایش اطلاعات حساب کاربری</h3>
+		<h5>فیلد های اجباری <div class="fg-red" style="display:inline;">*</div></h5>
+		<div class="panel bordered span10 offset1">
+			<div class="panel-header bg-steel fg-white">
+				اطلاعات حساب
+			</div>
+			<div class="panel-body">
+				<div style="display:block;" class="span12">
+					ایمیل<div class="fg-red" style="display:inline;">*</div>
+					<div class="input-control text">
+						<input type="text" value="navid.azami@gmail.com" style="direction:ltr;"/>
+					</div>
+				</div>
+				<div>
+					<div class="span6">
+					
+						تکرار گذرواژه جدید
+						<div class="input-control password" style="direction:ltr;">
+							<input type="password" value=""/>
+						</div>
+					</div>
+					<div class="span6">
+						گذرواژه جدید
+						<div class="input-control password" style="direction:ltr;">
+							<input type="password" value=""/>
+						</div>
+					</div>
+				</div>
+				<div style="text-align:left;">
+					<button class="default">ویرایش</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel span10 offset1">
+			<div class="panel-header bg-steel fg-white">
+				اطلاعات تماس
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="span6">
+						 نام خانوادگی<div class="fg-red" style="display:inline;">*</div>
+						<div class="input-control text">
+							<input type="text" value=""/>
+						</div>
+					</div>
+					<div class="span6">
+						نام<div class="fg-red" style="display:inline;">*</div>
+						<div class="input-control text">
+							<input type="text" value=""/>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="span4">
+						محله
+						<div class="input-control select">
+							<select>
+								<option>بنده نواز</option>
+							</select>
+						</div>
+					</div>
+					<div class="span4">
+						شهر
+						<div class="input-control select">
+							<select>
+								<option>
+									قایم شهر
+								</option>
+								<option>
+									تهران
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="span4">
+						استان
+						<div class="input-control select">
+							<select>
+								<option>
+									تهران
+								</option>
+								<option>
+									مازندران
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="span4 offset8">
+						شماره تلفن
+						<div class="input-control text">
+						<input type="text"/>
+						</div>
+					</div>
+				</div>
+				<div style="text-align:left;">
+					<button class="default">ویرایش</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel span10 offset1">
+			<div class="panel-header bg-steel fg-white">
+				لیستینگ!
+			</div>
+			<div class="panel-body">
+				<div class="span6 offset6 ">
+					دیگران بتوانند پیشنهاد بدهند
+					<div class="input-control select">
+						<select>
+							<option>بله</option>
+							<option>خیر</option>
+						</select>
+					</div>
+				</div>
+				<div style="text-align:left;">
+					<button class="default">ویرایش</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

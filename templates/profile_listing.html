@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+	<div class="bg-blue span10 offset1">
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> سلام</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> تنظیمات</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> صورت حساب ها</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> پیام ها</button>
+		<button class="large span2 bg-lightBlue bg-hover-lightBlue fg-white"> لیستینگ</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white">داشبورد</button>
+	</div>
+</div>
+<div class="row">
+	<div class="bg-blue span10 offset1"> </div>	
+</div>
+<div class="row" style="direction:rtl;">
+	<div class="span10 offset1">
+		<h3 style="display:inline;">مدیریت تبلیغات</h3>
+		<button class="default" style="float:left;">ثبت آگهی جدید</button>
+	</div>
+</div>
+<div class="row">
+	<div class="bg-blue span10 offset1"> </div>	
+</div>
+<div class="row" style="direction:rtl;">
+	<div class="span10 offset1">
+		<div class="span3">
+			وضعیت
+			<div class="input-control select">
+				<select>
+					<option>نو</option>
+					<option>دست دوم</option>
+				</select>
+			</div>
+		</div>
+		<div class="span3">
+			دسته
+			<div class="input-control select">
+				<select>
+					<option>بادی</option>
+					<option>غیربادی</option>
+				</select>
+			</div>
+		</div>
+		<div class="span3">
+			دسته
+			<div class="input-control select">
+				<select>
+					<option>بادی</option>
+					<option>غیربادی</option>
+				</select>
+			</div>
+		</div>
+		<div class="span3">
+			دسته
+			<div class="input-control select">
+				<select>
+					<option>بادی</option>
+					<option>غیربادی</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span10 offset1 bg-blue"> </div>
+</div>
+<div class="row" style="direction:rtl;">
+	<div class="span10 offset1">
+		<table class="table">
+			<thead>
+				<tr>
+					<td> </td>
+					<td>وضعیت</td>
+					<td>دسته</td>
+					<td> </td>
+					<td>قیمت</td>
+					<td> مشاهدات</td>
+					<td>مشاهدات موبایلی</td>
+					<td>مشاهدات وب سایت</td>
+					<td>ایمیل های ارسالی</td>
+					<td>وضعیت پرداخت</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<div class="tile half">
+							<img src="/media/images/Guitar1.jpg">
+						</div>
+					</td>
+					<td>
+						<button class="default small">برای فروش</button>
+					</td>
+					<td>
+						سنتی>بادی>نی
+					</td>
+					<td>
+						<button class="default small">ویرایش</button>
+						<button class="default small">نمایش</button>
+						<button class="danger small">حذف</button>
+					</td>
+					<td>
+						100 تومان
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						<div class="fg-green">پرداخت شد</div>
+					</td>
+				</tr>
+								<tr>
+					<td>
+						<div class="tile half">
+							<img src="/media/images/Guitar1.jpg">
+						</div>
+					</td>
+					<td>
+						<button class="danger small">درفت</button>
+					</td>
+					<td>
+						سنتی>بادی>نی
+					</td>
+					<td>
+						<button class="default small">ویرایش</button>
+						<button class="default small">نمایش</button>
+						<button class="danger small">حذف</button>
+					</td>
+					<td>
+						100 تومان
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						0
+					</td>
+					<td>
+						<div class="fg-darkRed">پرداخت نشد</div>
+						<button class="mini default">پرداخت</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+	<div class="bg-blue span10 offset1">
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> سلام</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> تنظیمات</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> صورت حساب ها</button>
+		<button class="large span2 bg-lightBlue bg-hover-lightBlue fg-white"> پیام ها</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> لیستینگ</button>
+		<button class="large span2 bg-blue bg-hover-lightBlue fg-white">داشبورد</button>
+	</div>
+</div>
+<div class="row">
+	<div class="span10 bg-blue offset1">
+	</div>
+</div>
+<div class="row" style="direction:rtl;">
+	<div class="span10 offset1">
+		<h3>صندوق دریافت</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>فرستنده</td>
+					<td>موضوع</td>
+					<td>تاریخ</td>
+					<td>خوانده شد؟</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>نوید اعظمی(navid.azami@gmail.com)</td>
+					<td>خرید ساز شما</td>
+					<td>5/10/1392</td>
+					<td class="fg-red">خیر</td>
+					<td>
+						<button class="mini default">خواندن</button>
+						<button class="mini danger">پاک کردن</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="span10 bg-blue offset1">
+	</div>
+</div>
+{% endblock %}

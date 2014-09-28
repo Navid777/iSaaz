@@ -22,6 +22,12 @@ urlpatterns = patterns('',
     
     url(r'^$', views.home),
     url(r'^sell/$', views.sell),
+    url(r'^profile/$', views.profile),
+    url(r'^profile/listing$', views.profile_listing),
+    url(r'^profile/messages$', views.profile_messages),
+    url(r'^profile/show/message$',views.profile_show_message),
+    url(r'^profile/invoices$', views.profile_invoices),
+    url(r'^profile/settings$', views.profile_settings),
 )
 
 if settings.DEBUG:
