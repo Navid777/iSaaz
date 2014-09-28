@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^profile/show/message$',views.profile_show_message),
     url(r'^profile/invoices$', views.profile_invoices),
     url(r'^profile/settings$', views.profile_settings),
+    url(r'^compare$', views.compare),
 )
 
 if settings.DEBUG:

@@ -24,3 +24,6 @@ def profile_invoices(request):
 
 def profile_settings(request):
     return render(request, 'profile_settings.html')
+
+def compare(request):
+    return render(request, 'compare.html')
