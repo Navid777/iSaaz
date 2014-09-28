@@ -30,3 +30,6 @@ def compare(request):
 
 def instrument(request):
     return render(request, 'instrument.html')
+
+def temp(request):
+    return render(request, 'temp.html')

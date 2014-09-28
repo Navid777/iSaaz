@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     
-    url(r'^$', views.home),
+    url(r'^home$', views.home),
     url(r'^sell/$', views.sell),
     url(r'^profile/$', views.profile),
     url(r'^profile/listing$', views.profile_listing),
@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^profile/settings$', views.profile_settings),
     url(r'^compare$', views.compare),
     url(r'^instrument$', views.instrument),
+    url(r'^$', views.temp),
 )
 
 if settings.DEBUG:
