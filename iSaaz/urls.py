@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^profile/invoices$', views.profile_invoices),
     url(r'^profile/settings$', views.profile_settings),
     url(r'^compare$', views.compare),
+    url(r'^instrument$', views.instrument),
 )
 
 if settings.DEBUG:

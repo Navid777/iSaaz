@@ -27,3 +27,6 @@ def profile_settings(request):
 
 def compare(request):
     return render(request, 'compare.html')
+
+def instrument(request):
+    return render(request, 'instrument.html')
