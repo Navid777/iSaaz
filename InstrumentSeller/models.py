@@ -21,6 +21,7 @@ class Advertisement(models.Model):
     returning = models.CharField(max_length=100)
     sound = models.FileField(upload_to = 'instrument_sound')
     image= models.ForeignKey('Ad_Image')
+    instrument = models.ForeignKey('Instrument')
     
 class Ad_Image(models.Model):
     image = models.FileField(upload_to = 'ad_pics')
@@ -64,17 +65,3 @@ class City(models.Model):
     name = models.CharField(max_length = 100)
     state= models.ForeignKey(State, related_name ='cities')
     
-class Instru_Cat1(models.Model):
-    name = models.CharField(max_length = 50)
-
-class Instru_Cat2(models.Model):
-    name = models.CharField(max_length = 50)
-    cat1 = models.ForeignKey(Instru_Cat1, related_name = 'subcats')
-    
-class Instru_Cat3(models.Model):
-    name = models.CharField(max_length = 50)
-    cat1 = models.ForeignKey(Instru_Cat2, related_name = 'subcats')
-
-class Instru_Cat4(models.Model):
-    name = models.CharField(max_length = 50)
-    cat1 = models.ForeignKey(Instru_Cat3, related_name = 'subcats')
