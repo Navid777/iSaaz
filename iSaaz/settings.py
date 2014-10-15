@@ -3,7 +3,7 @@ import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+BASE_DIR =  os.path.dirname(os.path.abspath(__file__))
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -14,7 +14,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         #'NAME': 'C:\\Users\\Navid\\Documents\\Aptana Studio 3 Workspace\\iSaaz\\sqlite.db',                      # Or path to database file if using sqlite3.
-        'NAME': 'C:\\Users\\Aiida\\Django Workspace\\iSaaz\\sqlite.db',
+        'NAME': os.path.join(BASE_DIR, 'sqlite.db'),
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',

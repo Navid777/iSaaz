@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from iSaaz import settings
 admin.autodiscover()
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
