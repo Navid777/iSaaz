@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
+\	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
 		<div class="container place-right" style="padding:80px 200px; direction:rtl;">
 			<h1 class="fg-white">ثبت آگهی</h1>
 			<h2 class="fg-white">
@@ -32,41 +32,45 @@
 			</div>
 		</div>
 	</div>
+<form action='.' method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+
 	<div class="row">
 		<div class="panel span10 offset1">
 			<div class="panel-header bg-steel fg-white" style="direction:rtl;">
 				چه سازی رو میخواهید بفروشید؟
+                {{form.errors}}
 			</div>
 			<div class="panel-body" style="direction:rtl; padding-top:10px;">
 
 				<div class="span3">
 					<nav class="sidebar">
-						<ul>
+						<ul id="sub4">
 							<li class="title">دسته</li>
-							<li class=""><a href="#"><i class="icon-home"></i>سنتی</a></li>
-							<li class=""><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
-							<li class=""><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
+							<li class="cat4" ><a href="#"><i class="icon-home"></i>سنتی</a></li>
+							<li class="cat4"><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
+							<li class="cat4"><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="span3">
 
 					<nav class="sidebar">
-						<ul>
+						<ul id="sub3">
 							<li class="title">دسته</li>
-							<li class=""><a href="#"><i class="icon-home"></i>سنتی</a></li>
-							<li class=""><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
-							<li class=""><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
+							<li class="cat3"><a href="#"><i class="icon-home"></i>سنتی</a></li>
+							<li class="cat3"><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
+							<li class="cat3"><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="span3">
 					<nav class="sidebar ">
-						<ul>
+						<ul id="sub2">
 							<li class="title">دسته</li>
-							<li class=""><a href="#"><i class="icon-home"></i>سنتی</a></li>
-							<li class=""><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
-							<li class=""><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
+							<li class="cat2"><a href="#"><i class="icon-home"></i>سنتی</a></li>
+							<li class="cat2"><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
+							<li class="cat2"><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -78,10 +82,12 @@
 							<li class="title">دسته</li>
 							<li class=""><a href="#"><i class="icon-home"></i>سنتی</a></li>
 							<li class=""><a href="#"><i class="icon-cog"></i>کلاسیک</a></li>
-							<li class=""><a href="#"><i class="icon-tree-view"></i>چرند</a></li>
 						</ul>
 					</nav>
 				</div>
+                <script type="text/javascript">
+
+                </script>
 			</div>
 		</div>
 	</div>
@@ -90,54 +96,58 @@
 			<div class="panel-header bg-steel fg-white" style="direction:rtl;">
 				بیشتر در مورد سازت بگو
 			</div>
-			<div class="panel-body" style="direction:rtl;">
+           <div class="panel-body" style="direction:rtl;">
 				<div class="span12">
 					<div class="row">
 						<div class="span4">
 							<label>سازنده</label>
 							<div class="input-control text">
-								<input type="text" value=""/>
+								<input type="text" value="" name="manufacturer"/>
 							</div>
 						</div>
 						<div class="span4">
 							<label>مدل</label>
 							<div class="input-control text">
-								<input type="text" value=""/>
+								<input type="text" value="" name="model"/>
 							</div>
 						</div>
 						<div class="span4">
 							<label>سال</label>
 							<div class="input-control select">
-								<select>
-									<option>1393</option>
-									<option>1392</option>
-									<option>1391</option>
+								<select name="year" value="year">
+                                    {% for x,y in form.fields.year.choices %}
+                                    <option value="{{ x }}">{{ y }}</option>
+                                    {% endfor %}
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="span4 offset4">
-							<label>مدل</label>
-							<div class="input-control text">
-								<input type="text" value=""/>
+							<label>وضعیت</label>
+							<div class="input-control select">
+								<select name="used" value="used">
+                                    {% for x,y in form.fields.used.choices %}
+                                    <option value="{{ x }}">{{ y }}</option>
+                                    {% endfor %}
+                                </select>
 							</div>
 						</div>
 						<div class="span4">
 							<label>قیمت</label>
 							<div class="input-control text">
-								<input type="text" value=""/>
+								<input type="text" value="" name="price"/>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="span4">
-							<label>استان</label>
+							<label>محله</label>
 							<div class="input-control select">
 								<select>
-									<option>تهران</option>
-									<option>مازندران</option>
-									<option>کرمانشاه</option>
+									<option>بهارشیراز</option>
+									<option>فولادکلا</option>
+									<option>صحنه</option>
 								</select>
 							</div>
 						</div>
@@ -152,12 +162,12 @@
 							</div>
 						</div>
 						<div class="span4">
-							<label>محله</label>
+							<label>استان</label>
 							<div class="input-control select">
 								<select>
-									<option>بهارشیراز</option>
-									<option>فولادکلا</option>
-									<option>صحنه</option>
+									<option>تهران</option>
+									<option>مازندران</option>
+									<option>کرمانشاه</option>
 								</select>
 							</div>
 						</div>
@@ -166,7 +176,7 @@
 						<div class="span12">
 							<label>عنوان</label>
 							<div class="input-control text">
-								<input type="text" value=""/>
+								<input type="text" value="" name="title"/>
 							</div>
 						</div>
 					</div>
@@ -174,7 +184,7 @@
 						<div class="span12">
 							<label>توضیحات</label>
 							<div class="input-control textarea">
-								<textarea>
+								<textarea name="details">
 									
 								</textarea>
 							</div>
@@ -194,40 +204,40 @@
 				<div class="span4">
 					<label>
 						<div class="">
-						سلم
+						شرایط استرداد
 						</div>
 						<div class="fg-steel">
 							سلام
 						</div>
 					</label>
 					<div class="input-control textarea">
-						<textarea> </textarea>
+						<textarea name="returning"> </textarea>
 					</div>
 				</div>
 				<div class="span4">
 					<label>
 						<div class="">
-						سلم
+						روش پرداخت
 						</div>
 						<div class="fg-steel">
 							سلام
 						</div>
 					</label>
 					<div class="input-control textarea">
-						<textarea> </textarea>
+						<textarea name="purchase"> </textarea>
 					</div>
 				</div>
 				<div class="span4">
 					<label>
 						<div class="">
-						سلم
+						روش ارسال
 						</div>
 						<div class="fg-steel">
 							سلام
 						</div>
 					</label>
 					<div class="input-control textarea">
-						<textarea> </textarea>
+						<textarea name="transport"> </textarea>
 					</div>
 				</div>
 			</div>
@@ -244,77 +254,113 @@
 						<div class="offset6 span6">
 							<label>نمونه صوتی</label>
 							<div class="input-control textarea">
-								<textarea>
-									
-								</textarea>
+                                {{ form.sound.errors }}
+                                {{ form.non_field_errors }}
+                                {{form.sound}}
 							</div>
 						</div>
 					</div>
+                    <script type="text/javascript">
+
+
+                          function upload_img(input, x) {
+                             if (input.files && input.files[0]) {
+                                 var reader = new FileReader();
+                                 reader.onload = function (e) {
+                                    $('#img' + x).attr('src', e.target.result);
+                                    $('#span' + x).hide();
+                                 }
+                                 reader.readAsDataURL(input.files[0]);
+                             }
+                          }
+
+                    </script>
 					<div class="row">
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
-								تصویر 6
+                                    <span id="span6">
+                                        تصویر 6
+                                    </span>
+
+                                <img id="img6" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+                                <input class="button" size="20" type='file' name="img6" onchange="upload_img(this, 6);" />
+
 							</div>
 						</div>
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
+                                {{form.img1.errors}}
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
+                                    <span id="span5">
 								تصویر 5
+                                    </span>
+                                    <img id="img5" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+								<input class="button" size="20" type='file' name="img5" onchange="upload_img(this, 5);" />
 							</div>
 						</div>
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
+                                    <span id="span4">
 								تصویر 4
+                                    </span>
+                                    <img id="img4" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+								<input class="button" size="20" type='file' name="img4" onchange="upload_img(this, 4);" />
 							</div>
 						</div>
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
+                                    <span id="span3">
 								تصویر 3
+                                    </span>
+                                    <img id="img3" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+								<input class="button" size="20" name="img3" type='file' onchange="upload_img(this, 3);" />
 							</div>
 						</div>
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
+                                    <span id="span2">
 								تصویر 2
+                                    </span>
+                                    <img id="img2" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+								<input class="button" name="img2" size="20" type='file' onchange="upload_img(this, 2);" />
 							</div>
 						</div>
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
 								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
 								<div style="padding-top:40px;">
+                                    <span id="span1">
 								تصویر اصلی
+                                    </span>
+                                    <img id="img1" src="#" alt="your image" />
 								</div>
 							</div>
 							<div style="float:left;">
-								<button class="button">آپلود</button>
+								<input class="button" name="img1" size="20" type='file' onchange="upload_img(this, 1);" />
 							</div>
 						</div>
 					</div>
@@ -346,4 +392,6 @@
 			</div>
 		</div>
 	</div>
+    <input type="submit" value="Submit" />
+</form>
 {% endblock %}

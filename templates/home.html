@@ -25,43 +25,14 @@
 	</div>
 	<div class="row">
 		<div class="span10 offset1">
-
+            {% for i in ad%}
 			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
+				<img style="height:100px; max-width:100%;" src="{{i.image.image.url}}"/>
 				<div>
-					گیتار الکتریک خفن
+					{{i.instrument.name}}
 				</div>
 			</div>
-			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-				<div>
-					گیتار الکتریک خفن
-				</div>
-			</div>
-			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-				<div>
-					گیتار الکتریک خفن
-				</div>
-			</div>
-			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-				<div>
-					گیتار الکتریک خفن
-				</div>
-			</div>
-			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-				<div>
-					گیتار الکتریک خفن
-				</div>
-			</div>
-			<div class="span2" style="height:150px; text-align:center;">
-				<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-				<div>
-					گیتار الکتریک خفن
-				</div>
-			</div>
+			{%endfor%}
 		</div>
 		<div class="offset1 span1">
 			<button class="default">مقایسه</button>
@@ -70,164 +41,18 @@
 	<div class="row">
 		<div class="span7 offset1">
 			<div class="row">
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
+				{%for i in mainAds%}
+                <div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
+					<img src="{{i.image.image.url}}" class="polaroid" style="height:400px; max-width: 100%;">
 					<div >
-						گیتار الکتریک
+						{{i.instrument.name}}
 						<br>
 						خفن
 						<br>
-						2000 تومن
+						{{i.price}} تومن
 					</div>
 				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
-				<div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="/media/images/Guitar1.jpg" class="polaroid" style="height:400px; max-width: 100%;">
-					<div >
-						گیتار الکتریک
-						<br>
-						خفن
-						<br>
-						2000 تومن
-					</div>
-				</div>
+				{%endfor%}
 			</div>
 		</div>
 		<div class="span3">
