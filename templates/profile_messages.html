@@ -20,13 +20,13 @@
 		<h3>صندوق دریافت</h3>
 		<table class="table">
 			<thead>
-				<tr>
+            <tr>
 					<td>فرستنده</td>
 					<td>موضوع</td>
 					<td>تاریخ</td>
 					<td>خوانده شد؟</td>
 					<td> </td>
-				</tr>
+			</tr>
 			</thead>
 			<tbody>
 				<tr>
@@ -39,6 +39,22 @@
 						<button class="mini danger">پاک کردن</button>
 					</td>
 				</tr>
+            {% for o in offers %}
+			    <tr>
+					<td>{{o.sender.user.first_name}} {{o.sender.user.last_name}}</td>
+					<td>{{o.title}}</td>
+					<td>{{o.time}}</td>
+                    {% if o.read%}
+					<td class="fg-green">بله</td>
+                    {%else%}
+                    <td class="fg-red">خیر</td>
+                    {%endif%}
+					<td>
+						<a href="/profile/show/message/{{o.id}}"><button class="mini default">خواندن</button></a>
+						<button class="mini danger">پاک کردن</button>
+					</td>
+			    </tr>
+            {% endfor %}
 			</tbody>
 		</table>
 	</div>

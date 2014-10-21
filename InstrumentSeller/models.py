@@ -5,16 +5,27 @@ from django.db.models.fields.files import ImageField
 # Create your models here.
 
 class Location(models.Model):
-    city = models.ForeignKey('City')
-    neighborhood= models.CharField(max_length=100)
-    
+    ostan= models.CharField(max_length=100)
+    shahr= models.CharField(max_length=100)
+    mahale= models.CharField(max_length=100)
+    def __str__(self):
+        return self.mahale
+
+class Category(models.Model):
+    cat1 = models.CharField(max_length=50)
+    cat2 = models.CharField(max_length=50)
+    cat3 = models.CharField(max_length=50)
+    cat4 = models.CharField(max_length=50)
+    def __str__(self):
+        return self.cat4
+
 class Advertisement(models.Model):
     title = models.CharField(max_length = 200)
-    user = models.ForeignKey('User_Profile')
+    user = models.ForeignKey('User_Profile', related_name='Ads')
     location = models.ForeignKey(Location, blank = True, null = True)
     submit_date= models.DateTimeField(auto_now=True)
     price= models.IntegerField()
-    advertisement_type = models.CharField(max_length=50) # doroste?
+    type = models.IntegerField(default=0) # 0 == active , 1 == deleted , 2 == sold
     details = models.CharField(max_length=500, blank = True)
     transport = models.CharField(max_length=100, blank = True)
     purchase = models.CharField(max_length=100, blank = True)
@@ -22,9 +33,9 @@ class Advertisement(models.Model):
     sound = models.FileField(upload_to = 'instrument_sound', blank = True)
     image= models.ForeignKey('Ad_Image', null = True)
     used = models.CharField(max_length=20)
-    instrument = models.ForeignKey('Instrument')
+    instrument = models.ForeignKey('Instrument', related_name='ad')
     def __str__(self):
-        return self.instrument.name
+        return self.title
     
 class Ad_Image(models.Model):
     image = models.FileField(upload_to = 'ad_pics')
@@ -49,14 +60,18 @@ class Instrument(models.Model):
     used = models.BooleanField()
     model = models.CharField(max_length = 50)
     year = models.IntegerField()
+    category = models.ForeignKey(Category, null=True)
     def __str__(self):
         return self.name
     
 class Offer(models.Model):
+    sender = models.ForeignKey(User_Profile)
+    title = models.CharField(max_length=200)
     content = models.CharField(max_length=500)
-    time = models.DateTimeField()
+    time = models.DateTimeField(auto_now=True)
     price= models.IntegerField()
-    ad= models.ForeignKey(Advertisement)
+    ad= models.ForeignKey(Advertisement, related_name='offers')
+    read = models.BooleanField(default= False)
     
 class Property(models.Model):
     instrument = models.ForeignKey(Instrument)
@@ -65,14 +80,3 @@ class Property(models.Model):
 class Property_Value(models.Model):
     propertys = models.ForeignKey(Property)
     value = models.IntegerField()
-    
-class State(models.Model):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-
-class City(models.Model):
-    name = models.CharField(max_length = 100)
-    state= models.ForeignKey(State, related_name ='cities')
-    def __str__(self):
-        return self.name

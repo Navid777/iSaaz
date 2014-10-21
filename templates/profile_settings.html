@@ -19,6 +19,12 @@
 	<div class="span10 offset1">
 		<h3>ویرایش اطلاعات حساب کاربری</h3>
 		<h5>فیلد های اجباری <div class="fg-red" style="display:inline;">*</div></h5>
+
+        <form action='/profile/settings' method="post" >
+		{% csrf_token %}
+        {{form1.errors}}
+        {{form2.errors}}
+        {{form3.errors}}
 		<div class="panel bordered span10 offset1">
 			<div class="panel-header bg-steel fg-white">
 				اطلاعات حساب
@@ -27,7 +33,7 @@
 				<div style="display:block;" class="span12">
 					ایمیل<div class="fg-red" style="display:inline;">*</div>
 					<div class="input-control text">
-						<input type="text" value="navid.azami@gmail.com" style="direction:ltr;"/>
+						<input type="text" value="{{user.user.email}}" name="email" style="direction:ltr;"/>
 					</div>
 				</div>
 				<div>
@@ -35,23 +41,29 @@
 					
 						تکرار گذرواژه جدید
 						<div class="input-control password" style="direction:ltr;">
-							<input type="password" value=""/>
+							<input type="password" value="" name="password2"/>
 						</div>
 					</div>
 					<div class="span6">
 						گذرواژه جدید
 						<div class="input-control password" style="direction:ltr;">
-							<input type="password" value=""/>
+							<input type="password" value="" name="password1"/>
 						</div>
 					</div>
 				</div>
 				<div style="text-align:left;">
 					<button class="default">ویرایش</button>
+                    <input type="submit" name="form1">
 				</div>
 			</div>
 		</div>
-
+        </form>
+        <form action='/profile/settings' method="post" >
+		{% csrf_token %}
 		<div class="panel span10 offset1">
+            {{form1.name.errors}}
+            {{form1.family_name.errors}}
+            {{form1.tel.errors}}
 			<div class="panel-header bg-steel fg-white">
 				اطلاعات تماس
 			</div>
@@ -60,13 +72,13 @@
 					<div class="span6">
 						 نام خانوادگی<div class="fg-red" style="display:inline;">*</div>
 						<div class="input-control text">
-							<input type="text" value=""/>
+							<input type="text" name="family_name" value="{{user.user.last_name}}" />
 						</div>
 					</div>
 					<div class="span6">
 						نام<div class="fg-red" style="display:inline;">*</div>
 						<div class="input-control text">
-							<input type="text" value=""/>
+							<input type="text" name="name" value="{{user.user.first_name}}" />
 						</div>
 					</div>
 				</div>
@@ -74,34 +86,25 @@
 					<div class="span4">
 						محله
 						<div class="input-control select">
-							<select>
-								<option>بنده نواز</option>
+							<select name="mahale" id="mahale">
 							</select>
 						</div>
 					</div>
 					<div class="span4">
 						شهر
 						<div class="input-control select">
-							<select>
-								<option>
-									قایم شهر
-								</option>
-								<option>
-									تهران
-								</option>
+							<select name="shahr" id="shahr" onchange="setMahale();">
+
 							</select>
 						</div>
 					</div>
 					<div class="span4">
 						استان
 						<div class="input-control select">
-							<select>
-								<option>
-									تهران
-								</option>
-								<option>
-									مازندران
-								</option>
+							<select name="ostan" id="ostan" onchange="setShahrs();">
+									<option value="تهران">تهران</option>
+                                    <option value="فارس">فارس</option>
+                                    <option value="مازندران">مازندران</option>
 							</select>
 						</div>
 					</div>
@@ -110,15 +113,20 @@
 					<div class="span4 offset8">
 						شماره تلفن
 						<div class="input-control text">
-						<input type="text"/>
+						<input type="text" value="{{user.tel}}" name="tel"/>
 						</div>
 					</div>
 				</div>
 				<div style="text-align:left;">
 					<button class="default">ویرایش</button>
+                    <input type="submit" name="form2">
 				</div>
 			</div>
 		</div>
+        </form>
+        <form action='/profile/settings' method="post">
+		{% csrf_token %}
+
 		<div class="panel span10 offset1">
 			<div class="panel-header bg-steel fg-white">
 				لیستینگ!
@@ -135,9 +143,11 @@
 				</div>
 				<div style="text-align:left;">
 					<button class="default">ویرایش</button>
+                    <input type="submit" name="form3">
 				</div>
 			</div>
 		</div>
+        </form>
 	</div>
 </div>
 {% endblock %}

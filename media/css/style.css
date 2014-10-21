@@ -6,3 +6,7 @@
 * {
 	font-family: DroidArabic !important;
 }
+
+li .selected a {
+background-color : #999999;
+}

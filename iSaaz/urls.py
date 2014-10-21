@@ -26,13 +26,16 @@ urlpatterns = patterns('',
     url(r'^profile/$', views.profile),
     url(r'^profile/listing$', views.profile_listing),
     url(r'^profile/messages$', views.profile_messages),
-    url(r'^profile/show/message$',views.profile_show_message),
+    url(r'^profile/show/message/(\d+)/$',views.profile_show_message),
     url(r'^profile/invoices$', views.profile_invoices),
     url(r'^profile/settings$', views.profile_settings),
     url(r'^compare$', views.compare),
-    url(r'^instrument$', views.instrument),
+    url(r'^instrument/(\d+)/$', views.instrument, name = "instrument"),
+    url(r'^login/$', views.login_user),
+    url(r'^logout/$', views.logout_user),
     url(r'^$', views.temp),
 )
+#urlpatterns += patterns('django.views.generic.simple',&nbsp(r'^accounts/login/$', 'direct_to_template', {'template': 'login_required.html'}),)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

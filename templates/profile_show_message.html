@@ -6,9 +6,9 @@
 		<button class="large span2 bg-blue bg-hover-lightBlue fg-white"> سلام</button>
 		<a href="/profile/settings"><button class="large span2 bg-blue bg-hover-lightBlue fg-white"> تنظیمات</button></a>
 		<a href="/profile/invoices"><button class="large span2 bg-blue bg-hover-lightBlue fg-white"> صورت حساب ها</button></a>
-		<a href="/profile/messages"><button class="large span2 bg-blue bg-hover-lightBlue fg-white"> پیام ها</button></a>
+		<a href="/profile/messages"><button class="large span2 bg-lightBlue bg-hover-lightBlue fg-white"> پیام ها</button></a>
 		<a href="/profile/listing"><button class="large span2 bg-blue bg-hover-lightBlue fg-white"> لیستینگ</button></a>
-		<a href="/profile/"><button class="large span2 bg-lightBlue bg-hover-lightBlue fg-white">داشبورد</button></a>
+		<a href="/profile/"><button class="large span2 bg-blue bg-hover-lightBlue fg-white">داشبورد</button></a>
 	</div>
 </div>
 <div class="row" style="direction:rtl;">
@@ -24,15 +24,15 @@
 <div class="row" style="direction:rtl;">
 	<div class="span10 offset1">
 		<div style="display:block;">
-			<div class="span10">نوید اعظمی(navid.azami@gmail.com)</div>
+			<div class="span10">{{offer.sender.user.first_name}} {{offer.sender.user.last_name}} - {{offer.sender.user.email}}</div>
 			<div class="span2">فرستنده:</div>
 		</div>
 		<div style="display:block;">
-			<div class="span10">یکشنبه 12 مهر 1388</div>
+			<div class="span10">{{offer.time}}</div>
 			<div class="span2">تاریخ:</div>
 		</div>
 		<div style="display:block;">
-			<div class="span10">خرید ساز شما</div>
+			<div class="span10">{{offer.title}}</div>
 			<div class="span2">موضوع:</div>
 		</div>
 	</div>
@@ -43,11 +43,7 @@
 </div>
 <div class="row" style="direction:rtl;">
 	<div class="span10 offset1">
-		با عرض سلام و خسته نباشید
-		<br>
-		میخواستم ساز شام را بخرم
-		<br>
-		موفق و پیروز باشید
+        {{offer.content}}
 	</div>
 </div>
 <div class="row">

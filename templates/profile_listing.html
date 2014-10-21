@@ -28,37 +28,35 @@
 		<div class="span3">
 			وضعیت
 			<div class="input-control select">
-				<select>
-					<option>نو</option>
-					<option>دست دوم</option>
+				<select id="cat4" disabled="true">
 				</select>
 			</div>
 		</div>
 		<div class="span3">
 			دسته
 			<div class="input-control select">
-				<select>
-					<option>بادی</option>
-					<option>غیربادی</option>
+				<select id="cat3" onclick="setcat4()" disabled="true">
 				</select>
 			</div>
 		</div>
 		<div class="span3">
 			دسته
 			<div class="input-control select">
-				<select>
-					<option>بادی</option>
-					<option>غیربادی</option>
+				<select id="cat2" onclick="setcat3()" disabled="true">
 				</select>
 			</div>
 		</div>
 		<div class="span3">
 			دسته
 			<div class="input-control select">
-				<select>
-					<option>بادی</option>
-					<option>غیربادی</option>
-				</select>
+				<select id="cat1" onclick="setcat2()">
+							<option>
+								کلاسیک
+							</option>
+							<option>
+								سنتی
+							</option>
+						</select>
 			</div>
 		</div>
 	</div>
@@ -84,16 +82,18 @@
 				</tr>
 			</thead>
 			<tbody>
+            {% for i in ads%}
 				<tr>
 					<td>
 						<div class="tile half">
-							<img src="/media/images/Guitar1.jpg">
+							<img src="{{i.image.image.url}}">
 						</div>
 					</td>
 					<td>
 						<button class="default small">برای فروش</button>
 					</td>
 					<td>
+                        {{i.instrument.category.cat1}}>{{i.instrument.category.cat2}}>{{i.instrument.category.cat3}}>{{i.instrument.category.cat4}}
 						سنتی>بادی>نی
 					</td>
 					<td>
@@ -102,10 +102,10 @@
 						<button class="danger small">حذف</button>
 					</td>
 					<td>
-						100 تومان
+						{{i.price}}
 					</td>
 					<td>
-						0
+						{{i.view_users}}
 					</td>
 					<td>
 						0
@@ -120,6 +120,7 @@
 						<div class="fg-green">پرداخت شد</div>
 					</td>
 				</tr>
+            {% endfor %}
 								<tr>
 					<td>
 						<div class="tile half">

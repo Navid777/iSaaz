@@ -14,7 +14,9 @@
 <div class="row">
 	<div class="span10 offset1" style="direction:rtl;">
 		<h3>پیام ها</h3>
-		شما 3 پیام خوانده نشده دارید
+		شما
+        {{unread|length}} پیام ناخوانده دارید
+
 		<a href="/profile/messages"><button class="bg-blue fg-white">مشاهده پیام ها</button></a>
 	</div>
 </div>
@@ -39,36 +41,30 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="info">
-					<td>گیتار</td>
+            {% for i in ads %}
+                {% if i.type == 0%}<!--active  -->
+                <tr class="info">
+                {% elif i.type == 1 %}<!--deleted  -->
+                <tr class="error">
+                {% else %}<!--sold  -->
+                <tr class="success">
+                {% endif %}
+					<td>{{i.instrument.name}}</td>
 					<td>اینجا</td>
-					<td>زنده!</td>
+                    {% if i.type == 0%}
+                    <td>زنده!</td>
+                    {% elif i.type == 1 %}
+                    <td>پاک شده</td>
+                    {% else %}
+                    <td>فروخته شده</td>
+                    {% endif %}
 					<td>1</td>
-					<td>12</td>
+					<td>{{i.view_users.count}}</td>
 					<td>13</td>
 					<td>14</td>
 					<td>120</td>
 				</tr>
-				<tr class="success">
-					<td>تار</td>
-					<td>اینجا</td>
-					<td>فروخته شده</td>
-					<td>1</td>
-					<td>12</td>
-					<td>13</td>
-					<td>14</td>
-					<td>120</td>
-				</tr>
-				<tr class="error">
-					<td>ویولون</td>
-					<td>اینجا</td>
-					<td>پاک شده</td>
-					<td>1</td>
-					<td>12</td>
-					<td>13</td>
-					<td>14</td>
-					<td>120</td>
-				</tr>
+            {% endfor %}
 			</tbody>
 			
 		</table>

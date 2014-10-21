@@ -40,14 +40,14 @@
 	</div>
 	<div class="row">
 		<div class="span7 offset1">
-			<div class="row">
+			<div id="ad_container" class="row">
 				{%for i in mainAds%}
-                <div class="span4 bg-hover-gray text-center" style= "height:500px;background-color: #efeae3;">
-					<img src="{{i.image.image.url}}" class="polaroid" style="height:400px; max-width: 100%;">
+                <div class="span4 bg-hover-gray text-center" style= "background-color: #efeae3;">
+					<img src="{{i.image.image.url}}" class="polaroid" style="max-width: 100%;">
 					<div >
-						{{i.instrument.name}}
+						{{i.title}}
 						<br>
-						خفن
+						{{i.instrument.name}}
 						<br>
 						{{i.price}} تومن
 					</div>
@@ -89,43 +89,31 @@
 						دسته
 					</h4>
 					<div class="input-control select">
-						<select>
+						<select id="cat1" onclick="setcat2()">
 							<option>
-								بادی
+								کلاسیک
 							</option>
 							<option>
-								زخمه ای
-							</option>
-							<option>
-								آرشه ای
+								سنتی
 							</option>
 						</select>
 					</div>
 					<div class="input-control select">
-						<select>
-							<option>
-								بادی
-							</option>
-							<option>
-								زخمه ای
-							</option>
-							<option>
-								آرشه ای
-							</option>
+						<select id="cat2" onclick="setcat3()" disabled="true">
+
 						</select>
 					</div>
 					<div class="input-control select">
-						<select>
-							<option>
-								بادی
-							</option>
-							<option>
-								زخمه ای
-							</option>
-							<option>
-								آرشه ای
-							</option>
+						<select id="cat3" onclick="setcat4()" disabled="true">
+
 						</select>
+
+					</div>
+                    <div class="input-control select">
+						<select id="cat4" disabled="true">
+
+						</select>
+
 					</div>
 					<h4 class="fg-steel">
 						سازنده
@@ -147,16 +135,29 @@
 						مکان
 					</h4>
 					<div class="input-control select">
-						<select>
+						<select id="ostan" onclick="setShahrs()">
+                            <option selected disabled>
+                                انتخاب استان
+                            </option>
 							<option>
-								بادی
+								تهران
 							</option>
 							<option>
-								زخمه ای
+								فارس
 							</option>
 							<option>
-								آرشه ای
+								مازندران
 							</option>
+						</select>
+                        <select id="shahr" onclick="setMahale()">
+                            <option selected disabled>
+                                انتخاب شهر
+                            </option>
+						</select>
+                        <select id="mahale">
+                            <option selected disabled>
+                                انتخاب محل
+                            </option>
 						</select>
 					</div>
 					<h4 class="fg-steel">
