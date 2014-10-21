@@ -221,10 +221,37 @@ def profile_settings(request):
 def compare(request):
     return render(request, 'compare.html')
 
-def instrument(request, instrument_id):
-    instrument = Instrument.objects.get(id = instrument_id)
-    ad = instrument.ad.all
+@csrf_protect
+def instrument(request, ad_id):
+    ad = Advertisement.objects.get(id = ad_id)
+    instrument = ad.instrument
+    if request.POST:
+        form = offer_form(request.POST)
+        if form.is_valid():
+            offer = Offer()
+            offer.sender= form.cleaned_data['sender']
+            offer.email= form.cleaned_data['email']
+            offer.price = form.cleaned_data['price']
+            offer.tel = form.cleaned_data['tel']
+            offer.transport = form.cleaned_data['transport']
+            offer.content = form.cleaned_data['content']
+            offer.ad = ad
+            offer.save()
+        else:
+            error = "نم"
+    form = offer_form()
     return render(request, 'instrument.html', locals())
+
+def delete_offer(request, offer_id):
+    Offer.objects.get(id = offer_id).delete()
+    return HttpResponseRedirect('/profile/messages')
+
+def fav(request, user_id, ad_id):
+    user = User_Profile.objects.get(id = user_id)
+    ad = Advertisement.objects.get(id = ad_id)
+    user.favorite.add(ad)
+    user.save()
+    ad.save()
 
 def temp(request):
     return render(request, 'temp.html')

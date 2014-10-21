@@ -13,8 +13,8 @@
 </div>
 <div class="row" style="direction:rtl;">
 	<div class="span10 offset1">
-		<button class="mini">بازگشت</button>
-		<button class="mini">پاک کردن</button>
+		<a href="/profile/messages"><button class="mini">بازگشت</button></a>
+		<a href="/delete_offer/{{offer.id}}"><button onclick="" class="mini">پاک کردن</button></a>
 	</div>
 </div>
 <div class="row">
@@ -24,15 +24,19 @@
 <div class="row" style="direction:rtl;">
 	<div class="span10 offset1">
 		<div style="display:block;">
-			<div class="span10">{{offer.sender.user.first_name}} {{offer.sender.user.last_name}} - {{offer.sender.user.email}}</div>
+			<div class="span10">{{offer.sender}} - {{offer.email}}</div>
 			<div class="span2">فرستنده:</div>
+		</div>
+        <div style="display:block;">
+			<div class="span10">{{offer.tel}}</div>
+			<div class="span2">شماره تماس:</div>
 		</div>
 		<div style="display:block;">
 			<div class="span10">{{offer.time}}</div>
 			<div class="span2">تاریخ:</div>
 		</div>
 		<div style="display:block;">
-			<div class="span10">{{offer.title}}</div>
+			<div class="span10">{{offer.ad.title}}</div>
 			<div class="span2">موضوع:</div>
 		</div>
 	</div>

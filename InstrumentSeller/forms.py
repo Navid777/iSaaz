@@ -31,7 +31,7 @@ class ad_form(forms.Form):
     sub4 = forms.CharField() #instrument
 
 class profile_form1(forms.Form):
-    email = forms.EmailField( required= False)
+    email = forms.EmailField(required= False)
     password1 = forms.PasswordInput()
     password2 = forms.PasswordInput()
 
@@ -55,3 +55,11 @@ class register_form(forms.Form):
     email = forms.EmailField()
     pass1 = forms.CharField(widget=forms.PasswordInput)
     pass2 = forms.CharField(widget=forms.PasswordInput)
+
+class offer_form(forms.Form):
+    sender = forms.CharField()
+    transport = forms.CharField()
+    email = forms.EmailField()
+    tel = forms.IntegerField()
+    content = forms.CharField()
+    price= forms.IntegerField()

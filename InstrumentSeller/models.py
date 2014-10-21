@@ -43,7 +43,7 @@ class Ad_Image(models.Model):
     
     
 class User_Profile(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='profile')
     tel = models.IntegerField(blank = True, null = True)
     image = models.FileField(upload_to='profile_images', blank = True)
     score = models.IntegerField(default = 0)
@@ -65,8 +65,10 @@ class Instrument(models.Model):
         return self.name
     
 class Offer(models.Model):
-    sender = models.ForeignKey(User_Profile)
-    title = models.CharField(max_length=200)
+    sender = models.CharField(max_length=200)
+    transport = models.CharField(max_length=300)
+    email = models.EmailField()
+    tel = models.IntegerField()
     content = models.CharField(max_length=500)
     time = models.DateTimeField(auto_now=True)
     price= models.IntegerField()

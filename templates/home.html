@@ -43,6 +43,7 @@
 			<div id="ad_container" class="row">
 				{%for i in mainAds%}
                 <div class="span4 bg-hover-gray text-center" style= "background-color: #efeae3;">
+                    <a href="/instrument/{{i.id}}">
 					<img src="{{i.image.image.url}}" class="polaroid" style="max-width: 100%;">
 					<div >
 						{{i.title}}
@@ -51,6 +52,7 @@
 						<br>
 						{{i.price}} تومن
 					</div>
+                    </a>
 				</div>
 				{%endfor%}
 			</div>
