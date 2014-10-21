@@ -47,4 +47,11 @@ class profile_form3(forms.Form):
 
 class login_form(forms.Form):
     username = forms.CharField()
-    password = forms.PasswordInput()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+class register_form(forms.Form):
+    first_name= forms.CharField()
+    family_name = forms.CharField()
+    email = forms.EmailField()
+    pass1 = forms.CharField(widget=forms.PasswordInput)
+    pass2 = forms.CharField(widget=forms.PasswordInput)

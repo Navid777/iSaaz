@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-\	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
+	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
 		<div class="container place-right" style="padding:80px 200px; direction:rtl;">
 			<h1 class="fg-white">ثبت آگهی</h1>
 			<h2 class="fg-white">
@@ -40,6 +40,8 @@
 			<div class="panel-header bg-steel fg-white" style="direction:rtl;">
 				چه سازی رو میخواهید بفروشید؟
                 {{form.errors}}
+                {{lform.errors}}
+                {{rform.errors}}
 			</div>
 			<div class="panel-body" style="direction:rtl; padding-top:10px;">
 
@@ -381,6 +383,63 @@
 			</div>
 		</div>
 	</div>
-    <input type="submit" value="Submit" />
-</form>
+        {% if request.user.is_authenticated%}
+            <input type="submit" value="Submit" name="auth_sub" />
+        {% else %}
+            <input type="button" value="Submit" onclick="popUpLogin()"/>
+        {% endif %}
+
+
+<div id="black_cover" style="width: 100%; height: 100%; background-color : white; opacity: 0.4; position: fixed; top:0px; bottom: 0px; display: none;">
+
+</div>
+<div id="loginForm" style=" width: 50%; padding:30px ;right:25%; position: fixed; top: 100px; background-color: white; display:none  ">
+    <div dir="rtl" align=>
+        <input type="button" onclick="display('login')" value="ورود"/>
+        <input type="button" onclick="display('register')" value="ثبت نام"/>
+            <div id="login" class="row" style="margin: 0px auto; width: 500px; " align="center">
+                <div style="width: 100%;">
+                    <p align="center"> {{error}} </p>
+                        <label>شناسه کاربری:</label>
+                                <div class="input-control text">
+                                    <input type="text" value="" name="username"/>
+                                </div>
+                        <label>رمز ورود:</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="password"/>
+                                </div>
+                    <input type="submit" value="Submit" name="login_sub" />
+                </div>
+            </div>
+            <div id="register" class="row" style="margin: 0px auto; width: 500px; display: none;" align="center">
+                <div style="width: 100%;">
+                    <p align="center"> {{error}} </p>
+                        <label>نام</label>
+                                    <div class="input-control text">
+                                        <input type="text" value="" name="first_name"/>
+                                    </div>
+                        <label>نام خانوادگی:</label>
+                                    <div class="input-control text">
+                                        <input type="text" value="" name="family_name"/>
+                                    </div>
+                        <label>ایمیل:</label>
+                                <div class="input-control text">
+                                    <input type="email" value="" name="email"/>
+                                </div>
+                        <label>رمز ورود</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="pass1"/>
+                                </div>
+                        <label>تکرار رمز ورود:</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="pass2"/>
+                                </div>
+                    <input type="submit" value="Submit" name="reg_sub" />
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
 {% endblock %}
+

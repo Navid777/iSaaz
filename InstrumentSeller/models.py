@@ -21,7 +21,7 @@ class Category(models.Model):
 
 class Advertisement(models.Model):
     title = models.CharField(max_length = 200)
-    user = models.ForeignKey('User_Profile', related_name='Ads')
+    user = models.ForeignKey('User_Profile', related_name='Ads', null= True)
     location = models.ForeignKey(Location, blank = True, null = True)
     submit_date= models.DateTimeField(auto_now=True)
     price= models.IntegerField()
