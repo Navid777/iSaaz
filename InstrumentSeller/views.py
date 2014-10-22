@@ -1,18 +1,14 @@
-# Create your views here.
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
+# -*- coding: utf-8 -*-
+from InstrumentSeller.forms import *
+from InstrumentSeller.models import *
+from django.contrib import auth
+from django.contrib.auth import login as auth_login, authenticate
+from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from InstrumentSeller.models import *
-from InstrumentSeller.forms import *
-from django.contrib.auth.models import User
-from django.contrib import auth
-from django.contrib.auth import login as auth_login
-
-
-
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_protect
 
 def home(request):
     mainAds = Advertisement.objects.all()

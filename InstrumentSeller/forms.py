@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 
 class ad_form(forms.Form):
