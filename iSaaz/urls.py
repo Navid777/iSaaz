@@ -33,7 +33,10 @@ urlpatterns = patterns('',
     url(r'^instrument/(\d+)/$', views.instrument, name = "instrument"),
     url(r'^login/$', views.login_user),
     url(r'^logout/$', views.logout_user),
+    url(r'^fav/(\d+)/(\d+)$',views.fav),
+    url(r'^delete_offer/(\d+)/$', views.delete_offer),
     url(r'^$', views.temp),
+
 )
 #urlpatterns += patterns('django.views.generic.simple',&nbsp(r'^accounts/login/$', 'direct_to_template', {'template': 'login_required.html'}),)
 

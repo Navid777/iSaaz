@@ -5,23 +5,36 @@
     <title>آی‌ساز</title>
     {% endblock %}
     <link rel="stylesheet" href="/media/css/metro-bootstrap.min.css">
-    <script src="/media/js/jquery.min.js"></script>
-    <script src="/media/js/jquery-ui.min.js"></script>
- 	<script src="/media/js/metro.min.js"></script>
+    <script type="text/javascript" src="/media/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/media/js/jquery-ui.min.js"></script>
+ 	<script type="text/javascript" src="/media/js/metro.min.js"></script>
  	<link rel="stylesheet" href="/media/css/style.css">
  	<link href="/media/css/iconFont.min.css" rel="stylesheet">
- 	<script src="/media/js/script.js"></script>
+ 	<script type="text/javascript"  src="/media/js/script.js"></script>
+    <script language="javascript" type="text/javascript">
+        function popUp(url) {
+            newwindow=window.open(url,'{{title}}','height=400,width=400');
+            if (window.focus) {newwindow.focus()}
+            return false;
+        }
+    </script>
+    <style type="text/css">
+    a:hover {
+    cursor:pointer;
+    }
+    </style>
     </head>
     <body class="metro" style="background-color:#efeae3">
     	<header class="bg-dark">
     		<div class="navigation-bar dark">
     			<div class="navigation-bar-content container">
-    				<a class="element place-right" href="/">
+    				<ul class="element-menu place-right" style="width: 100%;">
+                        <li style="float: right;">
+                        <a class="element place-right" href="/">
     					آی ساز
     					<span class="icon-grid-view on-right"> </span>
-    				</a>
-    				<span class="element-divider place-right"> </span>
-    				<ul class="element-menu place-right">
+    				    </a>
+                        </li>
     					<li style="float: right;">
     						<a class="" href="#">خانه</a>
     					</li>
@@ -46,6 +59,14 @@
     					<li style="float: right;">
     						<a class="" href="#">تماس با ما</a>
     					</li>
+                        <li style="float: left;">
+                        {% if request.user.is_authenticated %}
+                            <a href="/logout">خروج</a>
+                        {% else %}
+                            <a onclick="popUp('/login')">ورود</a>
+                        {% endif%}
+                        </li>
+
     				</ul>
     			</div>
     		</div>

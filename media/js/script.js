@@ -49,6 +49,22 @@ function setMahale() {
   changeSelect('mahale', mahaleList, mahaleList);
 }
 
+function popUpLogin(){
+    document.getElementById('black_cover').style.display = 'block';
+    document.getElementById('loginForm').style.display = 'block';
+}
+
+function display(id){
+    if(id == 'login'){
+        document.getElementById('login').style.display = 'block';
+        document.getElementById('register').style.display = 'none';
+        }
+    else{
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('register').style.display = 'block';
+        }
+}
+
 function changeSelect(fieldID, newOptions, newValues) {
   selectField = document.getElementById(fieldID);
   selectField.disabled = false;
@@ -58,7 +74,7 @@ function changeSelect(fieldID, newOptions, newValues) {
   }
 }
 
-function popitup(url) {
+function popUp(url) {
     new_window=window.open(url,'ورود','height=200,width=150');
     if (window.focus) {new_window.focus()}
     return false;
@@ -85,9 +101,6 @@ window.onload = function() {
 
 addLoadEvent(function() {
   setShahrs();
-});
-addLoadEvent(function() {
-  placeDivs();
 });
 
 

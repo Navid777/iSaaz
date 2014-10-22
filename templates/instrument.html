@@ -13,7 +13,7 @@
 	<div class="span7 offset1">
 		<div class="row">
 			<div class="carousel span8" data-role="carousel">
-                {% for img in ad.0.images.all %}
+                {% for img in ad.images.all %}
                 <div class="slide">
 					<img src="{{img.image.url}}">
 				</div>
@@ -23,16 +23,9 @@
 			</div>
 			<div class="span4">
 				<div>
-					<div class="span6" style="padding-bottom:30px;"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
-					<div class="span6"style="padding-bottom:30px;"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
-				</div>
-				<div>
-					<div class="span6"style="padding-bottom:30px;"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
-					<div class="span6"style="padding-bottom:30px;"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
-				</div>
-				<div>
-					<div class="span6"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
-					<div class="span6"><img src="/media/images/Guitar1.jpg" style="height:80px;"></div>
+                    {% for img in ad.images.all %}
+					<div class="span6" style="padding-bottom:30px;"><img src="{{img.image.url}}" style="height:80px;"></div>
+                    {% endfor %}
 				</div>
 			</div>
 		</div>
@@ -42,10 +35,13 @@
 		</div>
 		<div class="row" style="direction:rtl;">
 			<div>
-				<button class="danger"><i class="icon-heart on-right"></i>افزودن به علاقه مندی ها</button>
+                <form>
+    				<button class="danger" href="/fav/{{ user.id }}/{{ ad.id }}"><i class="icon-heart on-right"></i>افزودن به علاقه مندی ها</button>
+
+                </form>
 			</div>
 			<div>
-			{{ad.0.details}}
+			{{ad.details}}
 			<br>
 			<br>
 			<br>
@@ -53,7 +49,7 @@
 			</div>
 			<div>
 				مکان:
-                {{ad.0.location.mahale}}- {{ad.0.location.shahr}}- {{ad.0.location.ostan}}
+                {{ad.location.mahale}}- {{ad.location.shahr}}- {{ad.location.ostan}}
 				اینجا نقشه نشون داده میشه
 				<br>
 				<br>
@@ -92,7 +88,7 @@
 			</div>
 			<div class="panel-content">
 				<button class="span6 default">تماس با فروشنده</button>
-				<button class="span6 default">ایمیل به فروشنده</button>
+                <button class="span6 default" onclick="show()">پیام به فروشنده</button>
 			</div>
 		</div>
 	</div>
@@ -133,5 +129,52 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div id="black_cover" style="width: 100%; height: 100%; background-color : white; opacity: 0.4; position: fixed; top:0px; bottom: 0px; display: none;">
+
+</div>
+<div id="offerForm" style=" width: 50%; padding:30px ;right:25%; position: fixed; top: 10px; background-color: white; display: none;">
+<script type="text/javascript">
+    function show(){
+        document.getElementById("offerForm").style.display = 'block';
+    }
+
+</script>
+<div dir="rtl" align=center id="offer_holder">
+        <div class="row" style="margin: 0px auto; width: 500px;" align="center">
+            <div style="width: 100%;">
+                <form action='.' method="post">
+		        {% csrf_token %}
+                    {{form.errors}}
+                <p align="center"> {{error}} </p>
+                    <label>نام:</label>{{form.errors}}
+                            <div class="input-control text">
+                                <input type="text" value="{{user.first_name}} {{user.last_name}}" name="sender"/>
+                            </div>
+                    <label>ایمیل:</label>
+                            <div class="input-control text">
+                                <input type="text" value="{{user.email}}" name="email"/>
+                            </div>
+                    <label>قیمت پیشنهادی:</label>
+                            <div class="input-control text">
+                                <input type="text" value="" name="price"/>
+                            </div>
+                    <label>شماره تماس:</label>
+                            <div class="input-control text">
+                                <input type="text" value="{{user}}" name="tel"/>
+                            </div>
+                    <label>مکان پیشنهادی جهت دریافت</label>
+                            <div class="input-control text">
+                                <input type="text" value="" name="transport"/>
+                            </div>
+                    <label>پیام شما به فروشنده ی ساز:</label>
+                            <div class="input-control text">
+                                <textarea style="width: 100%" name="content"></textarea>
+                            </div><br><br>
+                    <input style="width: 20%;" type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1,0 +1,25 @@
+ 	<link rel="stylesheet" href="/media/css/style.css">
+ 	<link href="/media/css/iconFont.min.css" rel="stylesheet">
+
+<div class="span12" dir="rtl" align=>
+    <form action='.' method="post">
+    {% csrf_token %}
+        <div class="row" style="margin: 0px auto; width: 300">
+            <div class="span4">
+                <p align="center"> {{error}} </p>
+                    <label>شناسه کاربری:</label>
+							<div class="input-control text">
+								<input type="text" value="" name="username"/>
+							</div>
+                    <label>رمز ورود:</label>
+							<div class="input-control text">
+								<input type="password" value="" name="password"/>
+							</div>
+
+                    <input type="submit" value="Submit" />
+                </table>
+            </div>
+        </div>
+
+    </form>
+</div>
