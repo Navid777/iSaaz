@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models.fields.files import ImageField
 
 # Create your models here.
@@ -32,7 +32,6 @@ class Advertisement(models.Model):
     returning = models.CharField(max_length=100, blank = True)
     sound = models.FileField(upload_to = 'instrument_sound', blank = True)
     image= models.ForeignKey('Ad_Image', null = True)
-    used = models.CharField(max_length=20)
     instrument = models.ForeignKey('Instrument', related_name='ad')
     def __str__(self):
         return self.title
@@ -44,7 +43,7 @@ class Ad_Image(models.Model):
     
 class User_Profile(models.Model):
     user = models.ForeignKey(User, related_name='profile')
-    tel = models.IntegerField(blank = True, null = True)
+    tel = models.CharField(max_length=20,blank = True, null = True)
     image = models.FileField(upload_to='profile_images', blank = True)
     score = models.IntegerField(default = 0)
     allowed_ad_count = models.IntegerField()
@@ -68,7 +67,7 @@ class Offer(models.Model):
     sender = models.CharField(max_length=200)
     transport = models.CharField(max_length=300)
     email = models.EmailField()
-    tel = models.IntegerField()
+    tel = models.CharField(max_length=20)
     content = models.CharField(max_length=500)
     time = models.DateTimeField(auto_now=True)
     price= models.IntegerField()
@@ -78,7 +77,4 @@ class Offer(models.Model):
 class Property(models.Model):
     instrument = models.ForeignKey(Instrument)
     feature = models.CharField(max_length=100)
-    
-class Property_Value(models.Model):
-    propertys = models.ForeignKey(Property)
-    value = models.IntegerField()
+    value = models.CharField(max_length=100)
