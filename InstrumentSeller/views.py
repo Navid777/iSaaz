@@ -14,6 +14,8 @@ from django.views.decorators.csrf import csrf_protect
 def home(request):
     mainAds = Advertisement.objects.all()
     ad = Advertisement.objects.all()
+    categories = Category.objects.all()
+    cat2 = categories.values_list('cat2',flat=True).distinct()
     return render(request,'home.html', locals())
 
 @csrf_protect
@@ -217,7 +219,8 @@ def profile_settings(request):
     return render(request, 'profile_settings.html', locals())
 
 def compare(request):
-    return render(request, 'compare.html')
+    ads = Advertisement.objects.all()
+    return render(request, 'compare.html', locals())
 
 @csrf_protect
 def instrument(request, ad_id):
@@ -253,3 +256,11 @@ def fav(request, user_id, ad_id):
 
 def temp(request):
     return render(request, 'temp.html')
+
+def search_by_category(request, category_name):
+    categories = Category.objects.all()
+    cat2 = categories.values_list('cat2',flat=True).distinct()
+    mainAds = Advertisement.objects.filter(instrument__category__cat2=category_name)
+    ads = Advertisement.objects.all()
+    return render(request, 'home.html', locals())
+    

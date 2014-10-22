@@ -28,88 +28,45 @@
 						<td>
 							
 						</td>
+						{% for a in ads%}
 						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
+							<div >
+								<img style="height:100px; max-width:100px;" src="{{a.image.image.url}}">
 								<div>
-									گیتار الکتریک خفن
+									{{a.title}}
 								</div>
 							</div>
 						</td>
-						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-								<div>
-									گیتار الکتریک خفن
-								</div>
-							</div>
-						</td>
-						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-								<div>
-									گیتار الکتریک خفن
-								</div>
-							</div>
-						</td>
-						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-								<div>
-									گیتار الکتریک خفن
-								</div>
-							</div>
-						</td>
-						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-								<div>
-									گیتار الکتریک خفن
-								</div>
-							</div>
-						</td>
-						<td>
-							<div style="height:150px;">
-								<img style="height:100px; max-width:100%;" src="/media/images/Guitar1.jpg"/>
-								<div>
-									گیتار الکتریک خفن
-								</div>
-							</div>
-						</td>
+						{% endfor %}
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
+						
 						<td>
 							سازنده
 						</td>
-						<td>
-							یحیی
-						</td>
-						<td>
-							دیوید گیلمور
-						</td>
-						<td>
-							رضا قلی میرزا
-						</td>
-						<td>
-							نصیر حقیقی
-						</td>
-						<td>
-							حاج احمد آقا 
-						</td>
-						<td>
-							آقای شجریان 
-						</td>
+						{% for a in ads %}
+							<td>{{a.instrument.manufacturer}}</td>
+						{% endfor %}
 					</tr>
                     <tr>
                         <td> قیمت </td>
+                        {% for a in ads %}
+							<td>{{a.price}}</td>
+						{% endfor %}
                     </tr>
                     <tr>
                         <td>سال ساخت</td>
+                        {% for a in ads %}
+							<td>{{a.instrument.year}}</td>
+						{% endfor %}
                     </tr>
                     <tr>
                         <td>مدل</td>
+                        {% for a in ads %}
+							<td>{{a.instrument.model}}</td>
+						{% endfor %}
                     </tr>
                     <tr>
                         <td></td>

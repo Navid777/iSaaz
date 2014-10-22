@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout_user),
     url(r'^fav/(\d+)/(\d+)$',views.fav),
     url(r'^delete_offer/(\d+)/$', views.delete_offer),
+    url(r'^search/category/(\w+)/$', views.search_by_category),
     url(r'^$', views.temp),
 
 )

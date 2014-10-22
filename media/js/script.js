@@ -9,6 +9,8 @@ $(document).ready(function(){
 		}
 	});	
 });
+
+
 // Shahr lists
 var shahrs = new Array();
 
@@ -109,7 +111,7 @@ function placeDivs(){
     divs = cont.childNodes;
     for(i = 0; i<divs.length ; i++){
     if (i % 3 == 0){
-        divs[i].style.left = "0px";
+       divs[i].style.left = "0px";
     }else if (i % 3 == 2){
         divs[i].style.right = "0px";
     }

@@ -67,19 +67,15 @@
 						<input type="text" placeholder="کلمه کلیدی"/>
 					</div>
 					<div class="input-control select">
-						<select>
-							<option>
-								بادی
-							</option>
-							<option>
-								زخمه ای
-							</option>
-							<option>
-								آرشه ای
-							</option>
+						<select id="selectCat">
+							{% for c in cat2%}
+								<option value="{{c}}">
+									{{c}}
+								</option>
+							{% endfor %}
 						</select>
 					</div>
-					<button class="on-right default bg-hover-blue" style="float:left">بگرد</button>
+					<button class="on-right default bg-hover-blue" style="float:left" onclick="searchByCategory()">بگرد</button>
 				</div>
 			</div>
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px;">
