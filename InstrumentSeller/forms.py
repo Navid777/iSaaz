@@ -11,11 +11,7 @@ class ad_form(forms.Form):
     purchase = forms.CharField()
     price = forms.IntegerField()
     year = forms.ChoiceField(choices=[(x, x) for x in range(1370, 1393)], required=False)
-    USED = (
-        ('used', 'دست دو'),
-        ('new', 'جدید')
-    )
-    used = forms.ChoiceField(choices=USED, required=True)
+    used = forms.BooleanField(required= False)
     sound = forms.FileField(required=False)
     img1 = forms.FileField()
     img2 = forms.FileField(required=False)
@@ -30,6 +26,8 @@ class ad_form(forms.Form):
     sub2 = forms.CharField()
     sub3 = forms.CharField()
     sub4 = forms.CharField() #instrument
+    show_email = forms.BooleanField(required= False)
+    show_tel = forms.BooleanField(required= False)
 
 class profile_form1(forms.Form):
     email = forms.EmailField(required= False)

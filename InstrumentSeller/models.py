@@ -33,6 +33,9 @@ class Advertisement(models.Model):
     sound = models.FileField(upload_to = 'instrument_sound', blank = True)
     image= models.ForeignKey('Ad_Image', null = True)
     instrument = models.ForeignKey('Instrument', related_name='ad')
+    offer = models.BooleanField(default= True)
+    show_email = models.BooleanField(default= True)
+    show_tel = models.BooleanField(default= True)
     def __str__(self):
         return self.title
     

@@ -121,10 +121,9 @@
 						<div class="span4 offset4">
 							<label>وضعیت</label>
 							<div class="input-control select">
-								<select name="used" value="used">
-                                    {% for x,y in form.fields.used.choices %}
-                                    <option value="{{ x }}">{{ y }}</option>
-                                    {% endfor %}
+								<select name="used">
+                                    <option value="True">دست دوم</option>
+                                    <option value="False">جدید</option>
                                 </select>
 							</div>
 						</div>
@@ -367,7 +366,7 @@
 			<div class="panel-body" style="direction:rtl;">
 				<div class="input-control checkbox">
 					<label>
-						<input type="checkbox"/>
+						<input type="checkbox" name="show_tel"/>
 						<span class="check"> </span>
 						میخواهم شماره تلفنم نمایش داده شود.
 					</label>
@@ -375,7 +374,7 @@
 				<br>
 				<div class="input-control checkbox" >
 					<label>
-						<input type="checkbox"/>
+						<input type="checkbox" name="show_email"/>
 						<span class="check"> </span>
 						میخواهم ایمیلم نمایش داده شود.
 					</label>

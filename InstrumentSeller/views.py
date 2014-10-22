@@ -83,7 +83,7 @@ def sell(request):
                         user.save()
                         ad.user = user
                         ad.save()
-                        return HttpResponseRedirect('/profile/settings/', locals())
+                        return HttpResponseRedirect('/profile/settings', locals())
     else:
         form = ad_form()
         lform = login_form()
@@ -96,8 +96,7 @@ def build_ad(request, form, ad):
     saaz.manufacturer = form.cleaned_data['manufacturer']
     saaz.model = form.cleaned_data['model']
     saaz.year = form.cleaned_data['year']
-    if form.cleaned_data['used'] == 'دست دو':
-        saaz.used = True
+    saaz.used = form.cleaned_data['used']
     saaz.save()
     category = Category()
     category.cat1 = form.cleaned_data['sub1']
@@ -147,10 +146,12 @@ def build_ad(request, form, ad):
         img6 = Ad_Image(image = request.FILES['img6'])
         img6.save()
         ad.images.add(img6)
+    ad.show_email = form.cleaned_data['show_email']
+    ad.show_tel = form.cleaned_data['show_tel']
     ad.save()
     saaz.ad.add(ad)
     saaz.save()
-    return saaz.id
+    return ad.id
 
 def profile(request):
     user = User_Profile.objects.get(user = request.user)
