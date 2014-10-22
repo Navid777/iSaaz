@@ -17,7 +17,7 @@
 <div class="row" style="direction:rtl;">
 	<div class="span10 offset1">
 		<h3 style="display:inline;">مدیریت تبلیغات</h3>
-		<button class="default" style="float:left;">ثبت آگهی جدید</button>
+		<a href="/sell"><button class="default" style="float:left;">ثبت آگهی جدید</button></a>
 	</div>
 </div>
 <div class="row">
@@ -74,7 +74,7 @@
 					<td>دسته</td>
 					<td> </td>
 					<td>قیمت</td>
-					<td> مشاهدات</td>
+					<td>علاقه مندها</td>
 					<td>مشاهدات موبایلی</td>
 					<td>مشاهدات وب سایت</td>
 					<td>ایمیل های ارسالی</td>
@@ -94,18 +94,17 @@
 					</td>
 					<td>
                         {{i.instrument.category.cat1}}>{{i.instrument.category.cat2}}>{{i.instrument.category.cat3}}>{{i.instrument.category.cat4}}
-						سنتی>بادی>نی
 					</td>
 					<td>
 						<button class="default small">ویرایش</button>
 						<button class="default small">نمایش</button>
-						<button class="danger small">حذف</button>
+						<a href="/delete_ad/{{i.id}}"><button class="danger small">حذف</button>
 					</td>
 					<td>
 						{{i.price}}
 					</td>
 					<td>
-						{{i.view_users}}
+						{{i.favorit_users.all|length}}
 					</td>
 					<td>
 						0
@@ -121,43 +120,6 @@
 					</td>
 				</tr>
             {% endfor %}
-								<tr>
-					<td>
-						<div class="tile half">
-							<img src="/media/images/Guitar1.jpg">
-						</div>
-					</td>
-					<td>
-						<button class="danger small">درفت</button>
-					</td>
-					<td>
-						سنتی>بادی>نی
-					</td>
-					<td>
-						<button class="default small">ویرایش</button>
-						<button class="default small">نمایش</button>
-						<button class="danger small">حذف</button>
-					</td>
-					<td>
-						100 تومان
-					</td>
-					<td>
-						0
-					</td>
-					<td>
-						0
-					</td>
-					<td>
-						0
-					</td>
-					<td>
-						0
-					</td>
-					<td>
-						<div class="fg-darkRed">پرداخت نشد</div>
-						<button class="mini default">پرداخت</button>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 	</div>

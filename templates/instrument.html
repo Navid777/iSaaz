@@ -35,10 +35,7 @@
 		</div>
 		<div class="row" style="direction:rtl;">
 			<div>
-                <form>
-    				<button class="danger" href="/fav/{{ user.id }}/{{ ad.id }}"><i class="icon-heart on-right"></i>افزودن به علاقه مندی ها</button>
-
-                </form>
+    	        <a href="/fav/{{ user.id }}/{{ ad.id }}/"><button class="danger" ><i class="icon-heart on-right"></i>افزودن به علاقه مندی ها</button></a>
 			</div>
 			<div>
 			{{ad.details}}
@@ -50,7 +47,6 @@
 			<div>
 				مکان:
                 {{ad.location.mahale}}- {{ad.location.shahr}}- {{ad.location.ostan}}
-				اینجا نقشه نشون داده میشه
 				<br>
 				<br>
 				<br>

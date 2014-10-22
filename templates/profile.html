@@ -49,8 +49,8 @@
                 {% else %}<!--sold  -->
                 <tr class="success">
                 {% endif %}
-					<td>{{i.instrument.name}}</td>
-					<td>اینجا</td>
+					<td>{{i.title}}</td>
+					<td>{{i.location.ostan}}،  {{i.location.shahr}}، {{i.location.mahale}}</td>
                     {% if i.type == 0%}
                     <td>زنده!</td>
                     {% elif i.type == 1 %}
