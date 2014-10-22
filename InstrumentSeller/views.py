@@ -195,6 +195,7 @@ def profile_settings(request):
             form1 = profile_form1(request.POST, prefix= 'form1')
             if form1.is_valid():
                 user.user.email = form1.data['email']
+                user.user.username = form1.data['email']
                 pass1 = form1.cleaned_data.get('password1', None)
                 pass2 = form1.cleaned_data.get('password2', None)
                 if pass1 and pass2 and (pass1 == pass2):
@@ -203,9 +204,9 @@ def profile_settings(request):
         elif 'form2' in request.POST:
             form2 = profile_form2(request.POST, prefix= 'form2')
             if form2.is_valid():
-                user.user.first_name = form2.cleaned_data['name']
-                user.user.last_name = form2.cleaned_data['family_name']
-                user.tel = int(form2.cleaned_data['tel'])
+                user.user.first_name = form2.data['name']
+                user.user.last_name = form2.data['family_name']
+                user.tel = form2.data['tel']
         elif 'form3' in request.POST:
             form3 = profile_form3(request.POST, prefix= 'form3')
         user.user.save()
@@ -240,6 +241,10 @@ def instrument(request, ad_id):
     form = offer_form()
     return render(request, 'instrument.html', locals())
 
+def delete_ad(request, ad_id):
+    Advertisement.objects.get(id = ad_id).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 def delete_offer(request, offer_id):
     Offer.objects.get(id = offer_id).delete()
     return HttpResponseRedirect('/profile/messages')
@@ -250,6 +255,7 @@ def fav(request, user_id, ad_id):
     user.favorite.add(ad)
     user.save()
     ad.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def temp(request):
     return render(request, 'temp.html')

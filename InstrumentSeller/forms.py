@@ -37,7 +37,7 @@ class profile_form1(forms.Form):
 class profile_form2(forms.Form):
     name = forms.CharField(required= False)
     family_name = forms.CharField(required= False)
-    tel = forms.IntegerField(required= False)
+    tel = forms.CharField(required= False)
     def clean(self):
        return self.cleaned_data
 

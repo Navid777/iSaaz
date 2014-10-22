@@ -33,8 +33,9 @@ urlpatterns = patterns('',
     url(r'^instrument/(\d+)/$', views.instrument, name = "instrument"),
     url(r'^login/$', views.login_user),
     url(r'^logout/$', views.logout_user),
-    url(r'^fav/(\d+)/(\d+)$',views.fav),
+    url(r'^fav/(\d+)/(\d+)/$',views.fav),
     url(r'^delete_offer/(\d+)/$', views.delete_offer),
+    url(r'^delete_ad/(\d+)/$', views.delete_ad),
     url(r'^$', views.temp),
 
 )
