@@ -1,0 +1,32 @@
+{% extends 'directory_base.html' %}
+
+{% block content %}
+<div dir="rtl">
+    <img src="{{manufacturer.image.url}}">
+    <h1>{{manufacturer.name}}</h1>
+    <h2>سازهای تدریسی:
+        {% for i in manufacturer.instruments.all%}
+            {{i}},
+        {% endfor %}
+    </h2>
+    <h2>
+        آدرس:
+        {{manufacturer.location.ostan}}- {{manufacturer.location.shahr}}- {{manufacturer.location.mahale}}،
+        {{manufacturer.address}}
+    </h2>
+    <h3>
+        تلفن تماس:
+        {{manufacturer.tel}}
+    </h3>
+    <h3>
+        آدرس وبگاه:
+        <a href="http://{{manufacturer.website}}">{{manufacturer.name}}</a>
+    </h3>
+    <h3>درباره ی آموزشگاه:</h3>
+    <p>{{manufacturer.resume}}</p>
+    <div style="margin: 0px auto">
+        <img src="{{manufacturer.image.url}}">
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,578 @@
+{% extends 'directory_base.html'%}
+{% block content %}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#master_input").tokenInput("/directories/master_search/?format=json",{
+        queryParam: "term",
+        });
+        $("#saaz_input").tokenInput("/directories/saaz_search/?format=json",{
+        queryParam: "term",
+        });
+        $("#master_saaz_search").tokenInput("/directories/saaz_search/?format=json",{
+        queryParam: "term",
+        });
+        $("#institutes_search").tokenInput("/directories/institutes_search/?format=json",{
+        queryParam: "term",
+        });
+    });
+    function show (id){
+        document.getElementById("shop_form_div").style.display = 'none';
+        document.getElementById("workshop_form_div").style.display = 'none';
+        document.getElementById("institute_form_div").style.display = 'none';
+        document.getElementById("master_form_div").style.display = 'none';
+        document.getElementById("manufacturer_form_div").style.display = 'none';
+        document.getElementById(id + "_form_div").style.display = 'block'
+
+    }
+</script>
+<div dir="rtl" align="right">
+    <div dir="rtl" align="center" style="width: 100%;">
+        <div onclick="show(this.id)" id="shop" style="float: right; width: 20%;">فروشگاه</div>
+        <div onclick="show(this.id)" id="master" style="float: right; width: 20%;">استاد</div>
+        <div onclick="show(this.id)" id="workshop" style="float: right; width: 20%;">تعمیرگاه</div>
+        <div onclick="show(this.id)" id="institute" style="float: right; width: 20%;">آموزشگاه</div>
+        <div onclick="show(this.id)" id="manufacturer" style="float: right; width: 20%;">سازنده</div>
+    </div>
+    <!--
+
+    Manufacturer
+
+    -->
+{{manu_form.errors}}
+    <div class="directory_form" id="manufacturer_form_div" >
+        <form action="." method="post" id="manufacturer-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    نام سازنده:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="name" style="direction:ltr;"/>
+            </div>
+	    </div>
+            نوع ساز:
+        <div style="width: 100%;">
+
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_manufacturer_sub1">
+                        <li class="title">دسته</li>
+                        <li class=""><a><i class="icon-home"></i>
+                            <input type="radio" onclick="setCat2('directory_manufacturer_')" value="سنتی" name="directory_manufacturer_sub1" > سنتی
+                        </a></li>
+                        <li class=""><a><i class="icon-cog"></i>
+                            <input type="radio" onclick="setCat2('directory_manufacturer_')" value="کلاسیک" name="directory_manufacturer_sub1"> کلاسیک
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar ">
+                    <ul id="directory_manufacturer_sub2">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_manufacturer_sub3">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_manufacturer_sub4">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+تلفن:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="tel" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    آدرس وب سایت:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="website" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    عکس:
+            </div>
+            <div class="input-control text">
+                {{manu_form.image}}
+            </div>
+	    </div>
+
+        <div class="span4">
+            استان:
+            <div class="input-control select">
+                <select name="ostan" id="directory_manufacturer_ostan" onchange="setShahrs('directory_manufacturer_');">
+                        <option value="تهران">تهران</option>
+                        <option value="فارس">فارس</option>
+                        <option value="مازندران">مازندران</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            شهر:
+            <div class="input-control select">
+                <select name="shahr" id="directory_manufacturer_shahr" onchange="setMahale('directory_manufacturer_');">
+
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            محله:
+            <div class="input-control select">
+                <select name="mahale" id="directory_manufacturer_mahale">
+                </select>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    جزئیات آدرس دقیق محل:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="address" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    حدود قیمت:
+            </div>
+            <div class="input-control text">
+                از:
+                <input type="text" value="" name="range_min" style="direction:ltr;"/>
+            </div>
+            <div class="input-control text">
+                تا:
+                <input type="text" value="" name="range_max" style="direction:ltr;"/>
+            </div>
+            تومان
+	    </div>
+        <div class="span6">
+            <div  style="diplay: inline;">
+توضیحات مختصر در مورد رزومه، افتخارات و ...:
+            </div>
+            <div class="input-control text">
+                 <textarea style="display: block; width: 100%;" form="manufacturer-form" name="resume"></textarea>
+            </div>
+         </div>
+        <input type="submit" name="manufacturer_submit">
+        </form>
+    </div>
+
+
+    <!--
+
+    Institute
+
+    -->
+    <div class="directory_form" id="institute_form_div" style="display: none;">
+            <form action="." method="post" id="institute-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    نام آموزشگاه:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="name" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+تلفن:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="tel" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    آدرس وب سایت:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="website" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    لوگو:
+            </div>
+            <div class="input-control text">
+                {{inst_form.logo}}
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    عکس:
+            </div>
+            <div class="input-control text">
+                {{inst_form.image}}
+            </div>
+	    </div>
+
+        <div class="span4">
+            استان:
+            <div class="input-control select">
+                <select name="ostan" id="directory_institute_ostan" onchange="setShahrs('directory_institute_');">
+                        <option value="تهران">تهران</option>
+                        <option value="فارس">فارس</option>
+                        <option value="مازندران">مازندران</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            شهر:
+            <div class="input-control select">
+                <select name="shahr" id="directory_institute_shahr" onchange="setMahale('directory_institute_');">
+
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            محله:
+            <div class="input-control select">
+                <select name="mahale" id="directory_institute_mahale">
+                </select>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    جزئیات آدرس دقیق محل:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="address" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    سازها:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" id="saaz_input" name="instruments" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    اساتید همکار:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" id="master_input" name="masters" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div class="span6">
+            <div  style="diplay: inline;">
+توضیحات مختصر در مورد رزومه، افتخارات و ...:
+            </div>
+            <div class="input-control text">
+                 <textarea style="display: block; width: 100%;" form="institute-form" name="resume"></textarea>
+            </div>
+         </div>
+        <input type="submit" name="institute_submit">
+        </form>
+    </div>
+
+    <!-- MASTERS -->
+
+
+    <div class="directory_form" id="master_form_div" style="display: none;">
+
+        <form action="." method="post" id="master-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    نام استاد :
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="name" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+سازها:
+            </div>
+            <div class="input-control text">
+                <input type="text" id="master_saaz_search" value="" name="instruments" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    عکس:
+            </div>
+            <div class="input-control text">
+                <input type="file" value="" name="image" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    متد تدریس:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="method" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    آموزشگاه های همکار:
+            </div>
+            <div class="input-control text">
+                <input type="text" id="institutes_search" value="" name="institutes" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div class="span6">
+            <div  style="diplay: inline;">
+توضیحات مختصر در مورد رزومه، افتخارات و ...:
+            </div>
+            <div class="input-control text">
+                 <textarea style="display: block; width: 100%;" form="master-form" name="resume"></textarea>
+            </div>
+         </div>
+        <input type="submit" name="master_submit">
+        </form>
+    </div>
+
+
+    <!-- WORKSHOP -->
+
+
+    <div class="directory_form" id="workshop_form_div" style="display: none;">
+        <form action="." method="post" id="workshop-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+نام تعمیرگاه:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="name" style="direction:ltr;"/>
+            </div>
+	    </div>
+            نوع ساز:
+        <div style="width: 100%;">
+
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_workshop_sub1">
+                        <li class="title">دسته</li>
+                        <li class=""><a><i class="icon-home"></i>
+                            <input type="radio" onclick="setCat2('directory_workshop_')" value="سنتی" name="directory_workshop_sub1" > سنتی
+                        </a></li>
+                        <li class=""><a><i class="icon-cog"></i>
+                            <input type="radio" onclick="setCat2('directory_workshop_')" value="کلاسیک" name="directory_workshop_sub1"> کلاسیک
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar ">
+                    <ul id="directory_workshop_sub2">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_workshop_sub3">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_workshop_sub4">
+                        <li class="title">دسته</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+تلفن:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="tel" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    آدرس وب سایت:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="website" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    عکس:
+            </div>
+            <div class="input-control text">
+                {{manu_form.image}}
+            </div>
+	    </div>
+
+        <div class="span4">
+            استان:
+            <div class="input-control select">
+                <select name="ostan" id="directory_workshop_ostan" onchange="setShahrs('directory_workshop_');">
+                        <option value="تهران">تهران</option>
+                        <option value="فارس">فارس</option>
+                        <option value="مازندران">مازندران</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            شهر:
+            <div class="input-control select">
+                <select name="shahr" id="directory_workshop_shahr" onchange="setMahale('directory_workshop_');">
+
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            محله:
+            <div class="input-control select">
+                <select name="mahale" id="directory_workshop_mahale">
+                </select>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    جزئیات آدرس دقیق محل:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="address" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div class="span6">
+            <div  style="diplay: inline;">
+توضیحات مختصر در مورد رزومه، افتخارات و ...:
+            </div>
+            <div class="input-control text">
+                 <textarea style="display: block; width: 100%;" form="workshop-form" name="resume"></textarea>
+            </div>
+         </div>
+        <input type="submit" name="workshop_submit">
+        </form>
+    </div>
+
+
+
+    <!-- SHOP -->
+
+
+    <div class="directory_form" id="shop_form_div" style="display: none;">
+        <form action="." method="post" id="shop-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+نام فروشگاه:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="name" style="direction:ltr;"/>
+            </div>
+	    </div>
+            نوع ساز:
+        <div style="width: 100%;">
+
+            <div class="span3" style="float:right; width:25%;">
+                <nav class="sidebar">
+                    <ul id="directory_shop_sub1">
+                        <li class="title">دسته</li>
+                        <li class=""><a><i class="icon-home"></i>
+                            <input type="radio" value="سنتی" name="directory_shop_sub1" > سنتی
+                        </a></li>
+                        <li class=""><a><i class="icon-cog"></i>
+                            <input type="radio" value="کلاسیک" name="directory_shop_sub1"> کلاسیک
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+تلفن:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="tel" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    آدرس وب سایت:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="website" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    عکس:
+            </div>
+            <div class="input-control text">
+                {{manu_form.image}}
+            </div>
+	    </div>
+
+        <div class="span4">
+            استان:
+            <div class="input-control select">
+                <select name="ostan" id="directory_shop_ostan" onchange="setShahrs('directory_shop_');">
+                        <option value="تهران">تهران</option>
+                        <option value="فارس">فارس</option>
+                        <option value="مازندران">مازندران</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            شهر:
+            <div class="input-control select">
+                <select name="shahr" id="directory_shop_shahr" onchange="setMahale('directory_shop_');">
+
+                </select>
+            </div>
+        </div>
+        <div class="span4">
+            محله:
+            <div class="input-control select">
+                <select name="mahale" id="directory_shop_mahale">
+                </select>
+            </div>
+        </div>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    جزئیات آدرس دقیق محل:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" name="address" style="direction:ltr;"/>
+            </div>
+	    </div>
+        <div class="span6">
+            <div  style="diplay: inline;">
+توضیحات مختصر در مورد رزومه، افتخارات و ...:
+            </div>
+            <div class="input-control text">
+                 <textarea style="display: block; width: 100%;" form="shop-form" name="resume"></textarea>
+            </div>
+         </div>
+        <input type="submit" name="shop_submit">
+        </form>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

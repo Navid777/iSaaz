@@ -12,12 +12,19 @@ class Location(models.Model):
         return self.mahale
 
 class Category(models.Model):
-    cat1 = models.CharField(max_length=50)
-    cat2 = models.CharField(max_length=50)
-    cat3 = models.CharField(max_length=50)
-    cat4 = models.CharField(max_length=50)
+    cat1 = models.CharField(max_length=50,)
+    cat2 = models.CharField(max_length=50, null=True, blank=True)
+    cat3 = models.CharField(max_length=50, null=True, blank=True)
+    cat4 = models.CharField(max_length=50, null=True, blank=True)
     def __unicode__(self):
-        return self.cat4
+        if self.cat4:
+            return self.cat4
+        elif self.cat3:
+            return self.cat3
+        elif self.cat2:
+            return self.cat2
+        else:
+            return self.cat1
 
 class Advertisement(models.Model):
     title = models.CharField(max_length = 200)

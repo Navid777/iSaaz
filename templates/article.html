@@ -1,0 +1,141 @@
+{% extends 'article_base.html' %}
+
+{% block article %}
+        <script type="text/javascript">
+            function showReply(id){
+                document.getElementById("reply" + id).style.display = 'inline';
+            }
+        $("#likes").on("click", function(){
+        alert("hello");
+          $.ajax({
+                   type: "POST",
+                   url: "{% url "like" %}",
+                   data: {'article_id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{csrf_token}}'},
+                   dataType: "text",
+                   success: function(response) {
+                          alert('You liked this')
+                    },
+                    error: function(rs, e) {
+                           alert(rs.responseText);
+                    }
+              });
+        });
+        </script>
+<div dir="rtl" style="width: 60%; float: right; background-color : white;">
+    <h1>{{article.title}}</h1>
+    <b id="like_count">{{ article.likes.all|length }}</b> نفر این مقاله را پسندیده اند.
+    {% if user.is_authenticated%}
+        {% if user in article.likes.all %}
+        <div>شما هم این مقاله را پسندیده اید</div>
+        {% else %}
+        <button id="likes" name="{{article.id}}" value="">میپسندم</button>
+        {% endif %}
+    {% else %}
+        <div>{{article.likes.all|length}} لایک
+    {% endif %}
+
+    <p>{{article.views.all|length}} مشاهده</p>
+    <p>نویسنده:{{article.writer}} تاریخ: {{article.time}}</p>
+    <p>
+        برچسب ها:
+
+        {% for t in article.tags.all%}
+            {{t.name}}
+        {% endfor %}
+    </p>
+    <p><img style="display:inline;" src="{{article.image.url}}">{{article.content}}</p>
+</div>
+    <div style="clear: both; width: 100%; border: 1px black solid;">
+        نظر شما در مورد این مقاله چیست؟
+    <form action="." method="post" id="reply-form">
+        {% csrf_token %}
+    {% for c in article.comments.all%}
+        <div style="background-color : #eee; border : 1px black solid;">
+        <div style="border-bottom: 1px gray solid">
+            <p>{{c.content}}</p>
+            <div style="float: left;">
+                <p>
+                    <a href="/comment/like/{{user.id}}/{{c.id}}">{{c.likes.all|length}} لایک</a>
+                    <input type="button" onclick="showReply({{c.id}})" value="پاسخ">
+                </p>
+            </div>
+        </div>
+        <div>
+            {{c.name}}
+            {{c.time}}
+        </div>
+        </div>
+        {% for i in c.sub_comments.all%}
+            {{i.name}} <br>
+            {{i.email}} <br>
+            {{i.content}}
+        {% endfor %}
+
+
+        <div style="background-color: white; display: none;" id="reply{{c.id}}">
+            <div class="span6">
+                <div class="fg-red" style="diplay: inline;">
+                    نام*
+                </div>
+                <div class="input-control text">
+                    <input type="text" name="name" value="{{user.user.first_name}} {{user.user.last_name}}" />
+                </div>
+            </div>
+            <div class="span6">
+                <div class="fg-red" style="diplay: inline;">
+ایمیل*
+                </div>
+                <div class="input-control text">
+                    <input type="email" name="email" value="{{user.user.email}}" />
+                </div>
+                <div class="span6">
+                <div class="fg-red" style="diplay: inline;">
+دیدگاه شما:
+                </div>
+                <div class="input-control text">
+                     <textarea style="display: block; width: 100%;" form="reply-form" name="content"></textarea>
+                </div>
+                <input type="submit" name="replying{{c.id}}">
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </form>
+    <form action="." method="post" id="comment-form">
+        {% csrf_token %}
+        <div style="border: 1px black solid;">
+            <p>
+                نظر خود را وارد کنید
+            </p>
+            {{form.errors}}
+			<div class="span6">
+                <div class="fg-red" style="display: inline;">
+                    نام*
+                </div>
+                <div class="input-control text">
+                    <input type="text" name="name" value="{{user.user.first_name}} {{user.user.last_name}}" />
+                </div>
+            </div>
+            <div class="span6">
+                <div class="fg-red" style="display: inline;">
+ایمیل*
+                </div>
+                <div class="input-control text">
+                    <input type="email" name="email" value="{{user.user.email}}" />
+                </div>
+                <div class="span6">
+                <div class="fg-red" style="display: inline;">
+دیدگاه شما:
+                </div>
+                <div class="input-control text">
+                     <textarea style="display: block; width: 100%;" form="comment-form" name="content"></textarea>
+                </div>
+            </div>
+            </div>
+            <input type="submit" name="commenting">
+        </div>
+    </form>
+        </div>
+</div>
+{% endblock%}

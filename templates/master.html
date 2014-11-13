@@ -1,0 +1,21 @@
+{% extends 'directory_base.html' %}
+
+{% block content %}
+<div dir="rtl">
+    <img src="{{master.image.url}}">
+    <h1>{{master.name}}</h1>
+    <h2>سازهای مربوطه:
+        {% for i in master.instruments.all%}
+            {{i.name}},
+        {% endfor %}
+    </h2>
+    <h2>روش تدریس : {{master.method}}</h2>
+    <h2>آموزشگاه های مربوطه:
+        {% for i in master.institutes.all %}
+            <a href="/institute/{{i.id}}">{{i.name}}</a>
+        {% endfor %}
+    </h2>
+    <p>{{master.resume}}</p>
+</div>
+
+{% endblock %}

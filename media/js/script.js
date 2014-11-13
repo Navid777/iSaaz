@@ -10,6 +10,16 @@ $(document).ready(function(){
 	});	
 });
 
+$('#likes').click(function(){
+            alert("here");
+            var articleid;
+            articleid = $(this).attr("data_artid");
+             $.get('/like_article/', {article_id: articleid}, function(data){
+                       $('#like_count').html(data);
+                       $('#likes').hide();
+                   });
+        });
+
 
 // Shahr lists
 var shahrs = new Array();
@@ -37,18 +47,18 @@ mahales['مازندران']['قائم شهر']    = new Array('شمال','جنو
 mahales['مازندران']['رامسر']   = new Array('شرق','غرب');
 
 
-function setShahrs() {
-  ostanSel = document.getElementById('ostan');
+function setShahrs(x) {
+  ostanSel = document.getElementById(x+'ostan');
   shahrList = shahrs[ostanSel.value];
-  changeSelect('shahr', shahrList, shahrList);
-  setMahale();
+  changeSelect(x+'shahr', shahrList, shahrList);
+  setMahale(x);
 }
 
-function setMahale() {
-  ostanSel = document.getElementById('ostan');
-  shahrSel = document.getElementById('shahr');
+function setMahale(x) {
+  ostanSel = document.getElementById(x+'ostan');
+  shahrSel = document.getElementById(x+'shahr');
   mahaleList = mahales[ostanSel.value][shahrSel.value];
-  changeSelect('mahale', mahaleList, mahaleList);
+  changeSelect(x+'mahale', mahaleList, mahaleList);
 }
 
 function popUpLogin(){
@@ -96,29 +106,11 @@ function addLoadEvent(func) {
   }
 }
 
-window.onload = function() {
-    placeDivs();
-    }
 
 
 addLoadEvent(function() {
-  setShahrs();
 });
 
-
-function placeDivs(){
-    cont = document.getElementById('ad_container');
-    divs = cont.childNodes;
-    for(i = 0; i<divs.length ; i++){
-    if (i % 3 == 0){
-       divs[i].style.left = "0px";
-    }else if (i % 3 == 2){
-        divs[i].style.right = "0px";
-    }
-    }
-
-
-}
 
  ///////////////
  ///////////////
@@ -154,24 +146,25 @@ cat4['سنتی']['بادی']          = new Array();
 
 cat4['سنتی']['زهی']['کمانه ای'] = new Array('کمانچه','رباب')
 
-function setcat2() {
-  cat1Sel = document.getElementById('cat1');
+function setcat2(x) {
+  cat1Sel = document.getElementById(x+'cat1');
   cat2List = cat2[cat1Sel.value];
-  changeSelect('cat2', cat2List, cat2List);
-  setMahale();
+  changeSelect(x+'cat2', cat2List, cat2List);
+  setcat3(x);
 }
-function setcat3() {
-  cat1Sel = document.getElementById('cat1');
-  cat2Sel = document.getElementById('cat2');
+function setcat3(x) {
+  cat1Sel = document.getElementById(x+'cat1');
+  cat2Sel = document.getElementById(x+'cat2');
   cat3List = cat3[cat1Sel.value][cat2Sel.value];
-  changeSelect('cat3', cat3List, cat3List);
+  changeSelect(x+'cat3', cat3List, cat3List);
+  setcat4(x);
 }
 function setcat4() {
-  cat1Sel = document.getElementById('cat1');
-  cat2Sel = document.getElementById('cat2');
-  cat3Sel = document.getElementById('cat3');
+  cat1Sel = document.getElementById(x+'cat1');
+  cat2Sel = document.getElementById(x+'cat2');
+  cat3Sel = document.getElementById(x+'cat3');
   cat4List = cat4[cat1Sel.value][cat2Sel.value][cat3Sel.value];
-  changeSelect('cat4', cat4List, cat4List);
+  changeSelect(x+'cat4', cat4List, cat4List);
 }
 
 
@@ -184,19 +177,21 @@ function setcat4() {
 
 
 
-function setCat2() {
-  cat2List = cat2[document.querySelector('input[name="sub1"]:checked').value];
-  changeList('sub2', 'setCat3()', cat2List, cat2List);
+function setCat2(x) {
+  cat2List = cat2[document.querySelector('input[name="'+x+'sub1"]:checked').value];
+  changeList(x+'sub2', 'setCat3("'+ x +'")', cat2List, cat2List);
+  setCat3(x);
 }
 
-function setCat3() {
-  cat3List = cat3[document.querySelector('input[name="sub1"]:checked').value][document.querySelector('input[name="sub2"]:checked').value];
-  changeList('sub3', 'setCat4()', cat3List, cat3List);
+function setCat3(x) {
+  cat3List = cat3[document.querySelector('input[name="'+x+'sub1"]:checked').value][document.querySelector('input[name="'+x+'sub2"]:checked').value];
+  changeList(x+'sub3', 'setCat4("'+ x +'")', cat3List, cat3List);
+  setCat4(x);
 }
 
-function setCat4() {
-  cat4List = cat4[document.querySelector('input[name="sub1"]:checked').value][document.querySelector('input[name="sub2"]:checked').value][document.querySelector('input[name="sub3"]:checked').value];
-  changeList('sub4', '' , cat4List, cat4List);
+function setCat4(x) {
+  cat4List = cat4[document.querySelector('input[name="'+x+'sub1"]:checked').value][document.querySelector('input[name="'+x+'sub2"]:checked').value][document.querySelector('input[name="'+x+'sub3"]:checked').value];
+  changeList(x+'sub4', '' , cat4List, cat4List);
 }
 
 function changeList(fieldID, func, newOptions, newValues){

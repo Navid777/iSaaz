@@ -1,0 +1,26 @@
+{% extends 'directory_base.html' %}
+{% block content %}
+<div dir="rtl">
+    <img src="{{workshop.image.url}}">
+    <h1>{{workshop.name}}</h1>
+    <h2>
+        آدرس:
+        {{workshop.location.ostan}}- {{workshop.location.shahr}}- {{workshop.location.mahale}}،
+        {{workshop.address}}
+    </h2>
+    <h3>
+        تلفن تماس:
+        {{workshop.tel}}
+    </h3>
+    <h3>
+        آدرس وبگاه:
+        <a href="http://{{workshop.website}}">{{workshop.name}}</a>
+    </h3>
+    <h4>
+        دسته بندی سازهای موجود:
+        {{workshop.category}}
+    </h4>
+    <p>در مورد فروشگاه : {{workshop.resume}}</p>
+</div>
+
+{% endblock %}

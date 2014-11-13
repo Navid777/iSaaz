@@ -1,0 +1,38 @@
+{% extends 'directory_base.html' %}
+
+{% block content %}
+<div dir="rtl">
+    <img src="{{institute.logo.url}}">
+    <h1>{{institute.name}}</h1>
+    <h2>سازهای تدریسی:
+        {% for i in institute.instruments.all%}
+            {{i}},
+        {% endfor %}
+    </h2>
+    <h2>
+        اساتید همکار:
+        {% for i in institute.masters.all%}
+            <a href="/master/{{i.id}}">{{i.name}}</a> ،
+        {% endfor %}
+    </h2>
+    <h2>
+        آدرس:
+        {{institute.location.ostan}}- {{institute.location.shahr}}- {{institute.location.mahale}}،
+        {{institute.address}}
+    </h2>
+    <h3>
+        تلفن تماس:
+        {{institute.tel}}
+    </h3>
+    <h3>
+        آدرس وبگاه:
+        <a href="http://{{institute.website}}">{{institute.name}}</a>
+    </h3>
+    <h3>درباره ی آموزشگاه:</h3>
+    <p>{{institute.resume}}</p>
+    <div style="margin: 0px auto">
+        <img src="{{institute.image.url}}">
+    </div>
+</div>
+
+{% endblock %}

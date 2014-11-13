@@ -1,0 +1,27 @@
+{% extends 'directory_base.html' %}
+
+{% block content %}
+<div dir="rtl">
+    <img src="{{shop.image.url}}">
+    <h1>{{shop.name}}</h1>
+    <h2>
+        آدرس:
+        {{shop.location.ostan}}- {{shop.location.shahr}}- {{shop.location.mahale}}،
+        {{shop.address}}
+    </h2>
+    <h3>
+        تلفن تماس:
+        {{shop.tel}}
+    </h3>
+    <h3>
+        آدرس وبگاه:
+        <a href="http://{{shop.website}}">{{shop.name}}</a>
+    </h3>
+    <h4>
+        دسته بندی سازهای موجود:
+        {{shop.category}}
+    </h4>
+    <p>در مورد فروشگاه : {{shop.resume}}</p>
+</div>
+
+{% endblock %}

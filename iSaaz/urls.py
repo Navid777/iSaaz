@@ -3,6 +3,9 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from iSaaz import settings
+from Content import views as Content_Views
+from Directory import views as Directory_Views
+
 admin.autodiscover()
 
 # Uncomment the next two lines to enable the admin:
@@ -19,8 +22,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    
-    
+
+
     url(r'^home$', views.home),
     url(r'^sell/$', views.sell),
     url(r'^profile/$', views.profile),
@@ -38,7 +41,22 @@ urlpatterns = patterns('',
     url(r'^search/category/(\w+)/$', views.search_by_category),
     url(r'^delete_ad/(\d+)/$', views.delete_ad),
     url(r'^$', views.temp),
-
+    url(r'^articles/$', Content_Views.articles),
+    url(r'^articles/(\d+)/$', Content_Views.view_article),
+    url(r'^search/articles/(\w+)/$', Content_Views.search_by_category),
+    url(r'^like_article/$',Content_Views.like_article, name='like'),
+    url(r'^comment/like/(\d+)/(\d+)/$',Content_Views.comment_like),
+    url(r'^master/(\d+)/$',Directory_Views.master),
+    url(r'^shop/(\d+)/$',Directory_Views.shop),
+    url(r'^institute/(\d+)/$',Directory_Views.institute),
+    url(r'^workshop/(\d+)/$',Directory_Views.workshop),
+    url(r'^manufacturer/(\d+)/$',Directory_Views.manufacturer),
+    url(r'^new_directory/$',Directory_Views.new_directory),
+    url(r'^directories/$',Directory_Views.directories),
+    url(r'^directories/master_search/$',Directory_Views.masters_search),
+    url(r'^directories/saaz_search/$',Directory_Views.saaz_search),
+    url(r'^directories/institutes_search/$',Directory_Views.institutes_search),
+    url(r'^directories/?saaz=(\d+)$',Directory_Views.search),
 )
 #urlpatterns += patterns('django.views.generic.simple',&nbsp(r'^accounts/login/$', 'direct_to_template', {'template': 'login_required.html'}),)
 

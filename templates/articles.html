@@ -1,0 +1,19 @@
+{% extends 'article_base.html' %}
+
+{% block article%}
+            {% for a in articles %}
+            <div>
+                <div style="width: 25%; float: right">
+                    <img src="{{a.image.url}}">
+                </div>
+                <div style="width: 75%; float: right">
+                    <label>{{a.title}}</label>
+                    <p>{{a.content|slice:":200"}} ...<a href="/articles/{{a.id}}">بیشتر بخوانید</a> </p>
+                    <p>{{a.time}}</p>
+                    <a href="like/{{user.id}}/{{a.id}}"><p>{{a.likes.all|length}} لایک</p></a>
+                    <p>{{a.views.all|length}} مشاهده</p>
+                </div>
+            </div>
+            {% endfor %}
+
+{% endblock %}
