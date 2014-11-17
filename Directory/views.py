@@ -1,4 +1,4 @@
-# Create your views here.
+# -*- coding: utf-8 -*-
 from Directory.models import *
 from InstrumentSeller.models import *
 from Content.models import  *
