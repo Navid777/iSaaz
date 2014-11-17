@@ -41,22 +41,22 @@
     				    </a>
                         </li>
     					<li style="float: right;">
-    						<a class="" href="#">خانه</a>
+    						<a class="" href="/home">خانه</a>
     					</li>
     					<li style="float: right;">
     						<a class="" href="#">بیابید</a>
     					</li>
     					<li style="float: right;">
-    						<a class="" href="#">بسپارید</a>
+    						<a class="" href="/sell">بسپارید</a>
     					</li>
     					<li style="float: right;">
     						<a class="" href="#">فروشگاه</a>
     					</li>
     					<li style="float: right;">
-    						<a class="" href="#">مقالات</a>
+    						<a class="" href="/articles">مقالات</a>
     					</li>
     					<li style="float: right;">
-    						<a class="" href="#">دایرکتوری</a>
+    						<a class="" href="/directories">دایرکتوری</a>
     					</li>
     					<li style="float: right;">
     						<a class="" href="#">درباره ما</a>
@@ -68,7 +68,7 @@
                         {% if request.user.is_authenticated %}
                             <a href="/logout">خروج</a>
                         {% else %}
-                            <a onclick="popUp('/login')">ورود</a>
+                            <a onclick="popUpLogin()">ورود</a>
                         {% endif%}
                         </li>
 
@@ -84,5 +84,61 @@
     		</div>
     	</div>
     	</div>
+
+
+<div id="black_cover" style="width: 100%; height: 100%; background-color : white; opacity: 0.4; position: fixed; top:0px; bottom: 0px; display: none;">
+
+</div>
+<div id="loginForm" style=" width: 50%; padding:30px ;right:25%; position: fixed; top: 100px; background-color: white; display:none  ">
+    <div dir="rtl" align=>
+        <input type="button" onclick="display('login')" value="ورود"/>
+        <input type="button" onclick="display('register')" value="ثبت نام"/>
+            <div id="login" class="row" style="margin: 0px auto; width: 500px; " align="center">
+
+                <form action="" method="post">
+                <div style="width: 100%;">
+                    <p align="center"> {{error}} </p>
+                        <label>شناسه کاربری:(ایمیل)</label>
+                                <div class="input-control text">
+                                    <input type="text" value="" name="username"/>
+                                </div>
+                        <label>رمز ورود:</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="password"/>
+                                </div>
+                    <input type="submit" value="Submit" name="login_form" />
+                </div>
+                </form>
+            </div>
+            <div id="register" class="row" style="margin: 0px auto; width: 500px; display: none;" align="center">
+                <div style="width: 100%;">
+                    <form action="" method="post">
+                    <p align="center"> {{error}} </p>
+                        <label>نام</label>
+                                    <div class="input-control text">
+                                        <input type="text" value="" name="first_name"/>
+                                    </div>
+                        <label>نام خانوادگی:</label>
+                                    <div class="input-control text">
+                                        <input type="text" value="" name="family_name"/>
+                                    </div>
+                        <label>ایمیل:</label>
+                                <div class="input-control text">
+                                    <input type="email" value="" name="email"/>
+                                </div>
+                        <label>رمز ورود</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="pass1"/>
+                                </div>
+                        <label>تکرار رمز ورود:</label>
+                                <div class="input-control text">
+                                    <input type="password" value="" name="pass2"/>
+                                </div>
+                    <input type="submit" value="Submit" name="reg_form"  />
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
     </body>
 </html>

@@ -121,11 +121,11 @@ def institutes_search(request):
 
 def saaz_search(request):
     term = request.GET.get("term")
-    saazs = Instrument.objects.filter(name__icontains = term)
+    saazs = Category.objects.filter(cat4__icontains = term)
     if request.GET.get("format") == "json":
         data = []
         for saaz in saazs:
-            data.append({"id": saaz.name })
+            data.append({"id": saaz.cat4 })
         return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
@@ -145,14 +145,12 @@ def make_manufacturer(m, form, request):
     m.tel = form.cleaned_data['tel']
     m.image = request.FILES['image']
     m.resume = form.cleaned_data['resume']
-    saaz = Category()
-    saaz.cat1 = form.cleaned_data['directory_manufacturer_sub1']
-    saaz.cat2 = form.cleaned_data['directory_manufacturer_sub2']
-    saaz.cat3 = form.cleaned_data['directory_manufacturer_sub3']
-    saaz.cat4 = form.cleaned_data['directory_manufacturer_sub4']
-    saaz.save()
-    m.instrument = saaz
     m.save()
+    instruments = form.cleaned_data['instruments'].split(',')
+    for i in instruments:
+        instrument = Category.objects.get(cat4 = i)
+        if instrument is not None:
+            m.instruments.add(instrument)
     return m.id
 
 def make_institute(i, form, request):
@@ -178,7 +176,7 @@ def make_institute(i, form, request):
         if master is not None:
             i.masters.add(master)
     for s in instruments:
-        instrument = Instrument.objects.get(name = s)
+        instrument = Category.objects.get(cat4 = s)
         if instrument is not None:
             i.instruments.add(instrument)
     #i.instruments = form.cleaned_data['instruments']
@@ -203,7 +201,7 @@ def make_master(m, form, request):
         if institute is not None:
             m.institutes.add(institute)
     for i in instruments:
-        instrument = Instrument.objects.get(name = i)
+        instrument = Category.objects.get(cat4 = i)
         if instrument is not None:
             m.instruments.add(instrument)
     return m.id
@@ -222,14 +220,12 @@ def make_workshop(w, form, request):
     w.tel = form.cleaned_data['tel']
     w.image = request.FILES['image']
     w.resume = form.cleaned_data['resume']
-    saaz = Category()
-    saaz.cat1 = form.cleaned_data['directory_workshop_sub1']
-    saaz.cat2 = form.cleaned_data['directory_workshop_sub2']
-    saaz.cat3 = form.cleaned_data['directory_workshop_sub3']
-    saaz.cat4 = form.cleaned_data['directory_workshop_sub4']
-    saaz.save()
-    w.instrument = saaz
     w.save()
+    instruments = form.cleaned_data['instruments'].split(',')
+    for i in instruments:
+        instrument = Category.objects.get(cat4 = i)
+        if instrument is not None:
+            w.instruments.add(instrument)
     return w.id
 
 def make_shop(s, form, request):

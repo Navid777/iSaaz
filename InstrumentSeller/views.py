@@ -58,10 +58,7 @@ def sell(request):
                     u = authenticate(username = lform.cleaned_data['username'], password = lform.cleaned_data['password'])
                     if u is not None:
                         auth_login(request, u)
-                        user = User_Profile()
-                        user.user = request.user
-                        user.allowed_ad_count = 2
-                        user.save()
+                        user = u.profile
                         ad.user = user
                         ad.save()
                         return HttpResponseRedirect('/instrument/%d/' % saazid)

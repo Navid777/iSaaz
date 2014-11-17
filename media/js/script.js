@@ -61,6 +61,11 @@ function setMahale(x) {
   changeSelect(x+'mahale', mahaleList, mahaleList);
 }
 
+function popUpLoginSell(){
+    document.getElementById('black_cover_sell').style.display = 'block';
+    document.getElementById('loginFormSell').style.display = 'block';
+}
+
 function popUpLogin(){
     document.getElementById('black_cover').style.display = 'block';
     document.getElementById('loginForm').style.display = 'block';
@@ -167,7 +172,24 @@ function setcat4() {
   changeSelect(x+'cat4', cat4List, cat4List);
 }
 
-
+  $(function() {
+    var instruments = [
+      "گیتار",
+      "پیانو",
+      "سه تار",
+      "تار",
+      "فلوت",
+      "نی",
+      "آکاردئون",
+      "ویولن",
+      "کمانچه",
+      "باران",
+      "تنبک",
+    ];
+    $( "#saaz" ).autocomplete({
+      source: instruments
+    });
+  });
 
 
 

@@ -385,14 +385,14 @@
         {% if request.user.is_authenticated%}
             <input type="submit" value="Submit" name="auth_sub" />
         {% else %}
-            <input type="button" value="Submit" onclick="popUpLogin()"/>
+            <input type="button" value="Submit" onclick="popUpLoginSell()"/>
         {% endif %}
 
 
-<div id="black_cover" style="width: 100%; height: 100%; background-color : white; opacity: 0.4; position: fixed; top:0px; bottom: 0px; display: none;">
+<div id="black_cover_sell" style="width: 100%; height: 100%; background-color : white; opacity: 0.4; position: fixed; top:0px; bottom: 0px; display: none;">
 
 </div>
-<div id="loginForm" style=" width: 50%; padding:30px ;right:25%; position: fixed; top: 100px; background-color: white; display:none  ">
+<div id="loginFormSell" style=" width: 50%; padding:30px ;right:25%; position: fixed; top: 100px; background-color: white; display:none  ">
     <div dir="rtl" align=>
         <input type="button" onclick="display('login')" value="ورود"/>
         <input type="button" onclick="display('register')" value="ثبت نام"/>
@@ -437,7 +437,6 @@
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 {% endblock %}

@@ -4,6 +4,27 @@
 <title>صفحه اصلی</title>
 {% endblock %}
 {% block content %}
+        <script type="text/javascript">
+            $(function() {
+                var instruments = [
+                  "گیتار",
+                  "پیانو",
+                  "سه تار",
+                  "تار",
+                  "فلوت",
+                  "نی",
+                  "آکاردئون",
+                  "ویولن",
+                  "کمانچه",
+                  "باران",
+                  "تنبک",
+                ];
+                $( "#saaz" ).autocomplete({
+                  source: instruments
+                });
+              });
+
+        </script>
 	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
 		<div class="container place-right" style="padding:80px 200px; direction:rtl;">
 			<h1 class="fg-white">آی‌ساز</h1>
@@ -87,31 +108,7 @@
 						دسته
 					</h4>
 					<div class="input-control select">
-						<select id="cat1" onclick="setcat2()">
-							<option>
-								سنتی
-							</option>
-							<option>
-								کلاسیک
-							</option>
-						</select>
-					</div>
-					<div class="input-control select">
-						<select id="cat2" onclick="setcat3()" disabled="true">
-
-						</select>
-					</div>
-					<div class="input-control select">
-						<select id="cat3" onclick="setcat4()" disabled="true">
-
-						</select>
-
-					</div>
-                    <div class="input-control select">
-						<select id="cat4" disabled="true">
-
-						</select>
-
+						<input id="saaz" name="saaz">
 					</div>
 					<h4 class="fg-steel">
 						سازنده

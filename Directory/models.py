@@ -3,7 +3,7 @@ from InstrumentSeller.models import *
 # Create your models here.
 class Master(models.Model):
     name= models.CharField(max_length= 100)
-    instruments= models.ManyToManyField(Instrument, related_name='masters', null= True, blank= True)
+    instruments= models.ManyToManyField(Category, related_name='masters', null= True, blank= True)
     method = models.CharField(max_length= 100, null= True, blank= True)
     institutes = models.ManyToManyField('Institute', related_name='masters', null= True, blank= True)
     image = models.FileField(upload_to='masters', null= True, blank= True)
@@ -15,7 +15,7 @@ class Master(models.Model):
 class Institute(models.Model):
     name = models.CharField(max_length= 200)
     location = models.ForeignKey(Location)
-    instruments = models.ManyToManyField(Instrument, related_name='institutes', null= True, blank= True)
+    instruments = models.ManyToManyField(Category, related_name='institutes', null= True, blank= True)
     address = models.CharField(max_length=200)
     tel= models.CharField(max_length=100)
     website = models.CharField(max_length=400, null= True)
@@ -28,7 +28,7 @@ class Institute(models.Model):
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length= 200)
-    instrument= models.ForeignKey(Instrument, related_name='manufacturers')
+    instruments= models.ManyToManyField(Category, related_name='manufacturers')
     location = models.ForeignKey(Location)
     address = models.CharField(max_length=200)
     tel = models.CharField(max_length=100)
@@ -59,7 +59,7 @@ class Workshop(models.Model):
     name = models.CharField(max_length= 200)
     location = models.ForeignKey(Location)
     address = models.CharField(max_length=200)
-    instrument = models.ForeignKey(Instrument, related_name='workshops')
+    instruments = models.ManyToManyField(Category, related_name='workshops')
     tel = models.CharField(max_length=100)
     website = models.CharField(max_length=400, null= True)
     image = models.FileField(upload_to='workshops', null= True)

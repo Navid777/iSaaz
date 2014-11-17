@@ -15,6 +15,12 @@
         $("#institutes_search").tokenInput("/directories/institutes_search/?format=json",{
         queryParam: "term",
         });
+        $("#manufacturer_saaz_search").tokenInput("/directories/saaz_search/?format=json",{
+        queryParam: "term",
+        });
+        $("#workshop_saaz_search").tokenInput("/directories/saaz_search/?format=json",{
+        queryParam: "term",
+        });
     });
     function show (id){
         document.getElementById("shop_form_div").style.display = 'none';
@@ -51,44 +57,15 @@
                 <input type="text" value="" name="name" style="direction:ltr;"/>
             </div>
 	    </div>
-            نوع ساز:
-        <div style="width: 100%;">
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    سازها:
+            </div>
+            <div class="input-control text">
+                <input type="text" value="" id="manufacturer_saaz_search" name="instruments" style="direction:ltr;"/>
+            </div>
+	    </div>
 
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_manufacturer_sub1">
-                        <li class="title">دسته</li>
-                        <li class=""><a><i class="icon-home"></i>
-                            <input type="radio" onclick="setCat2('directory_manufacturer_')" value="سنتی" name="directory_manufacturer_sub1" > سنتی
-                        </a></li>
-                        <li class=""><a><i class="icon-cog"></i>
-                            <input type="radio" onclick="setCat2('directory_manufacturer_')" value="کلاسیک" name="directory_manufacturer_sub1"> کلاسیک
-                        </a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar ">
-                    <ul id="directory_manufacturer_sub2">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_manufacturer_sub3">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_manufacturer_sub4">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
 تلفن:
@@ -358,44 +335,14 @@
                 <input type="text" value="" name="name" style="direction:ltr;"/>
             </div>
 	    </div>
-            نوع ساز:
-        <div style="width: 100%;">
-
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_workshop_sub1">
-                        <li class="title">دسته</li>
-                        <li class=""><a><i class="icon-home"></i>
-                            <input type="radio" onclick="setCat2('directory_workshop_')" value="سنتی" name="directory_workshop_sub1" > سنتی
-                        </a></li>
-                        <li class=""><a><i class="icon-cog"></i>
-                            <input type="radio" onclick="setCat2('directory_workshop_')" value="کلاسیک" name="directory_workshop_sub1"> کلاسیک
-                        </a></li>
-                    </ul>
-                </nav>
+        <div style="display:block;" class="span6">
+            <div  style="display:inline;">
+    سازها:
             </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar ">
-                    <ul id="directory_workshop_sub2">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
+            <div class="input-control text">
+                <input type="text" value="" id="workshop_saaz_search" name="instruments" style="direction:ltr;"/>
             </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_workshop_sub3">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="span3" style="float:right; width:25%;">
-                <nav class="sidebar">
-                    <ul id="directory_workshop_sub4">
-                        <li class="title">دسته</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+	    </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
 تلفن:
