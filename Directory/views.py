@@ -1,4 +1,4 @@
-# Create your views here.
+# -*- coding: utf-8 -*-
 from Directory.models import *
 from InstrumentSeller.models import *
 from Content.models import  *
@@ -179,8 +179,7 @@ def make_institute(i, form, request):
         instrument = Category.objects.get(cat4 = s)
         if instrument is not None:
             i.instruments.add(instrument)
-    #i.instruments = form.cleaned_data['instruments']
-    #i.masters = form.cleaned_data['masters']
+
 
     return i.id
 
