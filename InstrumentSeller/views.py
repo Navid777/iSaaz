@@ -153,7 +153,7 @@ def build_ad(request, form, ad):
     return ad.id
 
 def profile(request):
-    user = User_Profile.objects.get(user = request.user)
+    user = User_Profile.objects.get(user = request.user.id)
     ads = user.Ads.all()
     unread = []
     for a in ads:
