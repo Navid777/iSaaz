@@ -5,21 +5,22 @@
             function showReply(id){
                 document.getElementById("reply" + id).style.display = 'inline';
             }
-        $("#likes").on("click", function(){
-        alert("hello");
-          $.ajax({
-                   type: "POST",
-                   url: "{% url "like" %}",
-                   data: {'article_id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{csrf_token}}'},
-                   dataType: "text",
-                   success: function(response) {
-                          alert('You liked this')
-                    },
-                    error: function(rs, e) {
-                           alert(rs.responseText);
-                    }
-              });
-        });
+        $(document).ready(function(){
+            $("#likes").on("click", function(){
+                  $.ajax({
+                           type: "POST",
+                           url: "/like_article/",
+                           data: {'article_id': $(this).attr('name'), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           dataType: "text",
+                           success: function(response) {
+                                  alert('You liked this')
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            }
+                      });
+                });
+            });
         </script>
 <div dir="rtl" style="width: 60%; float: right; background-color : white;">
     <h1>{{article.title}}</h1>
@@ -28,6 +29,7 @@
         {% if user in article.likes.all %}
         <div>شما هم این مقاله را پسندیده اید</div>
         {% else %}
+    {%csrf_token%}
         <button id="likes" name="{{article.id}}" value="">میپسندم</button>
         {% endif %}
     {% else %}

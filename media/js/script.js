@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	$(".carousel").carousel();
 	$('.carousel').carousel({
@@ -7,11 +8,37 @@ $(document).ready(function(){
 		markers: {
 			type: "square"
 		}
-	});	
+	});
+
+
+
+
+    $(document).mouseup(function (e)
+    {
+
+        var login = $("#loginForm");
+        var offer = $("#offerForm");
+        if (!login.is(e.target)&& login.has(e.target).length === 0)
+        {
+            login.hide();
+            $("#black_cover").hide();
+        }
+        if (!offer.is(e.target)&& offer.has(e.target).length === 0)
+        {
+            offer.hide();
+
+        }
+    });
+
+    $("#is_offer").change(function() {
+        if(this.checked) {
+            $("#price_input").prop('disabled', false);
+        }
+    });
+
 });
 
 $('#likes').click(function(){
-            alert("here");
             var articleid;
             articleid = $(this).attr("data_artid");
              $.get('/like_article/', {article_id: articleid}, function(data){
@@ -19,6 +46,8 @@ $('#likes').click(function(){
                        $('#likes').hide();
                    });
         });
+
+
 
 
 // Shahr lists
@@ -47,7 +76,7 @@ mahales['مازندران']['قائم شهر']    = new Array('شمال','جنو
 mahales['مازندران']['رامسر']   = new Array('شرق','غرب');
 
 
-function setShahrs(x) {
+function setShahr(x) {
   ostanSel = document.getElementById(x+'ostan');
   shahrList = shahrs[ostanSel.value];
   changeSelect(x+'shahr', shahrList, shahrList);

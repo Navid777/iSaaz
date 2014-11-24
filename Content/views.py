@@ -11,16 +11,26 @@ from Content.forms import *
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
-from django.utils import simplejson
+import json
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
 
+
+def has_saaz_autocomplete():
+    category = []
+    for c in Category.objects.all():
+        category.append(c.cat4)
+    return category
+
 def articles(request):
+    category = has_saaz_autocomplete()
     user = User_Profile.objects.get(user = request.user)
     articles = Article.objects.all()
     return render_to_response('articles.html', RequestContext(request,locals()))
 
 @csrf_protect
 def view_article(request, art_id):
+    category = has_saaz_autocomplete()
     context = RequestContext(request)
     article = Article.objects.get(id = art_id)
     user = User_Profile.objects.get(user = request.user)
@@ -57,16 +67,15 @@ def search_by_category(request, category_name):
             articles.append(i)
     return render(request, 'articles.html', locals())
 
+@csrf_protect
 def like_article(request):
     vars = {}
     if request.method == 'POST':
         user = request.user
-        article_id = request.POST.get('article_id', None)
-        #article = get_object_or_404(Article, slug=slug)
-        article = Article.objects.get(id = int(article_id))
-        article.likes.add(user)
-        article.save()
-    return HttpResponse(simplejson.dumps(vars), mimetype='application/javascript')
+        article_id = request.POST.get('article_id')
+        article = Article.objects.get(id = int(str(article_id)))
+        user.profile.article_likes.add(article)
+    return HttpResponse(json.dumps(vars), mimetype='application/javascript')
 
 def comment_like(request, user_id, comment_id):
     user = User_Profile.objects.get(id = user_id)

@@ -100,12 +100,14 @@
 				</div>
 			</div>
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px;">
+                <form action='/home' method="post">
+                    {% csrf_token %}
 				<div class="span12" style="direction:rtl; padding:2px;">
 					<h2 class="fg-steel">
 						جست و جو
 					</h2>
 					<h4 class="fg-steel">
-						دسته
+						ساز :
 					</h4>
 					<div class="input-control select">
 						<input id="saaz" name="saaz">
@@ -114,23 +116,12 @@
 						سازنده
 					</h4>
 					<div class="input-control select">
-						<select>
-							<option>
-								بادی
-							</option>
-							<option>
-								زخمه ای
-							</option>
-							<option>
-								آرشه ای
-							</option>
-						</select>
 					</div>
 					<h4 class="fg-steel">
 						مکان
 					</h4>
 					<div class="input-control select">
-						<select id="ostan" onclick="setShahrs()">
+						<select id="home_ostan" name="home_ostan"  onclick="setShahr('home_')">
                             <option selected disabled>
                                 انتخاب استان
                             </option>
@@ -144,12 +135,12 @@
 								مازندران
 							</option>
 						</select>
-                        <select id="shahr" onclick="setMahale()">
+                        <select id="home_shahr" name="home_shahr" onclick="setMahale('home_')">
                             <option selected disabled>
                                 انتخاب شهر
                             </option>
 						</select>
-                        <select id="mahale">
+                        <select id="home_mahale" name="home_mahale">
                             <option selected disabled>
                                 انتخاب محل
                             </option>
@@ -158,12 +149,15 @@
 					<h4 class="fg-steel">
 						قیمت
 					</h4>
+                    <label>از</label>
+                    <input type="text" name="min_price">
+                    <label>تا</label>
+                    <input type="text" name="min_price">
 					<div class="slider" data-role="slider" style="direction:ltr;">
 					</div>
-					<div class="slider" data-role="slider" style="direction:ltr;">
-					</div>
-					<button class="on-right default bg-hover-blue" style="float:left">بگرد</button>
+					<input type="submit">
 				</div>
+                </form>
 			</div>
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px; text-align:justify; direction:rtl;">
 				<p>

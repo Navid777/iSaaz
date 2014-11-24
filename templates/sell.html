@@ -44,24 +44,24 @@
                 {{rform.errors}}
 			</div>
 			<div class="panel-body" style="direction:rtl; padding-top:10px;">
-
+                {{from.}}
 				<div class="span3">
 					<nav class="sidebar">
-						<ul id="sub4">
+						<ul id="sell_sub4">
 							<li class="title">دسته</li>
 						</ul>
 					</nav>
 				</div>
 				<div class="span3">
 					<nav class="sidebar">
-						<ul id="sub3">
+						<ul id="sell_sub3">
 							<li class="title">دسته</li>
 						</ul>
 					</nav>
 				</div>
 				<div class="span3">
 					<nav class="sidebar ">
-						<ul id="sub2">
+						<ul id="sell_sub2">
 							<li class="title">دسته</li>
 						</ul>
 					</nav>
@@ -72,17 +72,15 @@
 						<ul id="sub1">
 							<li class="title">دسته</li>
 							<li class=""><a><i class="icon-home"></i>
-                                <input type="radio" onclick="setCat2()" value="سنتی" name="sub1"" > سنتی
+                                <input type="radio" onclick="setCat2('sell_')" value="سنتی" name="sell_sub1"" > سنتی
                             </a></li>
 							<li class=""><a><i class="icon-cog"></i>
-                                <input type="radio" onclick="setCat2()" value="کلاسیک" name="sub1"> کلاسیک
+                                <input type="radio" onclick="setCat2('sell_')" value="کلاسیک" name="sell_sub1"> کلاسیک
                             </a></li>
 						</ul>
 					</nav>
 				</div>
-                <script type="text/javascript">
 
-                </script>
 			</div>
 		</div>
 	</div>
@@ -138,14 +136,14 @@
 						<div class="span4">
 							<label>محله</label>
 							<div class="input-control select">
-								<select name="mahale" id="mahale">
+								<select name="sell_mahale" id="sell_mahale">
 								</select>
 							</div>
 						</div>
 						<div class="span4">
 							<label>شهر</label>
 							<div class="input-control select">
-								<select name="shahr" id="shahr" onchange="setMahale();">
+								<select name="sell_shahr" id="sell_shahr" onchange="setMahale('sell_');">
 
 								</select>
 							</div>
@@ -153,7 +151,7 @@
 						<div class="span4">
 							<label>استان</label>
 							<div class="input-control select">
-								<select name="ostan" id="ostan" onchange="setShahrs();">
+								<select name="sell_ostan" id="sell_ostan" onchange="setShahr('sell_');">
 									<option value="تهران">تهران</option>
                                     <option value="فارس">فارس</option>
                                     <option value="مازندران">مازندران</option>
@@ -241,7 +239,7 @@
 				<div class="span12">
 					<div class="row">
 						<div class="offset6 span6">
-							<label>نمونه صوتی</label>
+							<label>نمونه صوتی (یکی از فرمت های mp3، wav یا ogg)</label>
 							<div class="input-control textarea">
                                 {{ form.sound.errors }}
                                 {{ form.non_field_errors }}
@@ -250,7 +248,37 @@
 						</div>
 					</div>
                     <script type="text/javascript">
+                            $(document).ready(function () {
+                                 $('')
+                                    .css({
+                                        float: 'left',
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        width: '100px',
+                                        height: '100px'
+                                    })
+                                    .insertAfter($('#img1'));
 
+                                $('img#img1').imgAreaSelect({
+                                    handles: true,
+                                 //   onSelectEnd: someFunction
+                                    aspectRatio: "3:4",
+                                    imageWidth: 30,
+                                    imageHeight: 40,
+                                    onSelectEnd: function (img, selection) {
+                                    },
+                                    onSelectChange : function (img, selection) {
+                                        var scaleX = (300 / selection.width) * img.width ;
+                                        var scaleY = (400 / selection.height) * img.height;
+                                        $('#img1_2').css({
+                                        width: Math.round(scaleX) + 'px',
+                                        height: Math.round(scaleY) + 'px',
+                                        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+                                        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+                                    });
+                                    }
+                                });
+                            });
 
                           function upload_img(input, x) {
                              if (input.files && input.files[0]) {
@@ -259,12 +287,32 @@
                                     $('#img' + x).attr('src', e.target.result);
                                     $('#img' + x).show();
                                     $('#span' + x).hide();
+                                    if( x == 1 )
+                                        $('#img1_2').attr('src', e.target.result);
                                  }
                                  reader.readAsDataURL(input.files[0]);
                              }
                           }
 
                     </script>
+                    <div class="row">
+                        <div class="span2">
+							<div class="tile bg-gray" style="text-align:center; margin: 0px auto; height: 400px; width: 400px ">
+								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
+								<div style="">
+                                    <span id="span1">
+								تصویر اصلی
+                                    </span>
+                                    <img id="img1" src="#" alt="your image" style="display:hidden; height: 400px" />
+
+								</div>
+							</div>
+							<div style="float:left; display: ">
+								<input class="button" name="img1" size="20" type='file' onchange="upload_img(this, 1);" />
+							</div>
+						</div>
+                    </div>
+                    <div id = "imagePreview" style="width: 300px; height: 400px; overflow: hidden; display: none;"><img id="img1_2"  alt="X" src="#" style=" position : relative;"/></div>
 					<div class="row">
 						<div class="span2">
 							<div class="tile bg-gray" style="text-align:center; float:right; ">
@@ -339,20 +387,7 @@
 								<input class="button" name="img2" size="20" type='file' onchange="upload_img(this, 2);" />
 							</div>
 						</div>
-						<div class="span2">
-							<div class="tile bg-gray" style="text-align:center; float:right; ">
-								<button style="float:right;"><i class="icon-rocket on-right"></i>پاک کردن</button>
-								<div style="">
-                                    <span id="span1">
-								تصویر اصلی
-                                    </span>
-                                    <img id="img1" src="#" alt="your image" style="display:hidden;" />
-								</div>
-							</div>
-							<div style="float:left;">
-								<input class="button" name="img1" size="20" type='file' onchange="upload_img(this, 1);" />
-							</div>
-						</div>
+
 					</div>
 				</div>
 			</div>

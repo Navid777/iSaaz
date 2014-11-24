@@ -19,13 +19,13 @@ class ad_form(forms.Form):
     img4 = forms.FileField(required=False)
     img5 = forms.FileField(required=False)
     img6 = forms.FileField(required=False)
-    ostan = forms.CharField()
-    shahr = forms.CharField()
-    mahale = forms.CharField()
-    sub1 = forms.CharField()
-    sub2 = forms.CharField()
-    sub3 = forms.CharField()
-    sub4 = forms.CharField() #instrument
+    sell_ostan = forms.CharField()
+    sell_shahr = forms.CharField()
+    sell_mahale = forms.CharField()
+    sell_sub1 = forms.CharField()
+    sell_sub2 = forms.CharField()
+    sell_sub3 = forms.CharField()
+    sell_sub4 = forms.CharField() #instrument
     show_email = forms.BooleanField(required= False)
     show_tel = forms.BooleanField(required= False)
 
@@ -62,3 +62,12 @@ class offer_form(forms.Form):
     tel = forms.IntegerField()
     content = forms.CharField()
     price= forms.IntegerField()
+    is_offer = forms.BooleanField(required= False)
+
+class home_search_form(forms.Form):
+    home_ostan = forms.CharField(required= False)
+    home_shahr= forms.CharField(required= False)
+    home_mahale = forms.CharField(required= False)
+    saaz = forms.CharField(required= False)
+    min_price = forms.CharField(required= False)
+    max_price = forms.CharField(required= False)

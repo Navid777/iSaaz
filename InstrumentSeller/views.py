@@ -11,12 +11,38 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 
 
+@csrf_protect
 def home(request):
     mainAds = Advertisement.objects.all()
     ad = Advertisement.objects.all()
     categories = Category.objects.all()
     cat2 = categories.values_list('cat2',flat=True).distinct()
-    return render(request,'home.html', locals())
+    if request.method == 'POST':
+        search_form = home_search_form(request.POST)
+        if search_form.is_valid():
+            ostan = search_form.cleaned_data['home_ostan']
+            shahr = search_form.cleaned_data['home_shahr']
+            mahale = search_form.cleaned_data['home_mahale']
+            saaz = search_form.cleaned_data['saaz']
+            min = search_form.cleaned_data['min_price']
+            max = search_form.cleaned_data['max_price']
+            if ostan:
+                print ("here")
+                mainAds = Advertisement.objects.filter(location__ostan = ostan)
+                if shahr:
+                    mainAds = Advertisement.objects.filter(location__shahr = shahr)
+                    if mahale:
+                        mainAds = Advertisement.objects.filter(location__mahale = mahale)
+            if saaz:
+                mainAds = mainAds.filter(instrument__category__cat4 = saaz)
+            if min:
+                min = int(min)
+                mainAds = mainAds.filter(price__lt = min)
+            if max:
+                max = int(max)
+                mainAds = mainAds.filter(price__gt = max)
+    search_form = home_search_form()
+    return render(request, 'home.html', locals())
 
 @csrf_protect
 def login_user(request):
@@ -91,17 +117,17 @@ def sell(request):
 
 def build_ad(request, form, ad):
     saaz = Instrument()
-    saaz.name = form.cleaned_data['sub4']
+    saaz.name = form.cleaned_data['sell_sub4']
     saaz.manufacturer = form.cleaned_data['manufacturer']
     saaz.model = form.cleaned_data['model']
     saaz.year = form.cleaned_data['year']
     saaz.used = form.cleaned_data['used']
     saaz.save()
     category = Category()
-    category.cat1 = form.cleaned_data['sub1']
-    category.cat2 = form.cleaned_data['sub2']
-    category.cat3 = form.cleaned_data['sub3']
-    category.cat4 = form.cleaned_data['sub4']
+    category.cat1 = form.cleaned_data['sell_sub1']
+    category.cat2 = form.cleaned_data['sell_sub2']
+    category.cat3 = form.cleaned_data['sell_sub3']
+    category.cat4 = form.cleaned_data['sell_sub4']
     category.save()
     saaz.category = category
     img1 = Ad_Image(image = request.FILES['img1'])
@@ -118,9 +144,9 @@ def build_ad(request, form, ad):
     if 'sound' in request.FILES:
         ad.sound = request.FILES['sound']
     location = Location()
-    location.ostan = form.cleaned_data['ostan']
-    location.shahr= form.cleaned_data['shahr']
-    location.mahale = form.cleaned_data['mahale']
+    location.ostan = form.cleaned_data['sell_ostan']
+    location.shahr= form.cleaned_data['sell_shahr']
+    location.mahale = form.cleaned_data['sell_mahale']
     location.save()
     ad.location = location
     ad.save()

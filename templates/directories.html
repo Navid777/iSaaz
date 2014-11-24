@@ -1,49 +1,34 @@
 {% extends 'directory_base.html' %}
 {% block content %}
-          <script>
-  $(function() {
-    var instruments = [
-      "گیتار",
-      "پیانو",
-      "سه تار",
-      "تار",
-      "فلوت",
-      "نی",
-      "آکاردئون",
-      "ویولن",
-      "کمانچه",
-      "باران",
-      "تنبک",
-    ];
-    $( "#saaz" ).autocomplete({
-      source: instruments
-    });
-  });
+<script type="text/javascript">
+        $(document).ready(function(){
+            $(".directories_search").click(function(){
+                $('.directory_result').hide();
+                $('.directory_search_options').hide();
+                $('#' + $(this).attr('id') + '_search_options').show();
+                $('#' + $(this).attr('id') + '_results').show();
+            });
 
-  function search(){
-        value = document.getElemetById('saaz').value;
-        window.location.href = '/directories/' + value;
-  }
-    function search(value){
-        window.location.href = value;
-    }
+        });
 
-  function show(id){
-        document.getElementById("masters_serach_options").style.display = 'none';
-        document.getElementById("shops_serach_options").style.display = 'none';
-        document.getElementById("institutes_serach_options").style.display = 'none';
-        document.getElementById("workshops_serach_options").style.display = 'none';
-        document.getElementById("manufacturers_serach_options").style.display = 'none';
-        document.getElementById("masters_result").style.display = 'none';
-        document.getElementById("shops_result").style.display = 'none';
-        document.getElementById("workshops_result").style.display = 'none';
-        document.getElementById("institutes_result").style.display = 'none';
-        document.getElementById("manufacturers_result").style.display = 'none';
-        document.getElementById(id + "_serach_options").style.display = 'block';
-        document.getElementById(id + "_result").style.display = 'block';
 
-  }
-  </script>
+          function search(){
+                value = document.getElemetById('saaz').value;
+                window.location.href = '/directories/' + value;
+          }
+        function search(value){
+            window.location.href = value;
+        }
+
+
+</script>
+<script>
+    $(function() {
+            $( "#saaz" ).autocomplete({
+              source: {{category}}
+            });
+          });
+</script>
     <div dir="rtl" align="right">
         <form>
             ساز:
@@ -51,15 +36,15 @@
             <button onclick="search()">تایید</button>
         </form>
         <div style="clear: both; background-color: white;">
-            <div onclick="show(this.id)" id="institutes" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">آموزشگاه ها</div>
-            <div onclick="show(this.id)" id="manufacturers" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">سازنده ها</div>
-            <div onclick="show(this.id)" id="workshops" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">تعمیرگاه ها</div>
-            <div onclick="show(this.id)" id="masters" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">استادها</div>
-            <div onclick="show(this.id)" id="shops" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">فروشگاه ها</div>
+            <div id="institutes" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" >آموزشگاه ها</div>
+            <div id="manufacturers" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">سازنده ها</div>
+            <div id="workshops" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">تعمیرگاه ها</div>
+            <div id="masters" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">استادها</div>
+            <div id="shops" class="directories_search" style="float: right; width: 200px; height: 100px; border:1px solid black" align="center">فروشگاه ها</div>
         </div>
         <div id="search_result" style="clear: both; background-color: white;">
             <div id="side_bar" style="width: 25%; border: 1px solid black; float: right;">
-                <div id="shops_serach_options">
+                <div id="shops_search_options" class="directory_search_options" style="display: none;">
                     <form>
                     <div>
                         <label>نام فروشگاه:</label>
@@ -77,23 +62,63 @@
                     <input type="submit">
                     </form>
                 </div>
-                <div id="workshops_serach_options" >
-
+                <div id="workshops_search_options" class="directory_search_options" style="display: none;">
+                    <form>
+                    <div>
+                        <label>نام تعمیرگاه:</label>
+                        <input name="name" onchange="search(value)">
+                    </div>
+                    <div>
+                        <label>مکان:</label>
+                        <input type="text" name="location">
+                    </div>
+                    <input type="submit">
+                    </form>
                 </div>
-                <div id="institutes_serach_options">
-
+                <div id="institutes_search_options" class="directory_search_options" style="display: none;">
+                    <form>
+                    <div>
+                        <label>نام آموزشگاه:</label>
+                        <input name="name" onchange="search(value)">
+                    </div>
+                    <div>
+                        <label>مکان:</label>
+                        <input type="text" name="location">
+                    </div>
+                    <input type="submit">
+                    </form>
                 </div>
-                <div id="manufacturers_serach_options">
-
+                <div id="manufacturers_search_options" class="directory_search_options" style="display: none;">
+                    <form>
+                    <div>
+                        <label>نام سازنده:</label>
+                        <input name="name" onchange="search(value)">
+                    </div>
+                    <div>
+                        <label>مکان:</label>
+                        <input type="text" name="location">
+                    </div>
+                    <input type="submit">
+                    </form>
                 </div>
-                <div id="masters_serach_options">
-
+                <div id="masters_search_options" class="directory_search_options" style="display: none;">
+                    <form>
+                    <div>
+                        <label>نام استاد:</label>
+                        <input name="name" onchange="search(value)">
+                    </div>
+                    <div>
+                        <label>مکان:</label>
+                        <input type="text" name="location">
+                    </div>
+                    <input type="submit">
+                    </form>
                 </div>
 
 
             </div>
             <div style="width: 70%; float:right;" id="result">
-                    <div id="masters_result">
+                    <div id="masters_result" class="directory_result">
                         لیست استاد های یافت شده برای ساز {{saaz.name}}
                         {% for m in masters%}
                             <div style="width: 100%; clear:both; background-color: white;">
@@ -112,7 +137,7 @@
                         {% endfor %}
 
                     </div>
-                    <div id="institutes_result">
+                    <div id="institutes_result" class="directory_result">
                         لیست آموزشگاه های یافت شده برای ساز {{saaz.name}}
                         {% for m in institutes%}
                             <div style="width: 100%; clear:both; background-color: white;">
@@ -132,7 +157,7 @@
                         {% endfor %}
 
                     </div>
-                    <div id="manufacturers_result">
+                    <div id="manufacturers_result" class="directory_result">
                         {% for m in manufacturer%}
                         لیست سازنده های یافت شده برای ساز {{saaz.name}}
                             <div style="width: 100%; clear:both; background-color: white;">
@@ -149,7 +174,7 @@
                         {% endfor %}
 
                     </div>
-                    <div id="shops_result">
+                    <div id="shops_result" class="directory_result">
 
                         {% for m in shops%}
                             <div style="width: 100%; clear:both; background-color: white;">
@@ -166,7 +191,7 @@
                         {% endfor %}
 
                     </div>
-                    <div id="workshops_result">
+                    <div id="workshops_result" class="directory_result">
                         لیست تعمیرگاه های یافت شده برای ساز {{saaz.name}}
                         {% for m in workshop%}
                             <div style="width: 100%; clear:both; background-color: white;">

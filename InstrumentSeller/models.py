@@ -8,7 +8,7 @@ class Location(models.Model):
     ostan= models.CharField(max_length=100)
     shahr= models.CharField(max_length=100)
     mahale= models.CharField(max_length=100)
-    def __unicode__(self):
+    def __str__(self):
         return self.mahale
 
 class Category(models.Model):
@@ -16,7 +16,7 @@ class Category(models.Model):
     cat2 = models.CharField(max_length=50, null=True, blank=True)
     cat3 = models.CharField(max_length=50, null=True, blank=True)
     cat4 = models.CharField(max_length=50, null=True, blank=True)
-    def __unicode__(self):
+    def __str__(self):
         if self.cat4:
             return self.cat4
         elif self.cat3:
@@ -43,7 +43,7 @@ class Advertisement(models.Model):
     offer = models.BooleanField(default= True)
     show_email = models.BooleanField(default= True)
     show_tel = models.BooleanField(default= True)
-    def __unicode__(self):
+    def __str__(self):
         return self.title
     
 class Ad_Image(models.Model):
@@ -60,7 +60,7 @@ class User_Profile(models.Model):
     favorite = models.ManyToManyField(Advertisement, related_name="favorit_users", blank = True)
     view = models.ManyToManyField(Advertisement, related_name="view_users", blank = True)
     location = models.ForeignKey(Location, blank = True, null = True)
-    def __unicode__(self):
+    def __str__(self):
         return self.user.first_name
 
 class Instrument(models.Model):
@@ -70,7 +70,7 @@ class Instrument(models.Model):
     model = models.CharField(max_length = 50)
     year = models.IntegerField()
     category = models.ForeignKey(Category, null=True)
-    def __unicode__(self):
+    def __str__(self):
         return self.name
     
 class Offer(models.Model):
@@ -83,7 +83,8 @@ class Offer(models.Model):
     price= models.IntegerField()
     ad= models.ForeignKey(Advertisement, related_name='offers')
     read = models.BooleanField(default= False)
-    
+    is_offer = models.BooleanField()
+
 class Property(models.Model):
     instrument = models.ForeignKey(Instrument)
     feature = models.CharField(max_length=100)

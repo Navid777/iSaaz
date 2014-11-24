@@ -16,6 +16,13 @@ from Directory.forms import *
 import json
 from django.views.decorators.csrf import csrf_protect
 
+
+def has_saaz_autocomplete():
+    category = []
+    for c in Category.objects.all():
+        category.append(c.cat4)
+    return category
+
 def master(request, master_id):
     master = Master.objects.get(id = master_id)
     return render_to_response('master.html', RequestContext(request,locals()))
@@ -77,6 +84,7 @@ def new_directory(request):
     return render_to_response('new_directory.html', RequestContext(request,locals()))
 
 def directories(request):
+    category = has_saaz_autocomplete()
     form = directories_form()
     masters = Master.objects.order_by('?')[:5]
     institutes = Institute.objects.order_by('?')[:5]

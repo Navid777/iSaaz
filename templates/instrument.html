@@ -34,9 +34,13 @@
 			</div>
 		</div>
 		<div class="row" style="direction:rtl;">
+            {% if user.profile in ad.favorit_users.all %}
+
+            {% else %}
 			<div>
     	        <a href="/fav/{{ user.id }}/{{ ad.id }}/"><button class="danger" ><i class="icon-heart on-right"></i>افزودن به علاقه مندی ها</button></a>
 			</div>
+            {% endif %}
 			<div>
 			{{ad.details}}
 			<br>
@@ -44,6 +48,15 @@
 			<br>
 			<br>
 			</div>
+            <div>
+                نمونه ی صوتی:
+                <audio controls>
+                  <source src="{{ad.sound.url}}" type="audio/ogg">
+                  <source src="{{ad.sound.url}}" type="audio/mpeg">
+                  <source src="{{ad.sound.url}}" type="audio/wav">
+                Your browser does not support the audio element.
+                </audio>
+            </div>
 			<div>
 				مکان:
                 {{ad.location.mahale}}- {{ad.location.shahr}}- {{ad.location.ostan}}
@@ -77,17 +90,53 @@
 				</div>
 			</div>
 		</div>
-		<br><br>
-		<div class="panel" style="direction:rtl;">
+        <br><br>
+        <div class="panel" style="direction:rtl;">
 			<div class="panel-header bg-steel fg-white">
-				اطلاعات بیشتر
+مشخصات فروشنده
 			</div>
 			<div class="panel-content">
-				<button class="span6 default">تماس با فروشنده</button>
-                <button class="span6 default" onclick="show()">پیام به فروشنده</button>
+                <div>
+					<div class="span6">
+{{ad.user.user.first_name}} {{ad.user.user.last_name}}
+					</div>
+					<div class="span6">
+نام فروشنده:
+					</div>
+				</div>
+				<div>
+                    {% if ad.show_email %}
+					<div class="span6">
+						{{ad.user.user.email}}
+					</div>
+					<div class="span6">
+						ایمیل فروشنده:
+					</div>
+                    {% endif %}
+				</div>
+                <div>
+                    {% if ad.show_email %}
+					<div class="span6">
+						{{ad.user.tel}}
+					</div>
+					<div class="span6">
+شماره تماس فروشنده:
+					</div>
+                    {% endif %}
+				</div>
 			</div>
-		</div>
-	</div>
+        </div>
+        <br><br>
+        <div class="panel" style="direction:rtl;">
+            <div class="panel-header bg-steel fg-white">
+                اطلاعات بیشتر
+            </div>
+            <div class="panel-content">
+                <button class="span6 default">تماس با فروشنده</button>
+                <button class="span6 default" onclick="show()">پیام به فروشنده</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row" style="direction:rtl;">
 	<div class="span7 offset1">
@@ -135,6 +184,7 @@
         document.getElementById("offerForm").style.display = 'block';
     }
 
+
 </script>
 <div dir="rtl" align=center id="offer_holder">
         <div class="row" style="margin: 0px auto; width: 500px;" align="center">
@@ -143,6 +193,7 @@
 		        {% csrf_token %}
                     {{form.errors}}
                 <p align="center"> {{error}} </p>
+                    <input type="checkbox" id="is_offer" name="is_offer"> پیام جهت پیشنهاد قیمت و خرید
                     <label>نام:</label>{{form.errors}}
                             <div class="input-control text">
                                 <input type="text" value="{{user.first_name}} {{user.last_name}}" name="sender"/>
@@ -151,13 +202,18 @@
                             <div class="input-control text">
                                 <input type="text" value="{{user.email}}" name="email"/>
                             </div>
-                    <label>قیمت پیشنهادی:</label>
+                    <label>قیمت پیشنهادی(جهت پیشنهاد قیمت گزینه ی پیشنهاد در بالای فرم را انتخاب کنید):</label>
                             <div class="input-control text">
-                                <input type="text" value="" name="price"/>
+                                <input type="text" id="price_input" name="price" disabled="disabled"/>
+                                <label>
+                                    قیمت پیشنهادی فروشنده:
+                                    {{ad.price}}
+                                     تومان
+                                </label>
                             </div>
                     <label>شماره تماس:</label>
                             <div class="input-control text">
-                                <input type="text" value="{{user}}" name="tel"/>
+                                <input type="text" value="{{user.profile.tel}}" name="tel"/>
                             </div>
                     <label>مکان پیشنهادی جهت دریافت</label>
                             <div class="input-control text">

@@ -1,39 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content%}
+        <script type="text/javaascript">
+            $(function() {
+                var instruments = {{category}};
+                $( "#saaz" ).autocomplete({
+                  source: instruments
+                });
+              });
+        </script>
         <div class="span3" style="width: 25%; float:right;">
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px;">
 				<div class="span12" style="direction:rtl; padding:2px;">
 					<h3 class="fg-steel">
 						جست و جو
 					</h3>
-					<div class="input-control select">
-						<select id="cat1" onclick="setcat2()">
-							<option>
-								سنتی
-							</option>
-							<option>
-								کلاسیک
-							</option>
-						</select>
-					</div>
-					<div class="input-control select">
-						<select id="cat2" onclick="setcat3()" disabled="disabled">
-
-						</select>
-					</div>
-					<div class="input-control select">
-						<select id="cat3" onclick="setcat4()" disabled="disabled">
-
-						</select>
-
-					</div>
-                    <div class="input-control select">
-						<select id="cat4" disabled="disabled">
-
-						</select>
-
-					</div>
+                    <input id="saaz" name="saaz">
+                    <button onclick="search()">تایید</button>
 					<button class="on-right default bg-hover-blue" style="float:left" onclick="articleSearchByCategory()">بگرد</button>
 				</div>
 			</div>

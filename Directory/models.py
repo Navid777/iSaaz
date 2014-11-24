@@ -23,7 +23,7 @@ class Institute(models.Model):
     image = models.FileField(upload_to='institute_images', null= True)
     resume = models.CharField(max_length= 500, null= True)
     active = models.BooleanField(default= False)
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Manufacturer(models.Model):
@@ -39,7 +39,7 @@ class Manufacturer(models.Model):
     image = models.FileField(upload_to='manufacturers', null= True)
     resume = models.CharField(max_length=400, null= True)
     active = models.BooleanField(default= False)
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Shop(models.Model):
@@ -52,7 +52,7 @@ class Shop(models.Model):
     image = models.FileField(upload_to='shops', null= True)
     resume = models.CharField(max_length=400, null= True)
     active = models.BooleanField(default= False)
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Workshop(models.Model):
@@ -65,7 +65,7 @@ class Workshop(models.Model):
     image = models.FileField(upload_to='workshops', null= True)
     resume = models.CharField(max_length=400, null= True)
     active = models.BooleanField(default= False)
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Course(models.Model):
