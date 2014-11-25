@@ -23,7 +23,37 @@
                   source: instruments
                 });
               });
-
+            $(document).ready(function(){
+            $("#search_submit").on("click", function(){
+                  $.ajax({
+                           type: "POST",
+                           url: "/home/search/",
+                           data: {'ostan': $("#home_ostan option:selected").text(), 'shahr': $("#home_shahr option:selected").text(),
+                                'mahale': $("#home_mahale option:selected").text(), 'saaz': $('#saaz').text(), 'min_price': $('#min_price').text(),
+                                 'max_price': $('#max_price').text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           dataType: "json",
+                           success: function(data) {
+                                     if(data){
+                                        len = data.length;
+                                        txt = "";
+                                        $.each(data, function(i, item) {
+                                            txt += "<div class='span4 bg-hover-gray text-center' style= 'background-color: #efeae3; height: 300px;'><a href='/instrument/"
+                                             + item.id + "'><img src='" + item.image + "' class='polaroid' style='max-width: 100%;'><div >"
+                                             + item.title + "<br>" + item.instrument + "<br>" + item.price+ " تومن</div></a></div>"
+                                        });
+                                        if(txt == ""){
+                                            txt = "موردی یافت نشد"
+                                        }else{
+                                            $('#ad_container').html(txt);
+                                        }
+                                     }
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            }
+                      });
+                });
+            });
         </script>
 	<div style="background: url(/media/images/b1.jpg)top left no-repeat; background-size:cover; height:400px;">
 		<div class="container place-right" style="padding:80px 200px; direction:rtl;">
@@ -100,7 +130,7 @@
 				</div>
 			</div>
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px;">
-                <form action='/home' method="post">
+
                     {% csrf_token %}
 				<div class="span12" style="direction:rtl; padding:2px;">
 					<h2 class="fg-steel">
@@ -125,15 +155,9 @@
                             <option selected disabled>
                                 انتخاب استان
                             </option>
-							<option>
-								تهران
-							</option>
-							<option>
-								فارس
-							</option>
-							<option>
-								مازندران
-							</option>
+							<option>تهران</option>
+							<option>فارس</option>
+							<option>مازندران</option>
 						</select>
                         <select id="home_shahr" name="home_shahr" onclick="setMahale('home_')">
                             <option selected disabled>
@@ -155,9 +179,9 @@
                     <input type="text" name="min_price">
 					<div class="slider" data-role="slider" style="direction:ltr;">
 					</div>
-					<input type="submit">
+					<button id="search_submit" type="submit">
 				</div>
-                </form>
+
 			</div>
 			<div class="row bd-white" style="border-width:5px; border:solid; padding:5px; text-align:justify; direction:rtl;">
 				<p>

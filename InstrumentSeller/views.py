@@ -5,11 +5,12 @@ from django.contrib import auth
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
-
+import json
+from django.forms.models import model_to_dict
 
 @csrf_protect
 def home(request):
@@ -43,6 +44,42 @@ def home(request):
                 mainAds = mainAds.filter(price__gt = max)
     search_form = home_search_form()
     return render(request, 'home.html', locals())
+
+@csrf_protect
+def home_search(request):
+    mainAds = []
+    ads = []
+    if request.method == 'POST':
+            ostan = request.POST.get('ostan')
+            shahr = request.POST.get('shahr')
+            mahale = request.POST.get('mahale')
+            saaz = request.POST.get('saaz')
+            min = request.POST.get('min_price')
+            max = request.POST.get('max_price')
+            print (ostan )
+            if ostan:
+                ads = Advertisement.objects.filter(location__ostan = ostan)
+                if shahr:
+                    ads = Advertisement.objects.filter(location__shahr = shahr)
+                    if mahale:
+                        ads = Advertisement.objects.filter(location__mahale = mahale)
+            if saaz:
+                ads = ads.filter(instrument__category__cat4 = saaz)
+            if min:
+                min = int(min)
+                ads = ads.filter(price__lt = min)
+            if max:
+                max = int(max)
+                ads = ads.filter(price__gt = max)
+            for ad in ads:
+                info = {}
+                info['id'] = ad.id
+                info['image'] = ad.image.image.url
+                info['title'] = ad.title
+                info['instrument'] = ad.instrument.name
+                info['price'] = ad.price
+                mainAds.append(info)
+    return HttpResponse(json.dumps(mainAds), mimetype='application/javascript')
 
 @csrf_protect
 def login_user(request):

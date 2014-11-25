@@ -25,6 +25,7 @@ urlpatterns = patterns('',
 
 
     url(r'^home$', views.home),
+    url(r'^home/search/$', views.home_search),
     url(r'^sell/$', views.sell),
     url(r'^profile/$', views.profile),
     url(r'^profile/listing$', views.profile_listing),
