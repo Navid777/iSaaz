@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Create your views here.
 
 from Content.models import  *
@@ -12,6 +13,9 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 import json
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.db.models import Q
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
 
@@ -24,37 +28,49 @@ def has_saaz_autocomplete():
 
 def articles(request):
     category = has_saaz_autocomplete()
-    user = User_Profile.objects.get(user = request.user)
     articles = Article.objects.all()
     return render_to_response('articles.html', RequestContext(request,locals()))
+
+@csrf_protect
+def article_search(request):
+    mainArts = []
+    if request.method == 'POST':
+            saaz = request.POST.get('saaz')
+            arts = Article.objects.filter(category__cat4 = saaz)
+            for article in arts:
+                #info = serializers.serialize('json', [article, ] )
+                info = model_to_dict(article)
+                info['image'] = article.image.url
+                mainArts.append(info)
+    return HttpResponse(json.dumps(mainArts), mimetype='application/javascript')
+
 
 @csrf_protect
 def view_article(request, art_id):
     category = has_saaz_autocomplete()
     context = RequestContext(request)
     article = Article.objects.get(id = art_id)
-    user = User_Profile.objects.get(user = request.user)
     if request.method == 'POST':
-        if 'commenting' in request.POST:
-            cform = comment_form(request.POST)
-            if cform.is_valid():
+        if request.is_ajax():
+            if 'comment' in request.POST:
+                reply = Sub_Comment()
+                reply.name = request.POST.get('name')
+                reply.email = request.POST.get('email')
+                reply.content = request.POST.get('content')
+                reply.comment = Comment.objects.get(id = request.POST.get('comment'))
+                reply.save()
+                info = model_to_dict(reply)
+                info['comment'] = reply.comment.id
+                return HttpResponse(json.dumps(info), mimetype='application/javascript')
+            else:
                 comment = Comment()
-                comment.name = cform.cleaned_data['name']
-                comment.email = cform.cleaned_data['email']
-                comment.content = cform.cleaned_data['content']
+                comment.name = request.POST.get('name')
+                comment.email = request.POST.get('email')
+                comment.content = request.POST.get('content')
                 comment.article = article
                 comment.save()
-        else:
-            for c in article.comments.all():
-                if 'replying' + str(c.id) in request.POST:
-                    rform = comment_form(request.POST)
-                    if rform.is_valid():
-                        reply = Sub_Comment()
-                        reply.name = rform.cleaned_data['name']
-                        reply.email = rform.cleaned_data['email']
-                        reply.content = rform.cleaned_data['content']
-                        reply.comment = c
-                        reply.save()
+                info = model_to_dict(comment)
+                return HttpResponse(json.dumps(info), mimetype='application/javascript')
     cform = comment_form()
     rform = comment_form()
     return render_to_response('article.html', RequestContext(request,locals()))
@@ -69,16 +85,24 @@ def search_by_category(request, category_name):
 
 @csrf_protect
 def like_article(request):
-    vars = {}
+    likes = 0
     if request.method == 'POST':
         user = request.user
         article_id = request.POST.get('article_id')
         article = Article.objects.get(id = int(str(article_id)))
         user.profile.article_likes.add(article)
-    return HttpResponse(json.dumps(vars), mimetype='application/javascript')
+        likes = article.likes.count()
+    return HttpResponse(json.dumps(likes), mimetype='application/javascript')
 
-def comment_like(request, user_id, comment_id):
-    user = User_Profile.objects.get(id = user_id)
-    comment = Comment.objects.get(id = comment_id)
-    comment.likes.add(user)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+@csrf_protect
+def comment_like(request):
+    info = []
+    if request.method == 'POST':
+        user = request.user.profile
+        comment_id = request.POST.get('comment_id')
+        comment = Comment.objects.get(id = int(str(comment_id)))
+        comment.likes.add(user)
+        info.append(comment.id)
+        info.append(comment.likes.count())
+    return HttpResponse(json.dumps(info), mimetype='application/javascript')
+

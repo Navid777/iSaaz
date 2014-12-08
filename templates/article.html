@@ -3,37 +3,115 @@
 {% block article %}
         <script type="text/javascript">
             function showReply(id){
+                forms = document.getElementsByClassName("comment_reply");
+                for (i = 0;i < forms.length ; i ++ )
+                    forms[i].style.display = 'none'
                 document.getElementById("reply" + id).style.display = 'inline';
             }
+
         $(document).ready(function(){
-            $("#likes").on("click", function(){
+
+            $("#like_heart").on("click", function(){
                   $.ajax({
                            type: "POST",
                            url: "/like_article/",
                            data: {'article_id': $(this).attr('name'), csrfmiddlewaretoken:'{{csrf_token}}'},
                            dataType: "text",
-                           success: function(response) {
-                                  alert('You liked this')
+                           success: function(data) {
+                                  $('#like_count').text(data);
+                                  $('#like_heart').attr("src","/media/images/heart_red.png");
                             },
                             error: function(rs, e) {
                                    alert(rs.responseText);
                             }
                       });
                 });
+            $(".comment_like").on("click", function(){
+                  $.ajax({
+                           type: "POST",
+                           url: "/like_comment/",
+                           data: {'comment_id': $(this).attr('name'), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           dataType: "json",
+                           success: function(data) {
+                                  $('#aida').text(data[0]);
+                                  $('#comment_likes_' + data[0]).text(data[1]);
+                                  $('#comment' + data[0]).attr("src","/media/images/heart_red.png");
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            }
+                      });
+                });
+            $("#comment-form").on('submit', function(e){
+                    e.preventDefault();
+                    var data = $(this).serializeArray()
+                    data.push({csrfmiddlewaretoken:'{{csrf_token}}' , submit: 'commenting' });
+                  $.ajax({
+                           type: "POST",
+                           url: $(this).attr('action'),
+                           data: data,
+                           dataType: "json",
+                           success: function(data) {
+                                    txt = "<form action='.' method='post' class='reply_forming' id='reply-form" + data.id +
+                                     "'>{% csrf_token %}<input style='display : none' name='comment' value='" + data.id +
+                                     "'/><div style='background-color : #eee; border : 1px black solid;'><div style='border-bottom: 1px gray solid'><p>" +
+                                     data.content + "</p><div style='float: left;'><p><b id='comment_likes_{{c.id}}'>" + data.likes +
+                                     "</b>{%csrf_token%}<a><img class='comment_like' name='" +  data.id + "' id='comment" + data.id +
+                                     "' style='height:20px;' src='/media/images/heart_white.png'></a><input type='button' onclick='showReply(" +
+                                     data.id + ")' value='پاسخ'></p></div></div><div>" + data.name + " " + data.time + "</div></div><div id='replys" +
+                                     data.id + "'></div><div class='comment_reply' style='background-color: white; display: none;' id='reply" + data.id +
+                                     "'><div class='span6'><div class='fg-red' style='diplay: inline;'>نام*</div><div class='input-control text'>" +
+                                     "<input type='text' name='name' value='{{user.first_name}} {{user.last_name}}' /></div></div> <div class='span6'>" +
+                                     "<div class='fg-red' style='diplay: inline;'>ایمیل*</div><div class='input-control text'><input type='email'" +
+                                     "name='email' value='{{user.email}}' /></div><div class='span6'><div class='fg-red' style='diplay: inline;'>دیدگاه شما:" +
+                                     "</div><div class='input-control text'><textarea style='display: block; width: 100%;'" +
+                                     "form='reply-form" + data.id + "' name='content'></textarea> </div>" +
+                                     "<input type='submit' class='comment_reply_submit' name='" + data.id + "'></div></div><div></form>";
+                                    $('#comment_holder').append(txt);
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            },
+                            crossDomain: false,
+                      });
+                  return false;
+                });
+            $(".reply_forming").on('submit', function(e){
+                    e.preventDefault();
+                    var data = $(this).serializeArray()
+                    data.push({csrfmiddlewaretoken:'{{csrf_token}}' });
+                  $.ajax({
+                           type: "POST",
+                           url: $(this).attr('action'),
+                           data: data,
+                           dataType: "json",
+                           success: function(data) {
+                                txt = "<div style='border: 1px solid black;'><div>" +data.content +
+                                      "</div><label>" + data.name + "</label><label>" + data.email + "</label></div>";
+                                $('#replys' + data.comment).append(txt);
+                            },
+                            error: function(rs, e) {
+                                alert(rs.responseText);
+                            },
+                            crossDomain: false,
+                      });
+                  return false;
+                });
             });
         </script>
 <div dir="rtl" style="width: 60%; float: right; background-color : white;">
+    <h1 id="aida"></h1>
     <h1>{{article.title}}</h1>
-    <b id="like_count">{{ article.likes.all|length }}</b> نفر این مقاله را پسندیده اند.
+    <b id="like_count">{{ article.likes.all|length }}</b>
     {% if user.is_authenticated%}
-        {% if user in article.likes.all %}
-        <div>شما هم این مقاله را پسندیده اید</div>
+        {% if user.profile in article.likes.all %}
+        <img src="/media/images/heart_red.png" style="height:20px;">
         {% else %}
-    {%csrf_token%}
-        <button id="likes" name="{{article.id}}" value="">میپسندم</button>
+        {%csrf_token%}
+        <a><img name="{{article.id}}" id="like_heart" style="height:20px;" src="/media/images/heart_white.png"></a>
         {% endif %}
     {% else %}
-        <div>{{article.likes.all|length}} لایک
+        <img style="height:20px;" src="/media/images/heart_white.png">
     {% endif %}
 
     <p>{{article.views.all|length}} مشاهده</p>
@@ -49,15 +127,28 @@
 </div>
     <div style="clear: both; width: 100%; border: 1px black solid;">
         نظر شما در مورد این مقاله چیست؟
-    <form action="." method="post" id="reply-form">
-        {% csrf_token %}
+    <div id="comment_holder">
     {% for c in article.comments.all%}
+    <form action="." method="post" class="reply_forming" id="reply-form{{c.id}}">
+        {% csrf_token %}
+        <input style="display : none" name="comment" value="{{c.id}}"/>
         <div style="background-color : #eee; border : 1px black solid;">
         <div style="border-bottom: 1px gray solid">
             <p>{{c.content}}</p>
             <div style="float: left;">
                 <p>
-                    <a href="/comment/like/{{user.id}}/{{c.id}}">{{c.likes.all|length}} لایک</a>
+                        <b id="comment_likes_{{c.id}}">{{ c.likes.all|length }}</b>
+                    {% if user.is_authenticated%}
+                        {% if user.profile in c.likes.all %}
+                        <img src="/media/images/heart_red.png" style="height:20px;">
+                        {% else %}
+                        {%csrf_token%}
+                        <a><img class="comment_like" name="{{c.id}}" id="comment{{c.id}}" style="height:20px;" src="/media/images/heart_white.png"></a>
+                        {% endif %}
+                    {% else %}
+                        <img style="height:20px;" src="/media/images/heart_white.png">
+                    {% endif %}
+
                     <input type="button" onclick="showReply({{c.id}})" value="پاسخ">
                 </p>
             </div>
@@ -67,20 +158,27 @@
             {{c.time}}
         </div>
         </div>
-        {% for i in c.sub_comments.all%}
-            {{i.name}} <br>
-            {{i.email}} <br>
-            {{i.content}}
-        {% endfor %}
+        <div id="replys{{c.id}}">
+            {% for i in c.sub_comments.all%}
+                <div style="border: 1px solid black;">
+                    <div>
+                        {{i.content}}
+                    </div>
+                    <label>{{i.name}}</label>
+                    <label>{{i.email}}</label>
+                </div>
+            {% endfor %}
+        </div>
 
 
-        <div style="background-color: white; display: none;" id="reply{{c.id}}">
+
+        <div class="comment_reply" style="background-color: white; display: none;" id="reply{{c.id}}">
             <div class="span6">
                 <div class="fg-red" style="diplay: inline;">
                     نام*
                 </div>
                 <div class="input-control text">
-                    <input type="text" name="name" value="{{user.user.first_name}} {{user.user.last_name}}" />
+                    <input type="text" name="name" value="{{user.first_name}} {{user.last_name}}" />
                 </div>
             </div>
             <div class="span6">
@@ -88,22 +186,22 @@
 ایمیل*
                 </div>
                 <div class="input-control text">
-                    <input type="email" name="email" value="{{user.user.email}}" />
+                    <input type="email" name="email" value="{{user.email}}" />
                 </div>
                 <div class="span6">
                 <div class="fg-red" style="diplay: inline;">
 دیدگاه شما:
                 </div>
                 <div class="input-control text">
-                     <textarea style="display: block; width: 100%;" form="reply-form" name="content"></textarea>
+                     <textarea style="display: block; width: 100%;" form="reply-form{{c.id}}" name="content"></textarea>
                 </div>
-                <input type="submit" name="replying{{c.id}}">
+                <input type="submit" class="comment_reply_submit" name="{{c.id}}">
                 </div>
             </div>
         </div>
-
-    {% endfor %}
     </form>
+    {% endfor %}
+    </div>
     <form action="." method="post" id="comment-form">
         {% csrf_token %}
         <div style="border: 1px black solid;">
@@ -116,7 +214,7 @@
                     نام*
                 </div>
                 <div class="input-control text">
-                    <input type="text" name="name" value="{{user.user.first_name}} {{user.user.last_name}}" />
+                    <input type="text" name="name" value="{{user.first_name}} {{user.last_name}}" />
                 </div>
             </div>
             <div class="span6">
@@ -124,7 +222,7 @@
 ایمیل*
                 </div>
                 <div class="input-control text">
-                    <input type="email" name="email" value="{{user.user.email}}" />
+                    <input type="email" name="email" value="{{user.email}}" />
                 </div>
                 <div class="span6">
                 <div class="fg-red" style="display: inline;">

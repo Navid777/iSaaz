@@ -29,7 +29,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     article = models.ForeignKey('Article', related_name="comments", null= True, blank= True)
-    likes = models.ManyToManyField(User_Profile, null= True, blank= True)
+    likes = models.ManyToManyField(User_Profile, related_name="comment_likes", null= True, blank= True)
     #time = models.DateTimeField(auto_now= True)
     def __str__(self):
         return self.name

@@ -38,15 +38,6 @@ $(document).ready(function(){
 
 });
 
-$('#likes').click(function(){
-            var articleid;
-            articleid = $(this).attr("data_artid");
-             $.get('/like_article/', {article_id: articleid}, function(data){
-                       $('#like_count').html(data);
-                       $('#likes').hide();
-                   });
-        });
-
 
 
 

@@ -83,6 +83,40 @@ def new_directory(request):
         shop__form = shop_form()
     return render_to_response('new_directory.html', RequestContext(request,locals()))
 
+
+@csrf_protect
+def search_directory(request, directory):
+    result = []
+    ans = []
+    if request.method == 'POST':
+        if directory == 'shop':
+            ostan = request.POST.get('ostan')
+            shahr = request.POST.get('shahr')
+            mahale = request.POST.get('mahale')
+            category = request.POST.get('saaz')
+            name = request.POST.get('min_price')
+            if ostan:
+                ans = Shop.objects.filter(location__ostan = ostan)
+                if shahr:
+                    ans = Shop.objects.filter(location__shahr = shahr)
+                    if mahale:
+                        ans = Shop.objects.filter(location__mahale = mahale)
+            if category:
+                ans = ans.filter(category__cat1 = category)
+            if name:
+                ads = ans.filter(name__icontains = name)
+            for i in ans:
+                info = {}
+                info['id'] = i.id
+                info['image'] = i.image.url
+                info['name'] = i.name
+                info['category'] = i.category
+                result.append(info)
+    return HttpResponse(json.dumps(info), mimetype='application/javascript')
+
+
+
+
 def directories(request):
     category = has_saaz_autocomplete()
     form = directories_form()

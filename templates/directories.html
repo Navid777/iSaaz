@@ -8,14 +8,40 @@
                 $('#' + $(this).attr('id') + '_search_options').show();
                 $('#' + $(this).attr('id') + '_results').show();
             });
-
+            $("#shop_search").on("click", function(){
+                  $.ajax({
+                           type: "POST",
+                           url: "/directories/search/shop",
+                           data: {'name': $("#shop_name").text(), 'ostan': $("#shop_ostan option:selected").text(),
+                            'shahr': $("#shop_shahr option:selected").text(),'mahale': $("#shop_mahale option:selected").text(),
+                             'category':$("#shop_cat option:selected").text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           dataType: "json",
+                           success: function(data) {
+                                       $('#kossher').tetx(data);
+                                     if(data){
+                                        txt = "";
+                                        $.each(data, function(i, item) {
+                                            txt += "<div class='span4 bg-hover-gray text-center' style= 'background-color: #efeae3; height: 300px;'><a href='/instrument/"
+                                             + item.id + "'><img src='" + item.image + "' class='polaroid' style='max-width: 100%;'><div >"
+                                             + item.title + "<br>" + item.instrument + "<br>" + item.price+ " تومن</div></a></div>"
+                                        });
+                                        if(txt == ""){
+                                            txt = "موردی یافت نشد"
+                                        }else{
+                                            $('#ad_container').html(txt);
+                                        }
+                                     }
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            }
+                  });
+            });
         });
-
-
-          function search(){
-                value = document.getElemetById('saaz').value;
-                window.location.href = '/directories/' + value;
-          }
+        function search(){
+            value = document.getElemetById('saaz').value;
+            window.location.href = '/directories/' + value;
+        }
         function search(value){
             window.location.href = value;
         }
@@ -30,6 +56,7 @@
           });
 </script>
     <div dir="rtl" align="right">
+    <div id="kossher"></div>
         <form>
             ساز:
             <input id="saaz" name="saaz">
@@ -48,18 +75,39 @@
                     <form>
                     <div>
                         <label>نام فروشگاه:</label>
-                        <input name="name" onchange="search(value)">
+                        <input id="shop_name" name="name" onchange="search(value)">
                     </div>
-                    <div>
-                        <label>مکان:</label>
-                        <input type="text" name="location">
+                    <div class="span4">
+                        استان:
+                        <div class="input-control select">
+                            <select name="shop_ostan" id="shop_ostan" onchange="setShahr('shop_');">
+                                    <option value="تهران">تهران</option>
+                                    <option value="فارس">فارس</option>
+                                    <option value="مازندران">مازندران</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        شهر:
+                        <div class="input-control select">
+                            <select name="shop_shahr" id="shop_shahr" onchange="setMahale('shop_');">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        محله:
+                        <div class="input-control select">
+                            <select name="shop_mahale" id="shop_mahale">
+                            </select>
+                        </div>
                     </div>
                     <label>دسته</label>
-                    <select name="cat">
+                    <select name="shop_cat">
                         <option>سنتی</option>
                         <option>کلاسیک</option>
                     </select>
-                    <input type="submit">
+                    <button id="shop_search_button">بگرد</button>
                     </form>
                 </div>
                 <div id="workshops_search_options" class="directory_search_options" style="display: none;">
@@ -72,7 +120,7 @@
                         <label>مکان:</label>
                         <input type="text" name="location">
                     </div>
-                    <input type="submit">
+                    <button id="workshop_search_button">بگرد</button>
                     </form>
                 </div>
                 <div id="institutes_search_options" class="directory_search_options" style="display: none;">
@@ -85,7 +133,7 @@
                         <label>مکان:</label>
                         <input type="text" name="location">
                     </div>
-                    <input type="submit">
+                    <button id="institute_search_button">بگرد</button>
                     </form>
                 </div>
                 <div id="manufacturers_search_options" class="directory_search_options" style="display: none;">
@@ -98,7 +146,7 @@
                         <label>مکان:</label>
                         <input type="text" name="location">
                     </div>
-                    <input type="submit">
+                    <button id="manufacturer_search_button">بگرد</button>
                     </form>
                 </div>
                 <div id="masters_search_options" class="directory_search_options" style="display: none;">
@@ -111,7 +159,7 @@
                         <label>مکان:</label>
                         <input type="text" name="location">
                     </div>
-                    <input type="submit">
+                    <button id="masters_search_button">بگرد</button>
                     </form>
                 </div>
 
@@ -175,7 +223,7 @@
 
                     </div>
                     <div id="shops_result" class="directory_result">
-
+لیست فروشگاه های یافت شده برای ساز {{saaz.name}}
                         {% for m in shops%}
                             <div style="width: 100%; clear:both; background-color: white;">
                                 <div style="width: 20%; float: right">
@@ -183,7 +231,7 @@
                                 </div>
                                 <div style="width:80%; float:right; background-color: white;">
                                     <a href="/shop/{{m.id}}"><label>{{m.name}}</label></a>
-                                    <label>سازهای مربوطه:
+                                    <label>دسته:
                                             {{i.category}}
                                     </label>
                                 </div>

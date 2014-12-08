@@ -52,7 +52,7 @@ class Ad_Image(models.Model):
     
     
 class User_Profile(models.Model):
-    user = models.ForeignKey(User, related_name='profile')
+    user = models.OneToOneField(User, related_name='profile')
     tel = models.CharField(max_length=20,blank = True, null = True)
     image = models.FileField(upload_to='profile_images', blank = True)
     score = models.IntegerField(default = 0)
