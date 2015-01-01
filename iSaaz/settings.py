@@ -126,7 +126,6 @@ INSTALLED_APPS = (
     'InstrumentSeller',
     'Content',
     'Directory',
-    'django_trace',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
