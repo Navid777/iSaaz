@@ -19,10 +19,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
 import inspect
 
-def log(error):
-    frame, filename, ln, fn, lolc, idx = inspect.getouterframes(inspect.currentframe())[1]
-    print ("Error: " + error + " " + filename, ln, fn)
-
 def has_saaz_autocomplete():
     category = []
     for c in Category.objects.all():
@@ -30,7 +26,6 @@ def has_saaz_autocomplete():
     return category
 
 def articles(request):
-    log("articles")
     category = has_saaz_autocomplete()
     articles = Article.objects.all()
     return render_to_response('articles.html', RequestContext(request,locals()))
