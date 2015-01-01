@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
 
-from Content.models import  *
+from Content.models import *
 from InstrumentSeller.models import *
 from django.contrib import auth
 from django.contrib.auth import login as auth_login, authenticate
@@ -15,10 +15,13 @@ from django.views.decorators.csrf import csrf_protect
 import json
 from django.core import serializers
 from django.forms.models import model_to_dict
-from django.db.models import Q
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import get_object_or_404
+import inspect
 
+def log(error):
+    frame, filename, ln, fn, lolc, idx = inspect.getouterframes(inspect.currentframe())[1]
+    print ("Error: " + error + " " + filename, ln, fn)
 
 def has_saaz_autocomplete():
     category = []
@@ -27,6 +30,7 @@ def has_saaz_autocomplete():
     return category
 
 def articles(request):
+    log("articles")
     category = has_saaz_autocomplete()
     articles = Article.objects.all()
     return render_to_response('articles.html', RequestContext(request,locals()))
@@ -47,6 +51,7 @@ def article_search(request):
 
 @csrf_protect
 def view_article(request, art_id):
+    print("view_article")
     category = has_saaz_autocomplete()
     context = RequestContext(request)
     article = Article.objects.get(id = art_id)
