@@ -87,7 +87,7 @@ def search_by_category(request, category_name):
 def like_article(request):
     likes = 0
     if request.method == 'POST':
-        user = request.user
+        user = auth.get_user(request)
         article_id = request.POST.get('article_id')
         article = Article.objects.get(id = int(str(article_id)))
         user.profile.article_likes.add(article)
@@ -98,7 +98,7 @@ def like_article(request):
 def comment_like(request):
     info = []
     if request.method == 'POST':
-        user = request.user.profile
+        user = auth.get_user(request).profile
         comment_id = request.POST.get('comment_id')
         comment = Comment.objects.get(id = int(str(comment_id)))
         comment.likes.add(user)

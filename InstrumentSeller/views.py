@@ -217,7 +217,7 @@ def build_ad(request, form, ad):
     return ad.id
 
 def profile(request):
-    user = User_Profile.objects.get(user = request.user.id)
+    user = User_Profile.objects.get(user = auth.get_user(request).id)
     ads = user.Ads.all()
     unread = []
     for a in ads:
@@ -227,12 +227,12 @@ def profile(request):
     return render(request, 'profile.html', locals())
 
 def profile_listing(request):
-    user = User_Profile.objects.get(user = request.user)
+    user = User_Profile.objects.get(user = auth.get_user(request))
     ads = user.Ads.all
     return render(request, 'profile_listing.html', locals())
 
 def profile_messages(request):
-    user = User_Profile.objects.get(user = request.user)
+    user = User_Profile.objects.get(user = auth.get_user(request))
     offers = []
     ads = user.Ads
     for i in ads.all():
@@ -247,12 +247,12 @@ def profile_show_message(request, o_id):
     return render(request, 'profile_show_message.html', locals())
 
 def profile_invoices(request):
-    user = User_Profile.objects.get(user = request.user)
+    user = User_Profile.objects.get(user = auth.get_user(request))
     return render(request, 'profile_invoices.html')
 
 @csrf_protect
 def profile_settings(request):
-    user = User_Profile.objects.get(user = request.user)
+    user = User_Profile.objects.get(user = auth.get_user(request))
     if request.POST:
         if 'form1' in request.POST:
             form1 = profile_form1(request.POST, prefix= 'form1')
