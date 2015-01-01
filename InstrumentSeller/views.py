@@ -11,7 +11,6 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 import json
 from django.forms.models import model_to_dict
-import django_trace
 
 @csrf_protect
 def home(request):
