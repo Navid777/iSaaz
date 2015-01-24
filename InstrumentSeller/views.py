@@ -147,10 +147,36 @@ def sell(request):
                         ad.save()
                         return HttpResponseRedirect('/profile/settings', locals())
     else:
+        ostan = Ostan.objects.all()
         form = ad_form()
         lform = login_form()
         rform = register_form()
+        cat = Category.objects.all()
+        saaz = []
+        for c in cat:
+            if c.cat4 is not None:
+                saaz.append(c.cat3 + "-" + c.cat4)
+            else:
+                saaz.append(c.cat3)
     return render_to_response('sell.html', RequestContext(request,locals()))
+
+def shahr(request):
+    shahrs = []
+    if request.method == 'POST':
+        ostan = request.POST.get('ostan')
+        allShahrs = Ostan.objects.get(name = ostan).shahr_set.all()
+        for a in allShahrs:
+            shahrs.append(a.name)
+    return HttpResponse(json.dumps(shahrs), mimetype='application/javascript')
+
+def mahale(request):
+    mahales = []
+    if request.method == 'POST':
+        shahr = request.POST.get('shahr')
+        allMahales = Shahr.objects.get(name = shahr).mahale_set.all()
+        for a in allMahales:
+            mahales.append(a.name)
+    return HttpResponse(json.dumps(mahales), mimetype='application/javascript')
 
 def build_ad(request, form, ad):
     saaz = Instrument()
@@ -160,12 +186,12 @@ def build_ad(request, form, ad):
     saaz.year = form.cleaned_data['year']
     saaz.used = form.cleaned_data['used']
     saaz.save()
-    category = Category()
-    category.cat1 = form.cleaned_data['sell_sub1']
-    category.cat2 = form.cleaned_data['sell_sub2']
-    category.cat3 = form.cleaned_data['sell_sub3']
-    category.cat4 = form.cleaned_data['sell_sub4']
-    category.save()
+    inst_in = form.cleaned_data['saaz']
+    if '-' in inst_in:
+        x, inst = inst_in.split('-')
+        category = Category.objects.get( cat4 = inst )
+    else:
+        category = Category.objects.get( cat3 = inst_in )
     saaz.category = category
     img1 = Ad_Image(image = request.FILES['img1'])
     img1.save()

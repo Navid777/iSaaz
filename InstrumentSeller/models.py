@@ -1,13 +1,30 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields.files import ImageField
-
+from Directory.models import *
 # Create your models here.
+
+class Ostan(models.Model):
+    name = models.CharField(max_length= 50)
+    def __str__(self):
+        return self.name
+
+class Shahr(models.Model):
+    name = models.CharField(max_length=50)
+    ostan = models.ForeignKey(Ostan, blank = True, null = True )
+    def __str__(self):
+        return self.name
+
+class Mahale(models.Model):
+    name = models.CharField(max_length=100)
+    shahr = models.ForeignKey(Shahr, blank = True, null = True )
+    def __str__(self):
+        return self.name
 
 class Location(models.Model):
     ostan= models.CharField(max_length=100)
-    shahr= models.CharField(max_length=100)
-    mahale= models.CharField(max_length=100)
+    shahr= models.CharField(max_length=100, blank = True, null = True)
+    mahale= models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return self.mahale
 
@@ -65,27 +82,22 @@ class User_Profile(models.Model):
 
 class Instrument(models.Model):
     name = models.CharField(max_length=50)
-    manufacturer = models.CharField(max_length = 200, blank = True)
-    used = models.BooleanField()
+    manufacturer = models.ForeignKey('Directory.Manufacturer', null = True, related_name='Instruments')
+    used = models.BooleanField(default = False)
     model = models.CharField(max_length = 50)
     year = models.IntegerField()
-    category = models.ForeignKey(Category, null=True)
+    category = models.ForeignKey('Category', null=True)
     def __str__(self):
         return self.name
     
 class Offer(models.Model):
     sender = models.CharField(max_length=200)
-    transport = models.CharField(max_length=300)
+    transport = models.CharField(max_length=300, blank = True, null = True)
     email = models.EmailField()
     tel = models.CharField(max_length=20)
     content = models.CharField(max_length=500)
     time = models.DateTimeField(auto_now=True)
-    price= models.IntegerField()
+    price= models.IntegerField(blank = True, null = True)
     ad= models.ForeignKey(Advertisement, related_name='offers')
     read = models.BooleanField(default= False)
-    is_offer = models.BooleanField()
-
-class Property(models.Model):
-    instrument = models.ForeignKey(Instrument)
-    feature = models.CharField(max_length=100)
-    value = models.CharField(max_length=100)
+    is_offer = models.BooleanField(default= True)

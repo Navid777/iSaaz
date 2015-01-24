@@ -3,7 +3,7 @@ from InstrumentSeller.models import *
 # Create your models here.
 class Master(models.Model):
     name= models.CharField(max_length= 100)
-    instruments= models.ManyToManyField(Category, related_name='masters', null= True, blank= True)
+    instruments= models.ManyToManyField('InstrumentSeller.Category', related_name='masters', null= True, blank= True)
     method = models.CharField(max_length= 100, null= True, blank= True)
     institutes = models.ManyToManyField('Institute', related_name='masters', null= True, blank= True)
     image = models.FileField(upload_to='masters', null= True, blank= True)
@@ -14,8 +14,8 @@ class Master(models.Model):
 
 class Institute(models.Model):
     name = models.CharField(max_length= 200)
-    location = models.ForeignKey(Location)
-    instruments = models.ManyToManyField(Category, related_name='institutes', null= True, blank= True)
+    location = models.ForeignKey('InstrumentSeller.Location')
+    instruments = models.ManyToManyField('InstrumentSeller.Category', related_name='institutes', null= True, blank= True)
     address = models.CharField(max_length=200)
     tel= models.CharField(max_length=100)
     website = models.CharField(max_length=400, null= True)
@@ -28,8 +28,8 @@ class Institute(models.Model):
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length= 200)
-    instruments= models.ManyToManyField(Category, related_name='manufacturers')
-    location = models.ForeignKey(Location)
+    instruments= models.ManyToManyField('InstrumentSeller.Category', related_name='manufacturers')
+    location = models.ForeignKey('InstrumentSeller.Location')
     address = models.CharField(max_length=200)
     tel = models.CharField(max_length=100)
     #range = models.CharField(max_length=100, null= True) # edit
@@ -44,11 +44,11 @@ class Manufacturer(models.Model):
 
 class Shop(models.Model):
     name = models.CharField(max_length= 200)
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey('InstrumentSeller.Location')
     address = models.CharField(max_length=200)
     tel = models.CharField(max_length=100)
     website = models.CharField(max_length=400, null= True)
-    category = models.ForeignKey(Category, related_name='shops')
+    category = models.ForeignKey('InstrumentSeller.Category', related_name='shops')
     image = models.FileField(upload_to='shops', null= True)
     resume = models.CharField(max_length=400, null= True)
     active = models.BooleanField(default= False)
@@ -57,9 +57,9 @@ class Shop(models.Model):
 
 class Workshop(models.Model):
     name = models.CharField(max_length= 200)
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey('InstrumentSeller.Location')
     address = models.CharField(max_length=200)
-    instruments = models.ManyToManyField(Category, related_name='workshops')
+    instruments = models.ManyToManyField('InstrumentSeller.Category', related_name='workshops')
     tel = models.CharField(max_length=100)
     website = models.CharField(max_length=400, null= True)
     image = models.FileField(upload_to='workshops', null= True)
