@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_protect
 def has_saaz_autocomplete():
     category = []
     for c in Category.objects.all():
-        category.append(c.cat4)
+        category.append(c.cat3)
     return category
 
 def master(request, master_id):
@@ -76,6 +76,7 @@ def new_directory(request):
                 shop_id = make_shop(shop, shop__form, request)
                 return HttpResponseRedirect('/shop/%d/' % shop_id)
     else:
+        ostan = Ostan.objects.all()
         manu_form = manufacturer_form()
         inst_form = institute_form()
         mast_form = master_form()
@@ -163,11 +164,11 @@ def institutes_search(request):
 
 def saaz_search(request):
     term = request.GET.get("term")
-    saazs = Category.objects.filter(cat4__icontains = term)
+    saazs = Category.objects.filter(cat3__icontains = term)
     if request.GET.get("format") == "json":
         data = []
         for saaz in saazs:
-            data.append({"id": saaz.cat4 })
+            data.append({"id": saaz.cat3 })
         return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
@@ -190,7 +191,7 @@ def make_manufacturer(m, form, request):
     m.save()
     instruments = form.cleaned_data['instruments'].split(',')
     for i in instruments:
-        instrument = Category.objects.get(cat4 = i)
+        instrument = Category.objects.get(cat3 = i)
         if instrument is not None:
             m.instruments.add(instrument)
     return m.id
@@ -218,7 +219,7 @@ def make_institute(i, form, request):
         if master is not None:
             i.masters.add(master)
     for s in instruments:
-        instrument = Category.objects.get(cat4 = s)
+        instrument = Category.objects.get(cat3 = s)
         if instrument is not None:
             i.instruments.add(instrument)
 
@@ -242,7 +243,7 @@ def make_master(m, form, request):
         if institute is not None:
             m.institutes.add(institute)
     for i in instruments:
-        instrument = Category.objects.get(cat4 = i)
+        instrument = Category.objects.get(cat3 = i)
         if instrument is not None:
             m.instruments.add(instrument)
     return m.id
@@ -264,7 +265,7 @@ def make_workshop(w, form, request):
     w.save()
     instruments = form.cleaned_data['instruments'].split(',')
     for i in instruments:
-        instrument = Category.objects.get(cat4 = i)
+        instrument = Category.objects.get(cat3 = i)
         if instrument is not None:
             w.instruments.add(instrument)
     return w.id

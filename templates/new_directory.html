@@ -3,6 +3,46 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#directory_ostan").change(function(e){
+                e.preventDefault();
+                $.ajax({
+                       type: "POST",
+                       url: "/get_shahrs/",
+                       data: {'ostan': $("#directory_ostan option:selected" ).text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                       dataType: "json",
+                       success: function(data) {
+                            txt = "<option selected disabled>انتخاب شهر</option>" ;
+                            $.each(data, function(i, item) {
+                            txt += "<option value =" + item + ">" + item + "</option>"
+                            });
+                            $("#directory_shahr").html(txt);
+                        },
+                        error: function(rs, e) {
+                               alert(rs.responseText);
+                        }
+                  });
+                return false;
+                });
+        $("#directory_shahr").change(function(e){
+            e.preventDefault();
+            $.ajax({
+                   type: "POST",
+                   url: "/get_mahales/",
+                   data: {'shahr': $("#directory_shahr option:selected" ).text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                   dataType: "json",
+                   success: function(data) {
+                        txt = "<option selected disabled>انتخاب محله</option>" ;
+                        $.each(data, function(i, item) {
+                        txt += "<option value =" + item + ">" + item + "</option>"
+                        });
+                        $("#directory_mahale").html(txt);
+                   },
+                   error: function(rs, e) {
+                          alert(rs.responseText);
+                   }
+                   });
+            return false;
+        });
         $("#master_input").tokenInput("/directories/master_search/?format=json",{
         queryParam: "term",
         });
@@ -40,23 +80,103 @@
         <div onclick="show(this.id)" id="institute" style="float: right; width: 20%;">آموزشگاه</div>
         <div onclick="show(this.id)" id="manufacturer" style="float: right; width: 20%;">سازنده</div>
     </div>
+
+
+    <!--
+    ---------
+    ---------
+    ---------
+    INTERSECT
+    ---------
+    ---------
+    -->
+
+
+
+
+<form action="." method="post" id="master-form" enctype="multipart/form-data">
+<form action="." method="post" id="shop-form" enctype="multipart/form-data">
+<form action="." method="post" id="workshop-form" enctype="multipart/form-data">
+<form action="." method="post" id="institute-form" enctype="multipart/form-data">
+<form action="." method="post" id="manufacturer-form" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+
+<div id="Intersect" dir="rtl">
+    <div style="display:block;" class="span6">
+        <div  style="display:inline;">
+نام:
+        </div>
+        <div class="input-control text">
+            <input type="text" value="" name="name" style="direction:ltr;"/>
+        </div>
+    </div>
+    <div class="row">
+						<div class="span4">
+							<label>محله</label>
+							<div class="input-control select">
+								<select name="mahale" id="directory_mahale">
+                                     <option selected disabled>
+                                انتخاب محله
+                                    </option>
+								</select>
+							</div>
+						</div>
+						<div class="span4">
+							<label>شهر</label>
+							<div class="input-control select">
+								<select name="shahr" id="directory_shahr" >
+                                     <option selected disabled>
+                                انتخاب شهر
+                                    </option>
+								</select>
+							</div>
+						</div>
+						<div class="span4">
+							<label>استان</label>
+							<div class="input-control select">
+								<select name="ostan" id="directory_ostan">
+                                     <option selected disabled>
+                                انتخاب استان
+                                    </option>
+                                    {% for i in ostan%}
+                                    <option value = {{i}} >{{i}}</option>
+                                    {% endfor %}
+								</select>
+							</div>
+						</div>
+					</div>
+    <div style="display:block;" class="span6">
+        <div  style="display:inline;">
+جزئیات آدرس دقیق محل:
+        </div>
+        <div class="input-control text">
+            <input type="text" value="" name="address" style="direction:ltr;"/>
+        </div>
+    </div>
+    <div style="display:block;" class="span6">
+        <div  style="display:inline;">
+تلفن:
+        </div>
+        <div class="input-control text">
+            <input type="text" value="" name="tel" style="direction:ltr;"/>
+        </div>
+    </div>
+</div>
+
+
+
     <!--
 
     Manufacturer
 
     -->
+
+
+
 {{manu_form.errors}}
     <div class="directory_form" id="manufacturer_form_div" >
-        <form action="." method="post" id="manufacturer-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    نام سازنده:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="name" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     سازها:
@@ -66,14 +186,6 @@
             </div>
 	    </div>
 
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-تلفن:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="tel" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     آدرس وب سایت:
@@ -88,40 +200,6 @@
             </div>
             <div class="input-control text">
                 {{manu_form.image}}
-            </div>
-	    </div>
-
-        <div class="span4">
-            استان:
-            <div class="input-control select">
-                <select name="ostan" id="directory_manufacturer_ostan" onchange="setShahr('directory_manufacturer_');">
-                        <option value="تهران">تهران</option>
-                        <option value="فارس">فارس</option>
-                        <option value="مازندران">مازندران</option>
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            شهر:
-            <div class="input-control select">
-                <select name="shahr" id="directory_manufacturer_shahr" onchange="setMahale('directory_manufacturer_');">
-
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            محله:
-            <div class="input-control select">
-                <select name="mahale" id="directory_manufacturer_mahale">
-                </select>
-            </div>
-        </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    جزئیات آدرس دقیق محل:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="address" style="direction:ltr;"/>
             </div>
 	    </div>
         <div style="display:block;" class="span6">
@@ -147,8 +225,9 @@
             </div>
          </div>
         <input type="submit" name="manufacturer_submit">
-        </form>
     </div>
+    </form>
+
 
 
     <!--
@@ -157,24 +236,7 @@
 
     -->
     <div class="directory_form" id="institute_form_div" style="display: none;">
-            <form action="." method="post" id="institute-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    نام آموزشگاه:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="name" style="direction:ltr;"/>
-            </div>
-	    </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-تلفن:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="tel" style="direction:ltr;"/>
-            </div>
-	    </div>
+
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     آدرس وب سایت:
@@ -200,39 +262,6 @@
             </div>
 	    </div>
 
-        <div class="span4">
-            استان:
-            <div class="input-control select">
-                <select name="ostan" id="directory_institute_ostan" onchange="setShahr('directory_institute_');">
-                        <option value="تهران">تهران</option>
-                        <option value="فارس">فارس</option>
-                        <option value="مازندران">مازندران</option>
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            شهر:
-            <div class="input-control select">
-                <select name="shahr" id="directory_institute_shahr" onchange="setMahale('directory_institute_');">
-
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            محله:
-            <div class="input-control select">
-                <select name="mahale" id="directory_institute_mahale">
-                </select>
-            </div>
-        </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    جزئیات آدرس دقیق محل:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="address" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     سازها:
@@ -258,24 +287,15 @@
             </div>
          </div>
         <input type="submit" name="institute_submit">
-        </form>
     </div>
+   </form>
+
 
     <!-- MASTERS -->
 
 
     <div class="directory_form" id="master_form_div" style="display: none;">
 
-        <form action="." method="post" id="master-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    نام استاد :
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="name" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
 سازها:
@@ -317,24 +337,16 @@
             </div>
          </div>
         <input type="submit" name="master_submit">
-        </form>
-    </div>
+        </div>
+   </form>
+
 
 
     <!-- WORKSHOP -->
 
 
     <div class="directory_form" id="workshop_form_div" style="display: none;">
-        <form action="." method="post" id="workshop-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-نام تعمیرگاه:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="name" style="direction:ltr;"/>
-            </div>
-	    </div>
+
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     سازها:
@@ -343,14 +355,7 @@
                 <input type="text" value="" id="workshop_saaz_search" name="instruments" style="direction:ltr;"/>
             </div>
 	    </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-تلفن:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="tel" style="direction:ltr;"/>
-            </div>
-	    </div>
+
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     آدرس وب سایت:
@@ -368,39 +373,6 @@
             </div>
 	    </div>
 
-        <div class="span4">
-            استان:
-            <div class="input-control select">
-                <select name="ostan" id="directory_workshop_ostan" onchange="setShahr('directory_workshop_');">
-                        <option value="تهران">تهران</option>
-                        <option value="فارس">فارس</option>
-                        <option value="مازندران">مازندران</option>
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            شهر:
-            <div class="input-control select">
-                <select name="shahr" id="directory_workshop_shahr" onchange="setMahale('directory_workshop_');">
-
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            محله:
-            <div class="input-control select">
-                <select name="mahale" id="directory_workshop_mahale">
-                </select>
-            </div>
-        </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    جزئیات آدرس دقیق محل:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="address" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div class="span6">
             <div  style="diplay: inline;">
 توضیحات مختصر در مورد رزومه، افتخارات و ...:
@@ -410,8 +382,9 @@
             </div>
          </div>
         <input type="submit" name="workshop_submit">
-        </form>
     </div>
+</form>
+
 
 
 
@@ -419,16 +392,7 @@
 
 
     <div class="directory_form" id="shop_form_div" style="display: none;">
-        <form action="." method="post" id="shop-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-نام فروشگاه:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="name" style="direction:ltr;"/>
-            </div>
-	    </div>
+
             نوع ساز:
         <div style="width: 100%;">
 
@@ -447,14 +411,7 @@
             </div>
 
         </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-تلفن:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="tel" style="direction:ltr;"/>
-            </div>
-	    </div>
+
         <div style="display:block;" class="span6">
             <div  style="display:inline;">
     آدرس وب سایت:
@@ -472,39 +429,7 @@
             </div>
 	    </div>
 
-        <div class="span4">
-            استان:
-            <div class="input-control select">
-                <select name="ostan" id="directory_shop_ostan" onchange="setShahr('directory_shop_');">
-                        <option value="تهران">تهران</option>
-                        <option value="فارس">فارس</option>
-                        <option value="مازندران">مازندران</option>
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            شهر:
-            <div class="input-control select">
-                <select name="shahr" id="directory_shop_shahr" onchange="setMahale('directory_shop_');">
 
-                </select>
-            </div>
-        </div>
-        <div class="span4">
-            محله:
-            <div class="input-control select">
-                <select name="mahale" id="directory_shop_mahale">
-                </select>
-            </div>
-        </div>
-        <div style="display:block;" class="span6">
-            <div  style="display:inline;">
-    جزئیات آدرس دقیق محل:
-            </div>
-            <div class="input-control text">
-                <input type="text" value="" name="address" style="direction:ltr;"/>
-            </div>
-	    </div>
         <div class="span6">
             <div  style="diplay: inline;">
 توضیحات مختصر در مورد رزومه، افتخارات و ...:
@@ -514,8 +439,10 @@
             </div>
          </div>
         <input type="submit" name="shop_submit">
-        </form>
     </div>
+</form>
+
+
 
 </div>
 

@@ -15,10 +15,7 @@ class manufacturer_form(forms.Form):
     website = forms.CharField(required = False)
     image = forms.FileField(required = False)
     resume = forms.CharField(required = False)
-    directory_manufacturer_sub1 = forms.CharField(required = False)
-    directory_manufacturer_sub2 = forms.CharField(required = False)
-    directory_manufacturer_sub3 = forms.CharField(required = False)
-    directory_manufacturer_sub4 = forms.CharField(required = False)
+    instruments= forms.CharField(required = False)
 
 class shop_form(forms.Form):
     name = forms.CharField(required = False)

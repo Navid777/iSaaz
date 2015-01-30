@@ -45,44 +45,6 @@
 			</div>
 			<div class="panel-body" style="direction:rtl; padding-top:10px;">
                 <input id="saaz" name="saaz">
-                <!--
-                {{from.}}
-				<div class="span3">
-					<nav class="sidebar">
-						<ul id="sell_sub4">
-							<li class="title">دسته</li>
-						</ul>
-					</nav>
-				</div>
-				<div class="span3">
-					<nav class="sidebar">
-						<ul id="sell_sub3">
-							<li class="title">دسته</li>
-						</ul>
-					</nav>
-				</div>
-				<div class="span3">
-					<nav class="sidebar ">
-						<ul id="sell_sub2">
-							<li class="title">دسته</li>
-						</ul>
-					</nav>
-				</div>
-
-				<div class="span3">
-					<nav class="sidebar">
-						<ul id="sub1">
-							<li class="title">دسته</li>
-							<li class=""><a><i class="icon-home"></i>
-                                <input type="radio" onclick="setCat2('sell_')" value="سنتی" name="sell_sub1"" > سنتی
-                            </a></li>
-							<li class=""><a><i class="icon-cog"></i>
-                                <input type="radio" onclick="setCat2('sell_')" value="کلاسیک" name="sell_sub1"> کلاسیک
-                            </a></li>
-						</ul>
-					</nav>
-				</div>
-            -->
 			</div>
 		</div>
 	</div>
@@ -97,7 +59,6 @@
 						<div class="span4">
 							<label>سازنده</label>
 							<div class="input-control text">
-								<input type="text" value="" name="manufacturer"/>
                                 <input id="manufacturer" name="manufacturer">
 							</div>
 						</div>
@@ -278,9 +239,9 @@
                                                        alert(rs.responseText);
                                                 }
                                           });
-                                      return false;
-                                    });
-                              $("#sell_shahr").change(function(e){
+                                        return false;
+                                        });
+                                $("#sell_shahr").change(function(e){
                                     e.preventDefault();
                                     $.ajax({
                                            type: "POST",
@@ -293,12 +254,12 @@
                                                 txt += "<option value =" + item + ">" + item + "</option>"
                                                 });
                                                 $("#sell_mahale").html(txt);
-                                            },
-                                            error: function(rs, e) {
-                                                   alert(rs.responseText);
-                                            }
-                                      });
-                                  return false;
+                                           },
+                                           error: function(rs, e) {
+                                                  alert(rs.responseText);
+                                           }
+                                           });
+                                    return false;
                                 });
                                  $('')
                                     .css({
@@ -332,9 +293,14 @@
                             });
                           $(function() {
                                 $( "#saaz" ).autocomplete({
-                                  source: {{saaz}}
+                                  source: {{saaz|safe}}
                                 });
                               });
+                          $(function() {
+                            $( "#manufacturer" ).autocomplete({
+                              source: {{manufacturers|safe}}
+                            });
+                          });
                           function upload_img(input, x) {
                              if (input.files && input.files[0]) {
                                  var reader = new FileReader();

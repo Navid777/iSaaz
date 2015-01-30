@@ -13,7 +13,7 @@ class ad_form(forms.Form):
     year = forms.ChoiceField(choices=[(x, x) for x in range(1370, 1393)], required=False)
     used = forms.BooleanField(required= False)
     sound = forms.FileField(required=False)
-    img1 = forms.FileField()
+    img1 = forms.FileField(required= False)
     img2 = forms.FileField(required=False)
     img3 = forms.FileField(required=False)
     img4 = forms.FileField(required=False)
@@ -22,10 +22,7 @@ class ad_form(forms.Form):
     sell_ostan = forms.CharField()
     sell_shahr = forms.CharField()
     sell_mahale = forms.CharField()
-    sell_sub1 = forms.CharField()
-    sell_sub2 = forms.CharField()
-    sell_sub3 = forms.CharField()
-    sell_sub4 = forms.CharField() #instrument
+    saaz = forms.CharField()
     show_email = forms.BooleanField(required= False)
     show_tel = forms.BooleanField(required= False)
 

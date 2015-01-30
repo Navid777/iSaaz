@@ -6,31 +6,62 @@
 {% block content %}
         <script type="text/javascript">
             $(function() {
-                var instruments = [
-                  "گیتار",
-                  "پیانو",
-                  "سه تار",
-                  "تار",
-                  "فلوت",
-                  "نی",
-                  "آکاردئون",
-                  "ویولن",
-                  "کمانچه",
-                  "باران",
-                  "تنبک",
-                ];
                 $( "#saaz" ).autocomplete({
-                  source: instruments
+                  source: {{saaz|safe}}
+                });
+                $( "#manufacturer" ).autocomplete({
+                  source: {{manufacturers|safe}}
                 });
               });
             $(document).ready(function(){
-            $("#search_submit").on("click", function(){
+            $("#home_ostan").change(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                           type: "POST",
+                           url: "/get_shahrs/",
+                           data: {'ostan': $("#home_ostan option:selected" ).text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           dataType: "json",
+                           success: function(data) {
+                                txt = "<option selected disabled>انتخاب شهر</option>" ;
+                                $.each(data, function(i, item) {
+                                txt += "<option value =" + item + ">" + item + "</option>"
+                                });
+                                $("#home_shahr").html(txt);
+                            },
+                            error: function(rs, e) {
+                                   alert(rs.responseText);
+                            }
+                      });
+                    return false;
+                    });
+            $("#home_shahr").change(function(e){
+                e.preventDefault();
+                $.ajax({
+                       type: "POST",
+                       url: "/get_mahales/",
+                       data: {'shahr': $("#home_shahr option:selected" ).text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                       dataType: "json",
+                       success: function(data) {
+                            txt = "<option selected disabled>انتخاب محله</option>" ;
+                            $.each(data, function(i, item) {
+                            txt += "<option value =" + item + ">" + item + "</option>"
+                            });
+                            $("#home_mahale").html(txt);
+                       },
+                       error: function(rs, e) {
+                              alert(rs.responseText);
+                       }
+                       });
+                return false;
+            });
+            $("#search_submit").on("click", function(e){
+                  e.preventDefault();
                   $.ajax({
                            type: "POST",
                            url: "/home/search/",
-                           data: {'ostan': $("#home_ostan option:selected").text(), 'shahr': $("#home_shahr option:selected").text(),
-                                'mahale': $("#home_mahale option:selected").text(), 'saaz': $('#saaz').text(), 'min_price': $('#min_price').text(),
-                                 'max_price': $('#max_price').text(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                           data: {'ostan': $("#home_ostan option:selected").val(), 'shahr': $("#home_shahr option:selected").val(),
+                                'mahale': $("#home_mahale option:selected").val(), 'saaz': $('#saaz').val(),'manufacturer': $('#manufacturer').val(),
+                                 'min_price': $('#min_price').val(),'max_price': $('#max_price').val(), csrfmiddlewaretoken:'{{csrf_token}}'},
                            dataType: "json",
                            success: function(data) {
                                      if(data){
@@ -41,12 +72,10 @@
                                              + item.id + "'><img src='" + item.image + "' class='polaroid' style='max-width: 100%;'><div >"
                                              + item.title + "<br>" + item.instrument + "<br>" + item.price+ " تومن</div></a></div>"
                                         });
-                                        if(txt == ""){
-                                            txt = "موردی یافت نشد"
-                                        }else{
-                                            $('#ad_container').html(txt);
-                                        }
+                                     } else {
+                                        txt = "موردی یافت نشد"
                                      }
+                                     $('#ad_container').html(txt);
                             },
                             error: function(rs, e) {
                                    alert(rs.responseText);
@@ -143,9 +172,10 @@
 						<input id="saaz" name="saaz">
 					</div>
 					<h4 class="fg-steel">
-						سازنده
+						سازنده:
 					</h4>
 					<div class="input-control select">
+						<input id="manufacturer" name="manufacturer">
 					</div>
 					<h4 class="fg-steel">
 						مکان
@@ -153,20 +183,20 @@
 					<div class="input-control select">
 						<select id="home_ostan" name="home_ostan"  onclick="setShahr('home_')">
                             <option selected disabled>
-                                انتخاب استان
+                        انتخاب استان
                             </option>
-							<option>تهران</option>
-							<option>فارس</option>
-							<option>مازندران</option>
+                            {% for i in ostan%}
+                            <option value = {{i}} >{{i}}</option>
+                            {% endfor %}
 						</select>
                         <select id="home_shahr" name="home_shahr" onclick="setMahale('home_')">
-                            <option selected disabled>
+                            <option selected disabled value="">
                                 انتخاب شهر
                             </option>
 						</select>
                         <select id="home_mahale" name="home_mahale">
-                            <option selected disabled>
-                                انتخاب محل
+                            <option selected disabled value="">
+                                انتخاب محله
                             </option>
 						</select>
 					</div>

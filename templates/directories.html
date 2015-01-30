@@ -17,7 +17,6 @@
                              'category':$("#shop_cat option:selected").text(), csrfmiddlewaretoken:'{{csrf_token}}'},
                            dataType: "json",
                            success: function(data) {
-                                       $('#kossher').tetx(data);
                                      if(data){
                                         txt = "";
                                         $.each(data, function(i, item) {
@@ -56,7 +55,7 @@
           });
 </script>
     <div dir="rtl" align="right">
-    <div id="kossher"></div>
+    <a href="/new_directory">افزودن دایرکتوری</a>
         <form>
             ساز:
             <input id="saaz" name="saaz">

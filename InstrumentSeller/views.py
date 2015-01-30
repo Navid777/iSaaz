@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from InstrumentSeller.forms import *
 from InstrumentSeller.models import *
+from Directory.models import *
 from django.contrib import auth
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.models import User
@@ -14,6 +15,9 @@ from django.forms.models import model_to_dict
 
 @csrf_protect
 def home(request):
+    ostan = Ostan.objects.all()
+    saaz = get_saaz()
+    manufacturers = get_manufac()
     mainAds = Advertisement.objects.all()
     ad = Advertisement.objects.all()
     categories = Category.objects.all()
@@ -27,15 +31,15 @@ def home(request):
             saaz = search_form.cleaned_data['saaz']
             min = search_form.cleaned_data['min_price']
             max = search_form.cleaned_data['max_price']
-            if ostan:
+            if ostan is not "":
                 print ("here")
                 mainAds = Advertisement.objects.filter(location__ostan = ostan)
-                if shahr:
+                if shahr is not "":
                     mainAds = Advertisement.objects.filter(location__shahr = shahr)
-                    if mahale:
+                    if mahale is not "":
                         mainAds = Advertisement.objects.filter(location__mahale = mahale)
             if saaz:
-                mainAds = mainAds.filter(instrument__category__cat4 = saaz)
+                mainAds = mainAds.filter(instrument__category__cat3 = saaz)
             if min:
                 min = int(min)
                 mainAds = mainAds.filter(price__lt = min)
@@ -56,7 +60,8 @@ def home_search(request):
             saaz = request.POST.get('saaz')
             min = request.POST.get('min_price')
             max = request.POST.get('max_price')
-            print (ostan )
+            manufacturer = request.POST.get('manufacturer')
+            ads = Advertisement.objects.all()
             if ostan:
                 ads = Advertisement.objects.filter(location__ostan = ostan)
                 if shahr:
@@ -64,13 +69,15 @@ def home_search(request):
                     if mahale:
                         ads = Advertisement.objects.filter(location__mahale = mahale)
             if saaz:
-                ads = ads.filter(instrument__category__cat4 = saaz)
+                ads = ads.filter(instrument__category__cat3 = saaz)
             if min:
                 min = int(min)
                 ads = ads.filter(price__lt = min)
             if max:
                 max = int(max)
                 ads = ads.filter(price__gt = max)
+            if manufacturer:
+                ads = ads.filter(instrument__manufacturer__name = manufacturer)
             for ad in ads:
                 info = {}
                 info['id'] = ad.id
@@ -108,10 +115,7 @@ def sell(request):
             ad = Advertisement()
             saazid = build_ad(request, form, ad)
             if "auth_sub" in request.POST:
-                user = User_Profile()
-                user.user = request.user
-                user.allowed_ad_count = 2
-                user.save()
+                user = User_Profile.objects.get(user = request.user)
                 ad.user = user
                 ad.save()
                 return HttpResponseRedirect('/instrument/%d/' % saazid)
@@ -151,14 +155,28 @@ def sell(request):
         form = ad_form()
         lform = login_form()
         rform = register_form()
-        cat = Category.objects.all()
-        saaz = []
-        for c in cat:
-            if c.cat4 is not None:
-                saaz.append(c.cat3 + "-" + c.cat4)
-            else:
-                saaz.append(c.cat3)
+        saaz = get_saaz()
+        manufacturers = get_manufac()
     return render_to_response('sell.html', RequestContext(request,locals()))
+
+def get_saaz():
+    cat = Category.objects.all()
+    saaz = []
+    for c in cat:
+        if c.cat4 is not "":
+            saaz.append(c.cat3 + "-" + c.cat4)
+        else:
+            saaz.append(c.cat3)
+    saaz = json.dumps(saaz)
+    return saaz
+
+def get_manufac():
+    manu = Manufacturer.objects.all()
+    manufacturers = []
+    for m in manu:
+        manufacturers.append(m.name)
+    manufacturers = json.dumps(manufacturers)
+    return manufacturers
 
 def shahr(request):
     shahrs = []
@@ -180,8 +198,15 @@ def mahale(request):
 
 def build_ad(request, form, ad):
     saaz = Instrument()
-    saaz.name = form.cleaned_data['sell_sub4']
-    saaz.manufacturer = form.cleaned_data['manufacturer']
+    saaz.name = form.cleaned_data['saaz']
+    manufacturer = Manufacturer.objects.filter(name = form.cleaned_data['manufacturer'])
+    if not manufacturer:
+        manufacturer = Manufacturer()
+        manufacturer.name = form.cleaned_data['manufacturer']
+        manufacturer.save()
+        saaz.manufacturer = manufacturer
+    else:
+        saaz.manufacturer = manufacturer[0]
     saaz.model = form.cleaned_data['model']
     saaz.year = form.cleaned_data['year']
     saaz.used = form.cleaned_data['used']

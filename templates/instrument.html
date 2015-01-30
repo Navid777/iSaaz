@@ -48,6 +48,7 @@
 			<br>
 			<br>
 			</div>
+            {% if ad.sound%}
             <div>
                 نمونه ی صوتی:
                 <audio controls>
@@ -57,6 +58,7 @@
                 Your browser does not support the audio element.
                 </audio>
             </div>
+            {% endif %}
 			<div>
 				مکان:
                 {{ad.location.mahale}}- {{ad.location.shahr}}- {{ad.location.ostan}}
@@ -74,7 +76,8 @@
 			<div class="panel-content">
 				<div>
 					<div class="span6">
-						{{instrument.manufacturer}}
+                        <a href="/manufacturer/{{instrument.manufacturer.id}}">{{instrument.manufacturer}}</a>
+
 					</div>
 					<div class="span6">
 						سازنده: 
