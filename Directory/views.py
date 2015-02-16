@@ -31,6 +31,34 @@ def shop(request, shop_id):
     shop = Shop.objects.get(id = shop_id)
     return render_to_response('shop.html', RequestContext(request,locals()))
 
+def shops(request):
+    shops = Shop.objects.filter(active = True)
+    shop_names = []
+    for s in shops:
+        shop_names.append(s.name)
+    shop_names = json.dumps(shop_names)
+    return render_to_response('shops.html', RequestContext(request,locals()))
+
+def get_shops(request):
+    results = []
+    if request.method == 'POST':
+        shop = request.POST.get('shop')
+        allShops = Shop.objects.filter(name__icontains = shop)
+        for a in allShops:
+            if a.active:
+                info = {}
+                info['name'] = a.name
+                info['image'] = a.image.url
+                info['ostan'] = a.location.ostan
+                info['shahr'] = a.location.shahr
+                info['mahale'] = a.location.mahale
+                info['website'] = a.website
+                info['tel'] = a.tel
+                info['id'] = a.id
+                info['address'] = a.address
+                results.append(info)
+    return HttpResponse(json.dumps(results), content_type='application/json')
+
 def institute(request, institute_id):
     institute = Institute.objects.get(id = institute_id)
     return render_to_response('institute.html', RequestContext(request,locals()))
@@ -113,7 +141,7 @@ def search_directory(request, directory):
                 info['name'] = i.name
                 info['category'] = i.category
                 result.append(info)
-    return HttpResponse(json.dumps(info), mimetype='application/javascript')
+    return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 
@@ -141,7 +169,7 @@ def search(request):
         term = request.body[1:len(str(request.body))-2]
     if term == 'masters':
         masterss = Master.objects.order_by('?')[:2]
-        return HttpResponse(json.dumps(Masters),mimetype='application/json')
+        return HttpResponse(json.dumps(Masters),content_type='application/json')
 
 
 def masters_search(request):
@@ -151,7 +179,7 @@ def masters_search(request):
         data = []
         for master in masters:
             data.append({"id": master.name })
-        return HttpResponse(json.dumps(data), mimetype='application/json')
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
 def institutes_search(request):
     term = request.GET.get("term")
@@ -160,7 +188,7 @@ def institutes_search(request):
         data = []
         for institute in institutes:
             data.append({"id": institute.name })
-        return HttpResponse(json.dumps(data), mimetype='application/json')
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
 def saaz_search(request):
     term = request.GET.get("term")
@@ -169,7 +197,7 @@ def saaz_search(request):
         data = []
         for saaz in saazs:
             data.append({"id": saaz.cat3 })
-        return HttpResponse(json.dumps(data), mimetype='application/json')
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 def make_manufacturer(m, form, request):

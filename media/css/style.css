@@ -10,3 +10,26 @@
 li .selected a {
 background-color : #999999;
 }
+
+.shops_img img
+{
+    height : 200px;
+    width = 200px;
+}
+div .shops_details
+{
+    background-color : white;
+    width: 70%;
+    float: right;
+}
+div .shops_img
+{
+    width: 30%;
+    float: right;
+    background-color : white;
+}
+.shops_shop
+{
+    background-color : white;
+    height: 220px;
+}

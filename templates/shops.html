@@ -1,0 +1,70 @@
+{% extends 'directory_base.html' %}
+{% block content %}
+        <script type="text/javascript">
+         $(function() {
+                $( "#shop_auto" ).autocomplete({
+                  source: {{shop_names|safe}},
+                  change: function (event, ui) {
+                            $.ajax({
+                                   type: "POST",
+                                   url: "/get_shops/",
+                                   data: {'shop': $("#shop_auto").val(), csrfmiddlewaretoken:'{{csrf_token}}'},
+                                   dataType: "json",
+                                   success: function(data) {
+                                        txt = "";
+                                        $.each(data, function(i, item) {
+                                            txt += "<div dir='rtl' class='shops_shop'><div class = 'shops_img'><img src=" +
+                                            item.image + "></div><div class='shops_details'><a href='/shop/"+
+                                            item.id + "'>" + item.name + "</a><label>        آدرس:" +
+                                            item.ostan + "-" + item.shahr + "-" + item.mahale + "،" + item.address +
+                                            "</label><br>" + item.tel + "<br>آدرس وبگاه:<a href='http://" + item.website + "'>" +
+                                            item.name + "</a><br>دسته بندی سازهای موجود:" +
+                                             + "</div></div><br>" ;
+                                        });
+                                        $("#result_holder").html("");
+                                        $("#result_holder").html(txt);
+                                    },
+                                    error: function(rs, e) {
+                                           alert(rs.responseText);
+                                    }
+                              });
+                            return false;
+                    }
+                });
+         });
+
+        </script>
+        <div dir="rtl" id="shops_search">
+            <h4 class="fg-steel">
+نام فروشگاه:
+            </h4>
+            <div class="input-control select">
+                <input id="shop_auto" name="shop">
+            </div>
+        </div>
+        <div id="result_holder">
+        {% for s in shops%}
+        <div dir="rtl" class="shops_shop">
+            <div class = "shops_img">
+                <img src="{{s.image.url}}">
+            </div>
+            <div class="shops_details">
+              <a href="/shop/{{s.id}}">{{s.name}}</a>
+                <label>        آدرس:
+        {{s.location.ostan}}- {{s.location.shahr}}- {{s.location.mahale}}،
+        {{s.address}}</label><br>
+                {{s.tel}}<br>
+
+        آدرس وبگاه:
+        <a href="http://{{s.website}}">{{s.name}}</a>
+                <br>
+
+        دسته بندی سازهای موجود:
+        {{s.category}}
+
+            </div>
+        </div>
+        <br>
+        {% endfor%}
+    </div>
+{% endblock %}

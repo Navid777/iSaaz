@@ -1,5 +1,6 @@
 from django.db import models
 from InstrumentSeller.models import *
+from django.contrib.auth.models import User
 # Create your models here.
 class Master(models.Model):
     name= models.CharField(max_length= 100)
@@ -43,6 +44,7 @@ class Manufacturer(models.Model):
         return self.name
 
 class Shop(models.Model):
+    user = models.OneToOneField(User, related_name='shop')
     name = models.CharField(max_length= 200)
     location = models.ForeignKey('InstrumentSeller.Location')
     address = models.CharField(max_length=200)
